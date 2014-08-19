@@ -16,13 +16,14 @@ ExamModel = Backbone.Model.extend({
         _.each ls, (e) -> s[e] = {pass: 0, fail: 0}
         @set 'scores', s
 
-    # Generate a random string consiting only of our letters.
+    # Generate a random string consisting only of our letters.
     #
     # @param l The length of the string.
     # @return The generated string
     mkString: (l=30) ->
         ls = @get 'letters'
         cs = (ls[Math.floor Math.random() * ls.length] for n in [0 ... l])
+
         f = (m, v, i, l) -> m + v
         _.reduce(cs, f, "")
 })
