@@ -6,13 +6,23 @@ ExamModel = Backbone.Model.extend({
 
     initialize: ->
         # Be sure our letter array has one, and only one space.
-        l = @get 'letters'
-        l.push ' '
-        _.uniq l
-        @set 'letters', l
+        ls = @get 'letters'
+        ls.push ' '
+        _.uniq ls
+        @set 'letters', ls
 
         # initialize the scores
         s = {}
-        _.each l, (e, i, _l) -> s[e] = {pass: 0, fail: 0}
+        _.each ls, (e) -> s[e] = {pass: 0, fail: 0}
         @set 'scores', s
+
+    # Generate a random string consiting only of our letters.
+    #
+    # @param l The length of the string.
+    # @return The generated string
+    mkString: (l=30) ->
+        ls = @get 'letters'
+        cs = (ls[Math.floor Math.random() * ls.length] for n in [0 ... l])
+        f = (m, v, i, l) -> m + v
+        _.reduce(cs, f, "")
 })
