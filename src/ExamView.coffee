@@ -9,6 +9,3 @@ ExamView = Backbone.View.extend
 
     render: () ->
         @$el.html @testStringTemplate { testString: @model.get "testString" }
-
-examView = new ExamView
-    el: "#teststring"

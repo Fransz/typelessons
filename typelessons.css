@@ -18,6 +18,16 @@
 
 #keyboard .key {
     margin:0em 0.5em;
-    border:1px solid grey;
+    border:2px solid grey;
     padding:0.25em 0.5em;
+}
+
+#keyboard .key.fail {
+    color:red;
+    border: 2px solid red;
+}
+
+#keyboard .key.pass {
+    color:green;
+    border: 2px solid green;
 }

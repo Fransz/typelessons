@@ -39,11 +39,6 @@ describe("An Exam model", function () {
             expect(exam.get("typedString")).to.have.length(0);
         });
 
-        it("should have position 0", function () {
-            expect(exam.get("position")).to.be.equal(0)
-        });
-
-
         it("should be able to generate a string with the given length, consisting only of our letters.", function () {
             var cs = ls.join('');
             var s = exam.mkString(100);
@@ -63,11 +58,12 @@ describe("An Exam model", function () {
             exam.set("testString", testString)
         })
 
-        it("should calculate scores for the first typed character", function () {
+        it("should calculate scores for the first typed character correctly", function () {
             // Last typed 'h'
             exam.set("typedString", "h");
-            exam.calcScores();
+            exam.calcLastScore();
 
+            expect(exam.get("lastScore")).to.be.equal("fail");
             expect(ss['g']['pass']).to.be.equal(0);
             expect(ss['g']['fail']).to.be.equal(1);
             expect(ss['h']['pass']).to.be.equal(0);
@@ -77,8 +73,9 @@ describe("An Exam model", function () {
 
             // Last typed 'g'
             exam.set("typedString", "g");
-            exam.calcScores();
+            exam.calcLastScore();
 
+            expect(exam.get("lastScore")).to.be.equal("pass");
             expect(ss['g']['pass']).to.be.equal(1);
             expect(ss['g']['fail']).to.be.equal(1);
             expect(ss['h']['pass']).to.be.equal(0);
@@ -87,13 +84,12 @@ describe("An Exam model", function () {
             expect(ss[' ']['fail']).to.be.equal(0);
         });
 
-        it("should calculate scores for any typed character", function () {
-            exam.set("position", 6)
-
+        it("should calculate scores for any typed character correctly", function () {
             // Last typed 'h'
             exam.set("typedString", "ghghghh");
-            exam.calcScores();
+            exam.calcLastScore();
 
+            expect(exam.get("lastScore")).to.be.equal("fail");
             expect(ss['g']['pass']).to.be.equal(0);
             expect(ss['g']['fail']).to.be.equal(0);
             expect(ss['h']['pass']).to.be.equal(0);
@@ -103,8 +99,9 @@ describe("An Exam model", function () {
 
             // Last typed ' '
             exam.set("typedString", "ghghgh ");
-            exam.calcScores();
+            exam.calcLastScore();
 
+            expect(exam.get("lastScore")).to.be.equal("pass");
             expect(ss['g']['pass']).to.be.equal(0);
             expect(ss['g']['fail']).to.be.equal(0);
             expect(ss['h']['pass']).to.be.equal(0);
@@ -113,13 +110,12 @@ describe("An Exam model", function () {
             expect(ss[' ']['fail']).to.be.equal(1);
         });
 
-        it("should calculate scores for the last typed character", function () {
-            exam.set("position", testString.length - 1)
-
+        it("should calculate scores for the last typed character correctly", function () {
             // Last typed ' '
             exam.set("typedString", "ghghgh  ghghg ");
-            exam.calcScores();
+            exam.calcLastScore();
 
+            expect(exam.get("lastScore")).to.be.equal("fail");
             expect(ss['g']['pass']).to.be.equal(0);
             expect(ss['g']['fail']).to.be.equal(0);
             expect(ss['h']['pass']).to.be.equal(0);
@@ -129,8 +125,9 @@ describe("An Exam model", function () {
 
             // Last typed 'h'
             exam.set("typedString", "ghghgh  ghghgh");
-            exam.calcScores();
+            exam.calcLastScore();
 
+            expect(exam.get("lastScore")).to.be.equal("pass");
             expect(ss['g']['pass']).to.be.equal(0);
             expect(ss['g']['fail']).to.be.equal(0);
             expect(ss['h']['pass']).to.be.equal(1);
@@ -142,23 +139,23 @@ describe("An Exam model", function () {
         it("should not add scores for the hit key", function () {
             // Last typed 'q'
             exam.set("typedString", "q");
-            exam.calcScores();
+            exam.calcLastScore();
 
             expect(ss['q']).to.be.undefined;
 
             // Last typed 'h'
             exam.set("typedString", "h");
-            exam.calcScores();
+            exam.calcLastScore();
 
             expect(ss['h']['pass']).to.be.equal(0);
             expect(ss['h']['fail']).to.be.equal(0);
         });
 
 
-        it("should increase position after adding a keystroke", function () {
+        it("should remember the last keystroke", function () {
             exam.addKeyStroke('x');
 
-            expect(exam.get("position")).to.be.equal(1);
+            expect(exam.get("lastChar")).to.be.equal("x");
             expect(exam.get("typedString")).to.be.equal("x");
         });
     });
