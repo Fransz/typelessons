@@ -1,11 +1,21 @@
-#typed {
+#typedString {
+    font-family:monospace;
     width:50em;
     height:1em;
     border:1px solid gray;
     margin:0.25em;
 }
 
-#text {
+#typedString .fail {
+    color:red;
+}
+
+#typedString .pass {
+    color:green;
+}
+
+#testString {
+    font-family:monospace;
     width:50em;
     height:1em;
     border:1px solid gray;

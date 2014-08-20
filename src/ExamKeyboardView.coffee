@@ -7,9 +7,6 @@ ExamKeyboardView = Backbone.View.extend
         _.bindAll @, 'processKey'
         $(document).bind 'keypress', @processKey
 
-    render: () ->
-        @$el.html @testStringTemplate { testString: @model.get "testString" }
-
     # event handle for keyup events.
     #
     # @return void
