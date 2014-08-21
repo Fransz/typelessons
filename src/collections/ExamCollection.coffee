@@ -1,0 +1,3 @@
+ExamCollection = Backbone.Collection.extend({
+
+})
