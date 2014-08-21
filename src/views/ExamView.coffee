@@ -13,6 +13,7 @@ ExamView = Backbone.View.extend
         _.bindAll @, 'processKey'
         $(document).bind 'keypress', @processKey
 
+
     # Shows our testString.
     # Event handler for change:testString event on this views model.
     #
@@ -26,7 +27,15 @@ ExamView = Backbone.View.extend
     #
     # @return void
     showKey: () ->
-        id = "#key#{@model.get "lastChar"}"
+        # @TODO extend this for All Uppercase; enter;
+        idMap =
+            '-': "#keydash" '=': "#keyequal" ' ': "#keybackspace" '': "#keyenter" ';': "#keysemicolon"
+            '\'': "#keysinglequote" '\\': "#keybackslash" ',': "#keycomma" '.': "#keydot" '/': "#keyslash"
+            ' ': "#keyspace"
+
+        key = @model.get "lastChar"
+        id = if idMap[key] then idMap[key] else "#key#{key}"
+
         className = @model.get "lastScore"
 
         $(id).addClass(className)
@@ -53,5 +62,6 @@ ExamView = Backbone.View.extend
     #
     # @return void
     processKey: (evt) ->
+        console.log String.fromCharCode evt.which
         @model.addKeyStroke String.fromCharCode evt.which
 
