@@ -12,7 +12,7 @@ var gulp = require('gulp'),
     del = require('del');
 
 var paths = {
-    src: ['src/**/*'],
+    src: ['src/views/**/*', 'src/models/**/*', 'src/**/*'],
     build: ['build/js'],
     test: {
         integration: ['test/integration/**/*'], unit: ['test/unit/**/testrunner.html']
@@ -36,19 +36,19 @@ gulp.task('build', ['clean'], function() {
 });
 
 
-gulp.task('test_integration', function () {
+gulp.task('integrationtest', function () {
     return gulp.src(paths.test.integration, {read: false})
         .pipe(mocha());
 });
 
 
-gulp.task('test_unit', function () {
+gulp.task('unittest', function () {
     return gulp.src(paths.test.unit)
         .pipe(mochaPhantomJs());
 });
 
 
-gulp.task('test', ['build', 'test_unit', 'test_integration'], function () {
+gulp.task('test', ['build', 'unittest', 'integrationtest'], function () {
 });
 
 

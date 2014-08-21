@@ -1,0 +1,109 @@
+ExamView = Backbone.View.extend
+    typedStringTemplate: _.template '<%= shortenedString %><span class="<%= lastScore %>"><%= lastChar %></span>'
+    ticker: null
+
+    initialize: () ->
+        @listenTo @model, "change:testString", @renderTestString
+        @model.trigger "change:testString"
+
+        @listenTo @model, "change:lastChar", @showKey
+        @listenTo @model, "change:lastChar", @renderTypedString
+        @listenTo @model, "change:lastChar", @renderScores
+
+        # This is tedious; The key event cannot be bound to the views element, cause that doesnt receive the event,
+        # So we bind it to the document with jQuery's bind, and make sure we can use this by using underscores bindAll
+        _.bindAll @, 'processKey'
+        $(document).bind 'keypress', @processKey
+
+
+    # Shows our testString.
+    # Event handler for change:testString event on this views model.
+    #
+    # @return void
+    renderTestString: () ->
+        @$("#teststring").html @model.get "testString"
+
+
+    # Set a class on the last pressed key element, remove it after 200ms.
+    # Event handler for change:lastKey event on this views model.
+    #
+    # @return void
+    showKey: () ->
+        # @TODO extend this for All Uppercase; enter;
+        idMap =
+            '-': "#keydash"
+            '=': "#keyequal"
+            ' ': "#keybackspace"
+            '': "#keyenter"
+            ';': "#keysemicolon"
+            '\'': "#keysinglequote"
+            '\\': "#keybackslash"
+            ',': "#keycomma"
+            '.': "#keydot"
+            '/': "#keyslash"
+            ' ': "#keyspace"
+            '[': "#keyblockopen"
+            ']': "#keyblockclose"
+            '`': "#keybackquote"
+
+        key = @model.get "lastChar"
+        id = if idMap[key] then idMap[key] else "#key#{key}"
+
+        className = @model.get "lastScore"
+
+        $(id).addClass(className)
+
+        _f = () -> $(id).removeClass(className)
+        setTimeout _f, 200
+
+
+    # Shows our typedString, with the last character highlighted.
+    # Event handler for change:lastKey event on this views model.
+    #
+    # @return void
+    renderTypedString: () ->
+        typedString = @model.get "typedString"
+        shortenedString = typedString.slice 0, typedString.length - 1
+        lastChar = @model.get "lastChar"
+        lastScore = @model.get "lastScore"
+
+        @$("#typedString").html @typedStringTemplate { shortenedString: shortenedString, lastChar: lastChar, lastScore: lastScore }
+
+
+    # Show the last scores
+    # Event handler for change:lastKey event on this views model.
+    #
+    # @return void
+    renderScores: () ->
+        scores = @model.calcSumScore()
+        @$("#scores #pass").html scores.pass
+        @$("#scores #fail").html scores.fail
+
+
+    
+    # Let the model add a keystroke..
+    # event handle for keyup events.
+    #
+    # @return void
+    processKey: (evt) ->
+        if not @ticker then @tickTime()
+        @model.addKeyStroke String.fromCharCode evt.which
+
+    # A ticker for keeping time
+    #
+    # @return void
+    tickTime: () ->
+        [m, s] = [0, 0]
+        e = @$ "#scores #time"
+
+        _ticker = () ->
+            e.html "#{if(m < 10) then '0' + m else m}:#{if(s < 10) then '0' + s else s}"
+            if (++s == 60)
+                s = 0
+                m++
+
+        _ticker()
+        @ticker = setInterval _ticker, 1000
+
+    clearTickTime: () ->
+        clearInterval @ticker

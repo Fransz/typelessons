@@ -5,9 +5,10 @@
     </head>
     <body>
         <div id="exam">
-            <div id="typed"></div>
-
-            <div id="text"></div>
+            <div id="strings">
+                <div id="typedstring"></div>
+                <div id="teststring"></div>
+            </div>
 
             <div id="keyboard">
                 <div class="row" id="rowone">
@@ -23,7 +24,6 @@
                     <span class="key" id="key0">0</span>
                     <span class="key" id="keydash">-</span>
                     <span class="key" id="keyequal">=</span>
-                    <span class="key" id="keybackspace">1</span>
                 </div>
 
                 <div class="row" id="rowtwo">
@@ -37,8 +37,8 @@
                     <span class="key" id="keyi">i</span>
                     <span class="key" id="keyo">o</span>
                     <span class="key" id="keyp">p</span>
-                    <span class="key" id="key[">[</span>
-                    <span class="key" id="key]">]</span>
+                    <span class="key" id="keyblockopen">[</span>
+                    <span class="key" id="keyblockclose">]</span>
                     <span class="key" id="keyenter">enter</span>
                 </div>
 
@@ -53,11 +53,12 @@
                     <span class="key" id="keyk">k</span>
                     <span class="key" id="keyl">l</span>
                     <span class="key" id="keysemicolon">;</span>
-                    <span class="key" id="keyquote">&quot;</span>
+                    <span class="key" id="keysinglequote">&#39;</span>
                     <span class="key" id="keybackslash">\</span>
                 </div>
 
                 <div class="row" id="rowfour">
+                    <span class="key" id="keybackquote">`</span>
                     <span class="key" id="keyz">z</span>
                     <span class="key" id="keyx">x</span>
                     <span class="key" id="keyc">c</span>
@@ -72,6 +73,18 @@
 
                 <div class="row" id="rowfive">
                     <span class="key" id="keyspace">space</span>
+                </div>
+            </div>
+
+            <div id="scores">
+                <div>
+                    Pass: <span id="pass">0</span>
+                </div>
+                <div>
+                    Fail: <span id="fail">0</span>
+                </div>
+                <div>
+                    Time: <span id="time">00:00</span>
                 </div>
             </div>
 

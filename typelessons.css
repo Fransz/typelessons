@@ -1,11 +1,21 @@
-#typed {
+#typedString {
+    font-family:monospace;
     width:50em;
     height:1em;
     border:1px solid gray;
     margin:0.25em;
 }
 
-#text {
+#typedString .fail {
+    color:red;
+}
+
+#typedString .pass {
+    color:green;
+}
+
+#testString {
+    font-family:monospace;
     width:50em;
     height:1em;
     border:1px solid gray;
@@ -18,6 +28,16 @@
 
 #keyboard .key {
     margin:0em 0.5em;
-    border:1px solid grey;
+    border:2px solid grey;
     padding:0.25em 0.5em;
+}
+
+#keyboard .key.fail {
+    color:red;
+    border: 2px solid red;
+}
+
+#keyboard .key.pass {
+    color:green;
+    border: 2px solid green;
 }
