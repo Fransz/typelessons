@@ -1,15 +1,10 @@
-theExamModel = null
+theExamModel = new ExamModel
+    letters: ['g', 'h']
 
-$(
-    () ->
-        theExamModel = new ExamModel
-            letters: ['g', 'h']
+examKeyboardView = new ExamKeyboardView
+    model: theExamModel
+    el: "#exam #keyboard"
 
-        examKeyboardView = new ExamKeyboardView
-            model: theExamModel
-            el: "#exam #keyboard"
-
-        examStringsView = new ExamStringsView
-            model: theExamModel
-            el: "#exam #strings"
-)
+examStringsView = new ExamStringsView
+    model: theExamModel
+    el: "#exam #strings"
