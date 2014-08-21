@@ -136,7 +136,7 @@ describe("An Exam model", function () {
             expect(ss[' ']['fail']).to.be.equal(0);
         });
 
-        it("should not add scores for the hit key", function () {
+        it("should not add scores for the wrongly hit key", function () {
             // Last typed 'q'
             exam.set("typedString", "q");
             exam.calcLastScore();
@@ -158,5 +158,13 @@ describe("An Exam model", function () {
             expect(exam.get("lastChar")).to.be.equal("x");
             expect(exam.get("typedString")).to.be.equal("x");
         });
+
+        it("should calculate sum scores correctly", function () {
+            _.forEach('hghghg  ghghgh', function (e, i, l) { exam.addKeyStroke(e) });
+            sum = exam.calcSumScore()
+
+            expect(sum.pass).to.be.equal(8);
+            expect(sum.fail).to.be.equal(6);
+        })
     });
  });

@@ -64,4 +64,19 @@ ExamModel = Backbone.Model.extend({
         # Add the score to the scores, and set last score.
         @get("scores")[test][score]++
         @set "lastScore", score
+
+
+    # Calculate the sum off all pass and fail scores.
+    #
+    # @return Object
+    calcSumScore: () ->
+        scores = @get "scores"
+        f = (m, v, i, l) -> m + v
+
+        {
+            pass: _.reduce(_.pluck(scores, "pass"), f, 0),
+            fail: _.reduce(_.pluck(scores, "fail"), f, 0)
+        }
+        
+        
 })
