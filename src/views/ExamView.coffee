@@ -29,9 +29,20 @@ ExamView = Backbone.View.extend
     showKey: () ->
         # @TODO extend this for All Uppercase; enter;
         idMap =
-            '-': "#keydash" '=': "#keyequal" ' ': "#keybackspace" '': "#keyenter" ';': "#keysemicolon"
-            '\'': "#keysinglequote" '\\': "#keybackslash" ',': "#keycomma" '.': "#keydot" '/': "#keyslash"
+            '-': "#keydash"
+            '=': "#keyequal"
+            ' ': "#keybackspace"
+            '': "#keyenter"
+            ';': "#keysemicolon"
+            '\'': "#keysinglequote"
+            '\\': "#keybackslash"
+            ',': "#keycomma"
+            '.': "#keydot"
+            '/': "#keyslash"
             ' ': "#keyspace"
+            '[': "#keyblockopen"
+            ']': "#keyblockclose"
+            '`': "#keybackquote"
 
         key = @model.get "lastChar"
         id = if idMap[key] then idMap[key] else "#key#{key}"
