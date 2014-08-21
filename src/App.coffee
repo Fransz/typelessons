@@ -1,10 +1,6 @@
 theExamModel = new ExamModel
     letters: ['g', 'h']
 
-examKeyboardView = new ExamKeyboardView
+examView = new ExamView
     model: theExamModel
-    el: "#exam #keyboard"
-
-examStringsView = new ExamStringsView
-    model: theExamModel
-    el: "#exam #strings"
+    el: "#exam"
