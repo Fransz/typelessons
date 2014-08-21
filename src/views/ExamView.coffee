@@ -1,5 +1,6 @@
 ExamView = Backbone.View.extend
     typedStringTemplate: _.template '<%= shortenedString %><span class="<%= lastScore %>"><%= lastChar %></span>'
+    ticker: null
 
     initialize: () ->
         @listenTo @model, "change:testString", @renderTestString
@@ -85,5 +86,24 @@ ExamView = Backbone.View.extend
     #
     # @return void
     processKey: (evt) ->
+        if not @ticker then @tickTime()
         @model.addKeyStroke String.fromCharCode evt.which
 
+    # A ticker for keeping time
+    #
+    # @return void
+    tickTime: () ->
+        [m, s] = [0, 0]
+        e = @$ "#scores #time"
+
+        _ticker = () ->
+            e.html "#{if(m < 10) then '0' + m else m}:#{if(s < 10) then '0' + s else s}"
+            if (++s == 60)
+                s = 0
+                m++
+
+        _ticker()
+        @ticker = setInterval _ticker, 1000
+
+    clearTickTime: () ->
+        clearInterval @ticker
