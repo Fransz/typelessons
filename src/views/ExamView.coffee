@@ -1,7 +1,14 @@
 ExamView = Backbone.View.extend
+    # The typed strings last character is marked.
     typedStringTemplate: _.template '<%= shortenedString %><span class="<%= lastScore %>"><%= lastChar %></span>'
+
+    # The views element already exists.
     el: "#exam"
+
+    # Pointer to function use by setTimeout.
     ticker: null
+
+    # The taskModel for which we created this exam.
     task: null
 
     initialize: (args) ->
@@ -13,9 +20,8 @@ ExamView = Backbone.View.extend
         @listenTo @model, "change:lastChar", @showKey
         @listenTo @model, "change:lastChar", @renderTypedString
         @listenTo @model, "change:lastChar", @renderScores
-
-        # Let our task listen to change:completed events
         @listenTo @model, "change:completed", @examCompleted
+
         @$('#completed').hide()
 
         # This is tedious; The key event cannot be bound to the views element, cause that doesnt receive the event,

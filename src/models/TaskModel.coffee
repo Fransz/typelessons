@@ -28,3 +28,11 @@ TaskModel = Backbone.Model.extend
 
         f = (e, i, l) -> if e is ' ' then space else p
         _.map ls, f
+    
+        
+    # Add an exam to the exam collection after the exam is marked complete
+    #
+    # @param exam The completed exam
+    # @return void
+    completeExam: (exam) ->
+        @get("exams").add exam

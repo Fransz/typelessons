@@ -1,3 +1,2 @@
-ExamCollection = Backbone.Collection.extend({
-
-})
+ExamCollection = Backbone.Collection.extend
+    model: ExamModel

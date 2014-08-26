@@ -57,4 +57,20 @@ describe("An Task model", function () {
             expect(task.get("exams")).to.have.length(0);
         });
     });
+
+    describe("when passed an completed exam", function() {
+        var exam, task;
+
+        beforeEach(function () {
+            task = new TaskModel({letters: ['g', 'h']});
+            exam = new ExamModel({letters: ['g', 'h', ' ']});
+            exam.set("completed", true);
+        });
+
+        it("Should add the given exam to the exam collection", function () {
+            task.completeExam(exam);
+            expect(task.get("exams")).to.have.length(1);
+        });
+
+    });
 });

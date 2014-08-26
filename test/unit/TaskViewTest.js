@@ -8,10 +8,5 @@ describe("An Task view", function () {
             taskView = new TaskView({model: taskModel});
         });
 
-
-        it("Add the given exam to the models exam collection upon calling completeExam", function () {
-            taskView.completeExam(examModel);
-            expect(taskModel.get("exams")).to.have.length(1);
-        });
     });
 });
