@@ -7,6 +7,7 @@ ExamModel = Backbone.Model.extend({
 
         lastChar: ''
         lastScore: ""
+        completed: false
 
         duration: 0
         scores: {}
@@ -39,11 +40,11 @@ ExamModel = Backbone.Model.extend({
     # @return void
     addKeyStroke: (c) ->
         @set "typedString", @get("typedString") + c
+        @calcLastScore()
+
         if @get("typedString").length >= @get("testString").length
             @set "completed", true
             return
-
-        @calcLastScore()
 
         # be sure event changed:lastChar is triggered
         @set "lastChar", '', silent: true
