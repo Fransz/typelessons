@@ -25,6 +25,5 @@ TaskView = Backbone.View.extend
     render: () ->
         letters = @model.get "letters"
         stats = @model.get("exams").cummStats()
-        console.log stats
         @$el.html @template letters: letters, stats: stats
         return @

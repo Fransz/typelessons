@@ -5,8 +5,11 @@ ExamView = Backbone.View.extend
     # The views element already exists.
     el: "#exam"
 
-    # Pointer to function use by setTimeout.
+    # Pointer to function used for increasing ticks.
     ticker: null
+
+    # Ticks the exam took
+    ticks: 0
 
     # The taskModel for which we created this exam.
     task: null
@@ -102,26 +105,31 @@ ExamView = Backbone.View.extend
     #
     # @return void
     processKey: (evt) ->
-        if not @ticker then @tickTime()
+        if not @ticker then @setTicker()
         @model.addKeyStroke String.fromCharCode evt.which
 
     # A ticker for keeping time
     #
     # @return void
-    tickTime: () ->
+    setTicker: () ->
         [m, s] = [0, 0]
         e = @$ "#scores #time"
+        @ticks = 0
 
-        _ticker = () ->
+        _ticker = () =>
             e.html "#{if(m < 10) then '0' + m else m}:#{if(s < 10) then '0' + s else s}"
             if (++s == 60)
                 s = 0
                 m++
+            @ticks++
 
         _ticker()
         @ticker = setInterval _ticker, 1000
 
-    clearTickTime: () ->
+    # clears the timeticker.
+    #
+    # @return Number The tick count.
+    clearTicker: () ->
         clearInterval @ticker
 
     # Mark he model for this exam as completed, clean up our exam.
@@ -129,9 +137,12 @@ ExamView = Backbone.View.extend
     #
     # @return void
     examCompleted: () ->
+        @clearTicker()
+        @stopListening()
+
         @renderTypedString(false)
         @$('#completed').show()
 
-        @stopListening()
+        @model.setTimeStats @ticks
 
         @task.completeExam(@model)
