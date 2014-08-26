@@ -26,7 +26,7 @@ ExamModel = Backbone.Model.extend({
     #
     # @param l The length of the string.
     # @return The generated string
-    mkString: (l=100) ->
+    mkString: (l=10) ->
         ls = @get "letters"
         cs = (ls[Math.floor Math.random() * ls.length] for n in [0 ... l])
 
