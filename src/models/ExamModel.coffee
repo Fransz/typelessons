@@ -13,14 +13,9 @@ ExamModel = Backbone.Model.extend({
 
 
     initialize: () ->
-        # Be sure our letter array has one, and only one space.
-        ls = @get "letters"
-        ls.push ' '
-        _.uniq ls
-        @set 'letters', ls
-
         # initialize the scores
         s = {}
+        ls = @get "letters"
         _.each ls, (e) -> s[e] = {pass: 0, fail: 0}
         @set "scores", s
 
@@ -44,6 +39,10 @@ ExamModel = Backbone.Model.extend({
     # @return void
     addKeyStroke: (c) ->
         @set "typedString", @get("typedString") + c
+        if @get("typedString").length >= @get("testString").length
+            @set "completed", true
+            return
+
         @calcLastScore()
 
         # be sure event changed:lastChar is triggered
@@ -77,6 +76,4 @@ ExamModel = Backbone.Model.extend({
             pass: _.reduce(_.pluck(scores, "pass"), f, 0),
             fail: _.reduce(_.pluck(scores, "fail"), f, 0)
         }
-        
-        
 })

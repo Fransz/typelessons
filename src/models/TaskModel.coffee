@@ -1,4 +1,4 @@
-TaskModel = Backbone.Model.extend({
+TaskModel = Backbone.Model.extend
     defaults:
         completed: false
         letters: []
@@ -28,4 +28,3 @@ TaskModel = Backbone.Model.extend({
 
         f = (e, i, l) -> if e is ' ' then space else p
         _.map ls, f
-})

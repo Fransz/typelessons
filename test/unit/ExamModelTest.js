@@ -1,22 +1,16 @@
 describe("An Exam model", function () {
-    var exam;
-    var ls;
-    var ss;
-
-    beforeEach(function () {
-        exam = new ExamModel({letters: ['g', 'h']});
-        ls = exam.get('letters');
-        ss = exam.get('scores');
-    })
-
 
     describe("when newly created with letters 'gh'", function() {
-        it("should have letters 'g', 'h' and ' '", function () {
-            expect(ls).to.have.length(3);
-            expect(ls).to.contain('g');
-            expect(ls).to.contain('h');
-            expect(ls).to.contain(' ');
-        });
+        var exam;
+        var ls;
+        var ss;
+
+        beforeEach(function () {
+            exam = new ExamModel({letters: ['g', 'h']});
+            ls = exam.get('letters');
+            ss = exam.get('scores');
+        })
+
 
         it("should have a duration of 0", function () {
             expect(exam.get('duration')).to.be.equal(0)
@@ -39,26 +33,32 @@ describe("An Exam model", function () {
             expect(exam.get("typedString")).to.have.length(0);
         });
 
-        it("should be able to generate a string with the given length, consisting only of our letters.", function () {
+        it("should be able to generate a string with the given length, consisting only of our letters", function () {
             var cs = ls.join('');
             var s = exam.mkString(100);
 
             expect(s).to.have.length(100);
             for(i in s) {
-                expect(ls).to.contain(s[i])
+                expect(cs).to.contain(s[i])
             }
         });
     });
 
-    describe("when created with letters 'gh', and having testString 'ghghgh  ghghgh' ", function() {
+    describe("when created with letters 'gh ', and having testString 'ghghgh  ghghgh' ", function() {
+        var exam;
+        var ls;
+        var ss;
         var testString = "ghghgh  ghghgh";
 
         beforeEach(function () {
-            testString = "ghghgh  ghghgh";
+            exam = new ExamModel({letters: ['g', 'h', ' ']});
+            ls = exam.get('letters');
+            ss = exam.get('scores');
+           
             exam.set("testString", testString)
         })
 
-        it("should calculate scores for the first typed character correctly", function () {
+        it("should calculate scores for the first typed character", function () {
             // Last typed 'h'
             exam.set("typedString", "h");
             exam.calcLastScore();
@@ -84,7 +84,7 @@ describe("An Exam model", function () {
             expect(ss[' ']['fail']).to.be.equal(0);
         });
 
-        it("should calculate scores for any typed character correctly", function () {
+        it("should calculate scores for any typed character", function () {
             // Last typed 'h'
             exam.set("typedString", "ghghghh");
             exam.calcLastScore();
@@ -110,7 +110,7 @@ describe("An Exam model", function () {
             expect(ss[' ']['fail']).to.be.equal(1);
         });
 
-        it("should calculate scores for the last typed character correctly", function () {
+        it("should calculate scores for the last typed character", function () {
             // Last typed ' '
             exam.set("typedString", "ghghgh  ghghg ");
             exam.calcLastScore();
@@ -159,7 +159,7 @@ describe("An Exam model", function () {
             expect(exam.get("typedString")).to.be.equal("x");
         });
 
-        it("should calculate sum scores correctly", function () {
+        it("should calculate sum scores", function () {
             _.forEach('hghghg  ghghgh', function (e, i, l) { exam.addKeyStroke(e) });
             sum = exam.calcSumScore()
 

@@ -1,14 +1,22 @@
 ExamView = Backbone.View.extend
     typedStringTemplate: _.template '<%= shortenedString %><span class="<%= lastScore %>"><%= lastChar %></span>'
+    el: "#exam"
     ticker: null
+    task: null
 
-    initialize: () ->
+    initialize: (args) ->
+        @task = args.task
+
         @listenTo @model, "change:testString", @renderTestString
         @model.trigger "change:testString"
 
         @listenTo @model, "change:lastChar", @showKey
         @listenTo @model, "change:lastChar", @renderTypedString
         @listenTo @model, "change:lastChar", @renderScores
+
+        # Let our task listen to change:completed events
+        @listenTo @model, "change:completed", @examCompleted
+        @$('#completed').hide()
 
         # This is tedious; The key event cannot be bound to the views element, cause that doesnt receive the event,
         # So we bind it to the document with jQuery's bind, and make sure we can use this by using underscores bindAll
@@ -60,12 +68,14 @@ ExamView = Backbone.View.extend
     # Shows our typedString, with the last character highlighted.
     # Event handler for change:lastKey event on this views model.
     #
+    # @param mark  wheter the last character should be marked with its score
     # @return void
-    renderTypedString: () ->
+    renderTypedString: (mark=true) ->
         typedString = @model.get "typedString"
         shortenedString = typedString.slice 0, typedString.length - 1
         lastChar = @model.get "lastChar"
-        lastScore = @model.get "lastScore"
+        if mark
+            lastScore = @model.get "lastScore"
 
         @$("#typedString").html @typedStringTemplate { shortenedString: shortenedString, lastChar: lastChar, lastScore: lastScore }
 
@@ -107,3 +117,15 @@ ExamView = Backbone.View.extend
 
     clearTickTime: () ->
         clearInterval @ticker
+
+    # Mark he model for this exam as completed, clean up our exam.
+    # eventhandler for change:completed
+    #
+    # @return void
+    examCompleted: () ->
+        @renderTypedString(false)
+        @$('#completed').show()
+
+        @stopListening()
+
+        @task.completeExam(@model)

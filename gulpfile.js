@@ -12,7 +12,7 @@ var gulp = require('gulp'),
     del = require('del');
 
 var paths = {
-    src: ['src/views/**/*', 'src/models/**/*', 'src/**/*'],
+    src: ['src/views/**/*', 'src/collections/**/*', 'src/models/**/*', 'src/**/*'],
     build: ['build/js'],
     test: {
         integration: ['test/integration/**/*'], unit: ['test/unit/**/testrunner.html']

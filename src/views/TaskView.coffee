@@ -1,4 +1,13 @@
-TaskView = Backbone.View.extend()
+TaskView = Backbone.View.extend
+    events:
+        dblclick: @createExam
 
-taskView = new TaskView()
+    initialize: () ->
 
+    createExam: () ->
+        examModel = new ExamModel({ letters: @model.get "letters" })
+        examView = new ExamView({ model: examModel})
+
+    completeExam: (exam) ->
+        examView = null
+        console.log "completed"
