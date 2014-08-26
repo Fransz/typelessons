@@ -52,5 +52,9 @@ describe("An Task model", function () {
                 else expect(e[1]).to.be.equal(0.5);
             });
         });
+
+        it("Should not have completed exams", function () {
+            expect(task.get("exams")).to.have.length(0);
+        });
     });
 });
