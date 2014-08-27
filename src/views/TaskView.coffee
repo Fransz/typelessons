@@ -2,10 +2,10 @@ TaskView = Backbone.View.extend
     template: _.template """
         <div class="task">
             <%= letters %>
-            <span><%= stats.pass %></span>
-            <span><%= stats.fail %></span>
-            <span><%= stats.time %></span>
-            <span><%= stats.tries %></span>
+            <span><%= score.pass %></span>
+            <span><%= score.fail %></span>
+            <span><%= score.time %></span>
+            <span><%= score.tries %></span>
         </div>
     """
     
@@ -24,6 +24,6 @@ TaskView = Backbone.View.extend
     # @return void
     render: () ->
         letters = @model.get "letters"
-        stats = @model.get("exams").cummStats()
-        @$el.html @template letters: letters, stats: stats
+        score = @model.get("exams").cummScore()
+        @$el.html @template letters: letters, score: score
         return @

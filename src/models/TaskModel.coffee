@@ -13,7 +13,7 @@ TaskModel = Backbone.Model.extend
         @set 'letters', ls
 
         # calculate weights for each letter
-        @set "weights", @calcSimpleWeights()
+        @set "weights", @simpleWeights()
 
 
     # Calculate propability for each letter appearing in an exams string
@@ -21,7 +21,7 @@ TaskModel = Backbone.Model.extend
     #
     # @param space probability for the ' ' letter
     # @return array
-    calcSimpleWeights: (space=0.1) ->
+    simpleWeights: (space=0.1) ->
         space = 0 if space >= 1 or space <= 0
         ls = @get("letters")
         p = (1 - space) / (ls.length - 1)

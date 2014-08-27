@@ -40,7 +40,7 @@ ExamModel = Backbone.Model.extend({
     # @return void
     addKeyStroke: (c) ->
         @set "typedString", @get("typedString") + c
-        @calcLastScore()
+        @lastScore()
 
         if @get("typedString").length >= @get("testString").length
             @set "completed", true
@@ -55,7 +55,7 @@ ExamModel = Backbone.Model.extend({
     # The stats are added with the character tested, not with the character entered.
     #
     # @return void
-    calcLastScore: () ->
+    lastScore: () ->
         p = @get("typedString").length - 1
         typed = @get("typedString")[p]
         test = @get("testString")[p]
@@ -69,7 +69,7 @@ ExamModel = Backbone.Model.extend({
     # Calculate the sum off all pass and fail scores.
     #
     # @return Object
-    calcSumScore: () ->
+    sumScore: () ->
         scores = @get "scores"
         f = (m, v, i, l) -> m + v
 
@@ -79,7 +79,7 @@ ExamModel = Backbone.Model.extend({
             time: @time
         }
 
-    # Add a time to the stats
+    # Add a time to the scores
     #
     # @param time The time to add
     # @return void

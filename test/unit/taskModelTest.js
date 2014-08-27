@@ -32,7 +32,7 @@ describe("An Task model", function () {
         });
 
         it("should have weights 0.3 for 'g' and 'h', and 0.4 for ' ', if weights are generated with p = 0.4 for ' '", function() {
-            ws = task.calcSimpleWeights(0.4);
+            ws = task.simpleWeights(0.4);
             _.each(_.zip(ls, ws), function (e, i, l) {
                 if (e[0] == ' ') expect(e[1]).to.be.equal(0.4);
                 else expect(e[1]).to.be.equal(0.3);
@@ -40,13 +40,13 @@ describe("An Task model", function () {
         });
 
         it("should have weights 0.5 for 'g' and 'h', and 0 for ' ', if weights are generated with (p =< 0 || p >= 1) for ' '", function() {
-            ws = task.calcSimpleWeights(1);
+            ws = task.simpleWeights(1);
             _.each(_.zip(ls, ws), function (e, i, l) {
                 if (e[0] == ' ') expect(e[1]).to.be.equal(0);
                 else expect(e[1]).to.be.equal(0.5);
             });
 
-            ws = task.calcSimpleWeights(-0.1);
+            ws = task.simpleWeights(-0.1);
             _.each(_.zip(ls, ws), function (e, i, l) {
                 if (e[0] == ' ') expect(e[1]).to.be.equal(0);
                 else expect(e[1]).to.be.equal(0.5);
