@@ -176,5 +176,13 @@ describe("An Exam model", function () {
             exam.addKeyStroke('h');
             expect(exam.get("completed")).to.be.true;
         });
+
+        it("should have a score of 13 after typing 13 characters, and being marked complete", function () {
+            _.forEach("hghghg ghghgh", function (e, i, l) { exam.addKeyStroke(e); });
+
+            var s = exam.calcSumScore();
+            console.log(s);
+            expect(s.fail + s.pass).to.be.equal(13);
+        });
     });
  });

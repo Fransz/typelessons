@@ -52,7 +52,7 @@ ExamModel = Backbone.Model.extend({
 
 
     # Calculate the stats for the last character in the typed string.
-    # The stats are added with the character teseted, not with the character entered.
+    # The stats are added with the character tested, not with the character entered.
     #
     # @return void
     calcLastScore: () ->
@@ -83,7 +83,7 @@ ExamModel = Backbone.Model.extend({
     #
     # @param time The time to add
     # @return void
-    setTimeStats: (time)  ->
+    setTimeScore: (time)  ->
         s = @get "scores"
         s.time = time
         @set "scores", s
