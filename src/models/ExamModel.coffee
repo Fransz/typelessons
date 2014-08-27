@@ -76,15 +76,5 @@ ExamModel = Backbone.Model.extend({
         {
             pass: _.reduce(_.pluck(scores, "pass"), f, 0),
             fail: _.reduce(_.pluck(scores, "fail"), f, 0)
-            time: @time
         }
-
-    # Add a time to the scores
-    #
-    # @param time The time to add
-    # @return void
-    setTimeScore: (time)  ->
-        s = @get "scores"
-        s.time = time
-        @set "scores", s
 })

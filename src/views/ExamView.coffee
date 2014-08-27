@@ -145,6 +145,6 @@ ExamView = Backbone.View.extend
         @renderScores()
         @$('#completed').show()
 
-        @model.setTimeScore @ticks
+        @model.set("time", @ticks)
 
         @task.completeExam(@model)
