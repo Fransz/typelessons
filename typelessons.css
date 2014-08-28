@@ -1,4 +1,4 @@
-#typedString {
+#typedstring {
     font-family:monospace;
     width:50em;
     height:1em;
@@ -6,15 +6,15 @@
     margin:0.25em;
 }
 
-#typedString .fail {
+#typedstring .fail {
     color:red;
 }
 
-#typedString .pass {
+#typedstring .pass {
     color:green;
 }
 
-#testString {
+#teststring {
     font-family:monospace;
     width:50em;
     height:1em;
@@ -40,4 +40,8 @@
 #keyboard .key.pass {
     color:green;
     border: 2px solid green;
+}
+
+#completed {
+    display:none;
 }
