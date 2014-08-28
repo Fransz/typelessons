@@ -86,7 +86,7 @@ ExamView = Backbone.View.extend
         if mark
             lastScore = @model.get "lastScore"
 
-        @$("#typedString").html @typedStringTemplate { shortenedString: shortenedString, lastChar: lastChar, lastScore: lastScore }
+        @$("#typedstring").html @typedStringTemplate { shortenedString: shortenedString, lastChar: lastChar, lastScore: lastScore }
 
 
     # Show the last scores
