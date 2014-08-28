@@ -6,10 +6,8 @@ TaskCollectionView = Backbone.View.extend
         @listenTo @tasks, "add", @render
 
         # initialisation
-        t = new TaskModel letters: ['g', 'h']
-        tt = new TaskModel letters: ['y', 't']
-        ttt = new TaskModel letters: ['b', 'n']
-        @tasks.add [t, tt, ttt]
+        f = (l) -> new TaskModel letters: l.split('')
+        @tasks.add _.map App.initialModels, f
 
     render: (task) ->
         taskView = new TaskView
