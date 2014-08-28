@@ -6,10 +6,13 @@ TaskModel = Backbone.Model.extend
         exams: new ExamCollection()
 
     initialize: () ->
-        # Be sure our letter array has one, and only one space.
+        # Be sure our letter array has one, and only one space, at its last position.
         ls = @get "letters"
         ls.push ' '
         _.uniq ls
+        unless ls[ls.length - 1] is ' '
+            ls = _.filter(ls, (e) -> e isnt ' ')
+            ls.push(' ' )
         @set 'letters', ls
 
         # calculate weights for each letter
@@ -26,8 +29,9 @@ TaskModel = Backbone.Model.extend
         ls = @get("letters")
         p = (1 - space) / (ls.length - 1)
 
-        f = (e, i, l) -> if e is ' ' then space else p
-        _.map ls, f
+        ws = _.map ls, ((e) -> if e is ' ' then space else p)
+        ws[ws.length - 1] = 1 - _.reduce ws[0 ... -1], ((m, v) -> m + v)
+        return ws
     
         
     # Add an exam to the exam collection after the exam is marked complete

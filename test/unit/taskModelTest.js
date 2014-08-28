@@ -18,6 +18,10 @@ describe("An Task model", function () {
             expect(ls).to.contain(' ');
         });
 
+        it("should have letters ' ', at the final position of the letter array", function () {
+            expect(ls[ls.length - 1]).to.be.equal(' ');
+        });
+
         it("should not be completed", function () {
             /* jshint -W030 */
             expect(completed).to.be.false;
@@ -25,8 +29,10 @@ describe("An Task model", function () {
 
         it("should have weights 0.45 for 'g' and 'h', and 0.1 for ' ', as default", function() {
             ws = task.get('weights');
+            space = 1 - _.reduce(ws.slice(0, -1), function(m, v) { return m + v; }, 0);
+
             _.each(_.zip(ls, ws), function (e, i, l) {
-                if (e[0] == ' ') expect(e[1]).to.be.equal(0.1);
+                if (e[0] == ' ') expect(e[1]).to.be.equal(space);
                 else expect(e[1]).to.be.equal(0.45);
             });
         });

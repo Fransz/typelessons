@@ -1,7 +1,7 @@
 App = App or {}
 
 
-App.initialModels = [
+App.initialModels = _.map [
     # "asdfg","hjkl;"
     "gh", "fj", "dj", "sl", "a;",
 
@@ -28,7 +28,7 @@ App.initialModels = [
 
     # "asdfg","hjkl;" "zxcvb","nm,./" "qwert","yuiop" "12345","67890"
     "azq1hnm6", "sxw2jmu7", "dce3k,i8", "fvr4l.o9", "gbt5;/p0"
-]
+], (s) -> s.split('')
 
 # Sample function.
 #
