@@ -1,6 +1,7 @@
-ExamModel = Backbone.Model.extend({
+ExamModel = Backbone.Model.extend
     defaults:
         letters: []
+        weights: []
 
         testString: ""
         typedString: ""
@@ -26,12 +27,21 @@ ExamModel = Backbone.Model.extend({
     #
     # @param l The length of the string.
     # @return The generated string
-    mkString: (l=10) ->
+    mkString: (l=100) ->
         ls = @get "letters"
-        cs = (ls[Math.floor Math.random() * ls.length] for n in [0 ... l])
+        ws = @get "weights"
+        ns = _.filter ls, ((c) -> c isnt ' ')                       # letters without ' ' letter
 
-        f = (m, v, i, l) -> m + v
-        _.reduce cs, f, ""
+        cs = App.sample ls, ws , l                                  # Array of random letters from our ls.
+
+        # replace leading, and trailing spaces.
+        cs[0] = ns[0] if cs[0] is ' '
+        cs[cs.length - 1] = ns[ns.length - 1] if cs[cs.length - 1] is ' '
+
+        # replace double spaces.
+        cs[i - 1] = ns[i % ns.length] for i in [1 .. cs.length] when cs[i] is ' ' and cs[i - 1] is ' '
+
+        cs.join('')
 
 
     # Adds a character to the typed string, recalc stats.
@@ -77,4 +87,3 @@ ExamModel = Backbone.Model.extend({
             pass: _.reduce(_.pluck(scores, "pass"), f, 0),
             fail: _.reduce(_.pluck(scores, "fail"), f, 0)
         }
-})

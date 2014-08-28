@@ -140,11 +140,10 @@ ExamView = Backbone.View.extend
         @clearTicker()
         @stopListening()
 
-        @renderTypedString(false)
+        @renderTypedString false
         @showKey()
         @renderScores()
         @$('#completed').show()
 
-        @model.set("time", @ticks)
-
-        @task.completeExam(@model)
+        @model.set "time", @ticks
+        @task.completeExam @model

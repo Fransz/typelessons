@@ -34,7 +34,7 @@ describe("An Exam collection", function () {
                 ' ': {pass: 5, fail: 5},
             };
             for(var i = 0; i < 3; i++) {
-                exam = new ExamModel({letters: ['g', 'h']});
+                exam = new ExamModel({letters: ['g', 'h'], weights: [0.5, 0.5]});
                 exam.set("scores", scores);
                 exam.set("time", 100);
                 collection.add(exam);
@@ -47,7 +47,6 @@ describe("An Exam collection", function () {
 
         it("should have the correct cummelative scores", function () {
             ss = collection.cummScore();
-            console.log(ss);
             expect(ss.fail).to.be.equal(165);
             expect(ss.pass).to.be.equal(135);
             expect(ss.time).to.be.equal(300);

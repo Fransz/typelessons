@@ -63,7 +63,7 @@ describe("An Task model", function () {
 
         beforeEach(function () {
             task = new TaskModel({letters: ['g', 'h']});
-            exam = new ExamModel({letters: ['g', 'h', ' ']});
+            exam = new ExamModel({letters: ['g', 'h', ' '], weights: [0.25, 0.25, 0.5]});
             exam.set("completed", true);
         });
 

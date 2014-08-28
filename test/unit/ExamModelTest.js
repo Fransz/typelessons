@@ -2,23 +2,30 @@
 
 describe("An Exam model", function () {
 
-    describe("when newly created with letters 'gh'", function() {
+    describe("when newly created with letters 'gh ', and no weigths", function() {
         var exam;
         var ls;
         var ss;
 
         beforeEach(function () {
-            exam = new ExamModel({letters: ['g', 'h']});
-            ls = exam.get("letters");
-            ss = exam.get("scores");
+            exam = new ExamModel({letters: ['g', 'h', ' '], weights: [0.25, 0.25, 0.5]});
         });
 
+        it("should have an attribute letters, equal to the letters given upon creation", function () {
+            expect(exam.get("letters")).to.be.eql(['g', 'h', ' ']);
+        });
+
+        it("should have an attribute weights, equal to the weights given upon creation", function () {
+            expect(exam.get("weights")).to.be.eql([0.25, 0.25, 0.5]);
+        });
 
         it("should have a duration of 0", function () {
             expect(exam.get("duration")).to.be.equal(0);
         });
 
         it("should have a zero pass entry and a zero fail entry, in scores for each letter", function () {
+            var ls = exam.get("letters");
+            var ss = exam.get("scores");
             for (var i in ls) {
                 expect(ss[ls[i]]).to.have.ownProperty("pass");
                 expect(ss[ls[i]].pass).to.be.equal(0);
@@ -27,24 +34,37 @@ describe("An Exam model", function () {
             }
         });
 
-        it("should have a testString of length 100", function () {
-            expect(exam.get("testString")).to.have.length(100);
-        });
-
         it("should have an empty typedString", function () {
             expect(exam.get("typedString")).to.have.length(0);
         });
 
-        it("should be able to generate a string with the given length, consisting only of our letters", function () {
-            var cs = ls.join('');
-            var s = exam.mkString(100);
+        describe("the teststing", function () {
+            it("should have a length of 100", function () {
+                expect(exam.get("testString")).to.have.length(100);
+            });
 
-            expect(s).to.have.length(100);
-            for(var i in s) {
-                expect(cs).to.contain(s[i]);
-            }
+            it("should only consist of our characters", function () {
+                var cs = exam.get("letters").join('');
+                var s = exam.get("testString");
+
+                for(var i in s) {
+                    expect(cs).to.contain(s[i]);
+                }
+            });
+
+            it("should not start, or end with ' ' ", function () {
+                var s = exam.get("testString");
+                expect(s[0]).to.be.not.equal(' ');
+            });
+
+            it("should not contain double ' ' ", function () {
+                var s = exam.get("testString");
+                var re = /  +/;
+                expect(re.test(s)).to.be.false;
+            });
         });
     });
+    
 
     describe("when created with letters 'gh ', and having testString 'ghghgh ghghgh' ", function() {
         var exam;
@@ -53,7 +73,7 @@ describe("An Exam model", function () {
         var testString = "ghghgh ghghgh";
 
         beforeEach(function () {
-            exam = new ExamModel({letters: ['g', 'h', ' ']});
+            exam = new ExamModel({letters: ['g', 'h', ' '], weights: [0.25, 0.25, 0.5]});
             ls = exam.get("letters");
             ss = exam.get("scores");
            

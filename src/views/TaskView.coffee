@@ -15,8 +15,12 @@ TaskView = Backbone.View.extend
     initialize: () ->
 
     createExam: () ->
-        examModel = new ExamModel letters: @model.get "letters"
-        examView = new ExamView  model: examModel, task: @.model
+        examModel = new ExamModel
+                        letters: @model.get "letters"
+                        weights: @model.get "weights"
+        examView = new ExamView
+                        model: examModel
+                        task: @.model
 
 
     # Render the task. We show the models letters, and stats for completed exams.
