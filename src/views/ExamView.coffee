@@ -25,7 +25,8 @@ ExamView = Backbone.View.extend
         @listenTo @model, "change:lastChar", @renderScores
         @listenTo @model, "change:completed", @examCompleted
 
-        @$('#completed').hide()
+        @$("#completed").hide()
+        @$("#typedstring").html ''
 
         # This is tedious; The key event cannot be bound to the views element, cause that doesnt receive the event,
         # So we bind it to the document with jQuery's bind, and make sure we can use this by using underscores bindAll
@@ -84,11 +85,13 @@ ExamView = Backbone.View.extend
         last = typedString.length - 1
         shortenedString = typedString[0 ... last]
         lastChar = typedString[last]
-        if mark
-            lastScore = @model.get "lastScore"
+
+        lastScore = ''
+        lastScore = @model.get "lastScore" if mark
 
         @$("#typedstring").html @typedStringTemplate { shortenedString: shortenedString, lastChar: lastChar, lastScore: lastScore }
 
+    
 
     # Show the last scores
     # Event handler for change:lastKey event on this views model.

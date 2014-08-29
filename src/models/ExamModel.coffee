@@ -32,7 +32,7 @@ ExamModel = Backbone.Model.extend
     #
     # @param l The length of the string.
     # @return The generated string
-    mkString: (l=100) ->
+    mkString: (l=10) ->
         ls = @get "letters"
         ws = @get "weights"
         ns = _.filter ls, ((c) -> c isnt ' ')                       # letters without ' ' letter

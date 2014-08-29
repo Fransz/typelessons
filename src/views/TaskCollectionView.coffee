@@ -1,4 +1,10 @@
 TaskCollectionView = Backbone.View.extend
+    # A collection with al task models.
+    tasks: null
+
+    # An array with a view for all endered tasks
+    taskViews: []
+
     el: "#tasks"
 
     initialize: () ->
@@ -18,6 +24,9 @@ TaskCollectionView = Backbone.View.extend
         _.each App.initialModels, (l) => @tasks.create letters: l
 
     render: (task) ->
+        # create a taskView for the tobe rendered task, keep it.
         taskView = new TaskView
             model: task
+        @taskViews.push taskView
+
         @$el.append taskView.render().el

@@ -12,7 +12,9 @@ TaskView = Backbone.View.extend
     events:
         dblclick: "createExam"
 
+
     initialize: () ->
+        @listenTo @model, "sync", @render
 
     createExam: () ->
         examModel = new ExamModel
