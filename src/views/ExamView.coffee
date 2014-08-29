@@ -81,8 +81,9 @@ ExamView = Backbone.View.extend
     # @return void
     renderTypedString: (mark=true) ->
         typedString = @model.get "typedString"
-        shortenedString = typedString.slice 0, typedString.length - 1
-        lastChar = @model.get "lastChar"
+        last = typedString.length - 1
+        shortenedString = typedString[0 ... last]
+        lastChar = typedString[last]
         if mark
             lastScore = @model.get "lastScore"
 

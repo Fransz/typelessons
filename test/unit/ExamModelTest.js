@@ -19,8 +19,8 @@ describe("An Exam model", function () {
             expect(exam.get("weights")).to.be.eql([0.25, 0.25, 0.5]);
         });
 
-        it("should have a duration of 0", function () {
-            expect(exam.get("duration")).to.be.equal(0);
+        it("should have a time of 0", function () {
+            expect(exam.get("time")).to.be.equal(0);
         });
 
         it("should have a zero pass entry and a zero fail entry, in scores for each letter", function () {

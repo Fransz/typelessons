@@ -1,4 +1,6 @@
 TaskModel = Backbone.Model.extend
+    localStorage: new Backbone.LocalStorage "typelessons.tasks"
+
     defaults:
         completed: false
         letters: []
