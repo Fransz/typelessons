@@ -3,7 +3,7 @@ TaskModel = Backbone.Model.extend
         completed: false
         letters: []
         weights: []
-        exams: new ExamCollection()
+        exams: null
 
     initialize: () ->
         # Be sure our letter array has one, and only one space, at its last position.
@@ -17,6 +17,9 @@ TaskModel = Backbone.Model.extend
 
         # calculate weights for each letter
         @set "weights", @simpleWeights()
+
+        # init the examcollection
+        @set "exams", new ExamCollection()
 
 
     # Calculate propability for each letter appearing in an exams string
