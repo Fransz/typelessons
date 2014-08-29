@@ -1,4 +1,6 @@
-ExamView = Backbone.View.extend
+App = App or {}
+
+App.ExamView = Backbone.View.extend
     # The typed strings last character is marked.
     typedStringTemplate: _.template '<%= shortenedString %><span class="<%= lastScore %>"><%= lastChar %></span>'
 
@@ -25,7 +27,8 @@ ExamView = Backbone.View.extend
         @listenTo @model, "change:lastChar", @renderScores
         @listenTo @model, "change:completed", @examCompleted
 
-        @$('#completed').hide()
+        @$("#completed").hide()
+        @$("#typedstring").html ''
 
         # This is tedious; The key event cannot be bound to the views element, cause that doesnt receive the event,
         # So we bind it to the document with jQuery's bind, and make sure we can use this by using underscores bindAll
@@ -81,13 +84,16 @@ ExamView = Backbone.View.extend
     # @return void
     renderTypedString: (mark=true) ->
         typedString = @model.get "typedString"
-        shortenedString = typedString.slice 0, typedString.length - 1
-        lastChar = @model.get "lastChar"
-        if mark
-            lastScore = @model.get "lastScore"
+        last = typedString.length - 1
+        shortenedString = typedString[0 ... last]
+        lastChar = typedString[last]
 
-        @$("#typedString").html @typedStringTemplate { shortenedString: shortenedString, lastChar: lastChar, lastScore: lastScore }
+        lastScore = ''
+        lastScore = @model.get "lastScore" if mark
 
+        @$("#typedstring").html @typedStringTemplate { shortenedString: shortenedString, lastChar: lastChar, lastScore: lastScore }
+
+    
 
     # Show the last scores
     # Event handler for change:lastKey event on this views model.
@@ -106,6 +112,8 @@ ExamView = Backbone.View.extend
     # @return void
     processKey: (evt) ->
         if not @ticker then @setTicker()
+        # evt.stopPropagation()
+        evt.preventDefault()
         @model.addKeyStroke String.fromCharCode evt.which
 
     # A ticker for keeping time
@@ -139,11 +147,12 @@ ExamView = Backbone.View.extend
     examCompleted: () ->
         @clearTicker()
         @stopListening()
+        $(document).unbind 'keypress'
 
         @renderTypedString false
         @showKey()
         @renderScores()
         @$('#completed').show()
 
-        @model.set "time", @ticks
+        @model.set "time", @ticks - 1
         @task.completeExam @model

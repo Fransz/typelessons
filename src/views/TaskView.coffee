@@ -1,4 +1,6 @@
-TaskView = Backbone.View.extend
+App = App or {}
+
+App.TaskView = Backbone.View.extend
     template: _.template """
         <div class="task">
             <%= letters %>
@@ -12,13 +14,15 @@ TaskView = Backbone.View.extend
     events:
         dblclick: "createExam"
 
+
     initialize: () ->
+        @listenTo @model, "sync", @render
 
     createExam: () ->
-        examModel = new ExamModel
+        examModel = new App.ExamModel
                         letters: @model.get "letters"
                         weights: @model.get "weights"
-        examView = new ExamView
+        examView = new App.ExamView
                         model: examModel
                         task: @.model
 
