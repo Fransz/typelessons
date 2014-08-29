@@ -1,4 +1,6 @@
-ExamModel = Backbone.Model.extend
+App = App or {}
+
+App.ExamModel = Backbone.Model.extend
     defaults:
         letters: []
         weights: []

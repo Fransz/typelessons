@@ -1,4 +1,6 @@
-TaskModel = Backbone.Model.extend
+App = App or {}
+
+App.TaskModel = Backbone.Model.extend
     localStorage: new Backbone.LocalStorage "typelessons.tasks"
 
     defaults:
@@ -26,7 +28,7 @@ TaskModel = Backbone.Model.extend
         @set "weights", @simpleWeights() unless (@get "weights").length
 
         # init the examcollection
-        @set "exams", new ExamCollection(@get "exams")
+        @set "exams", new App.ExamCollection(@get "exams")
 
 
     # Calculate propability for each letter appearing in an exams string

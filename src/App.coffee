@@ -1,6 +1,5 @@
 App = App or {}
 
-
 App.initialModels = _.map [
     # "asdfg","hjkl;"
     "gh", "fj", "dk", "sl", "a;",
@@ -82,4 +81,4 @@ App.sample = (values, distribution, cnt) ->
     [pTable, aTable] = _initialize distribution
     _generate(values, pTable, aTable) for [0 ... cnt]
 
-App.theTaskCollectionView = new TaskCollectionView
+App.theTaskCollectionView = new App.TaskCollectionView

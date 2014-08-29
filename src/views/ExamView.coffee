@@ -1,4 +1,6 @@
-ExamView = Backbone.View.extend
+App = App or {}
+
+App.ExamView = Backbone.View.extend
     # The typed strings last character is marked.
     typedStringTemplate: _.template '<%= shortenedString %><span class="<%= lastScore %>"><%= lastChar %></span>'
 
@@ -152,5 +154,5 @@ ExamView = Backbone.View.extend
         @renderScores()
         @$('#completed').show()
 
-        @model.set "duration", @ticks
+        @model.set "time", @ticks - 1
         @task.completeExam @model

@@ -1,5 +1,7 @@
-ExamCollection = Backbone.Collection.extend
-    model: ExamModel
+App = App or {}
+
+App.ExamCollection = Backbone.Collection.extend
+    model: App.ExamModel
 
     # Calculate the cumm scores for all exams.
     #

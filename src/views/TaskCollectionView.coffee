@@ -1,4 +1,6 @@
-TaskCollectionView = Backbone.View.extend
+App = App or {}
+
+App.TaskCollectionView = Backbone.View.extend
     # A collection with al task models.
     tasks: null
 
@@ -8,7 +10,7 @@ TaskCollectionView = Backbone.View.extend
     el: "#tasks"
 
     initialize: () ->
-        @tasks = new TaskCollection()
+        @tasks = new App.TaskCollection()
 
         @listenTo @tasks, "add", @render
         @tasks.fetch()
@@ -25,7 +27,7 @@ TaskCollectionView = Backbone.View.extend
 
     render: (task) ->
         # create a taskView for the tobe rendered task, keep it.
-        taskView = new TaskView
+        taskView = new App.TaskView
             model: task
         @taskViews.push taskView
 
