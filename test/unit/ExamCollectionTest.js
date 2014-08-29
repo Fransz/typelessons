@@ -4,7 +4,7 @@ describe("An Exam collection", function () {
         var collection;
 
         beforeEach(function () {
-            collection = new ExamCollection();
+            collection = new App.ExamCollection();
         });
 
         it("should have a length of 0", function () {
@@ -27,14 +27,14 @@ describe("An Exam collection", function () {
         beforeEach(function () {
             var exam, scores;
 
-            collection = new ExamCollection();
+            collection = new App.ExamCollection();
             scores = {
                 'h': {pass: 20, fail: 25},
                 'j': {pass: 20, fail: 25},
                 ' ': {pass: 5, fail: 5},
             };
             for(var i = 0; i < 3; i++) {
-                exam = new ExamModel({letters: ['g', 'h'], weights: [0.5, 0.5]});
+                exam = new App.ExamModel({letters: ['g', 'h'], weights: [0.5, 0.5]});
                 exam.set("scores", scores);
                 exam.set("time", 100);
                 collection.add(exam);

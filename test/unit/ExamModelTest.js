@@ -8,7 +8,7 @@ describe("An Exam model", function () {
         var ss;
 
         beforeEach(function () {
-            exam = new ExamModel({letters: ['g', 'h', ' '], weights: [0.25, 0.25, 0.5]});
+            exam = new App.ExamModel({letters: ['g', 'h', ' '], weights: [0.25, 0.25, 0.5]});
         });
 
         it("should have an attribute letters, equal to the letters given upon creation", function () {
@@ -73,7 +73,7 @@ describe("An Exam model", function () {
         var testString = "ghghgh ghghgh";
 
         beforeEach(function () {
-            exam = new ExamModel({letters: ['g', 'h', ' '], weights: [0.25, 0.25, 0.5]});
+            exam = new App.ExamModel({letters: ['g', 'h', ' '], weights: [0.25, 0.25, 0.5]});
             ls = exam.get("letters");
             ss = exam.get("scores");
            
