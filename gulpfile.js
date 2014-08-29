@@ -1,4 +1,4 @@
-'use strict';
+"use strict"
 
 var gulp = require('gulp'),
     util = require('gulp-util'),
@@ -12,7 +12,7 @@ var gulp = require('gulp'),
     del = require('del');
 
 var paths = {
-    src: ['src/views/**/*', 'src/collections/**/*', 'src/models/**/*', 'src/**/*'],
+    src: ['src/models/**/*', 'src/collections/**/*', 'src/views/**/*', 'src/**/*'],
     build: ['build/js'],
     test: {
         integration: ['test/integration/**/*'], unit: ['test/unit/**/testrunner.html']
@@ -66,7 +66,7 @@ gulp.task('dist', ['clean'], function() {
 gulp.task('compress', function() {
   gulp.src('build/**/*.js')
     .pipe(uglify())
-    .pipe(gulp.dest('dist'))
+    .pipe(gulp.dest('dist'));
 });
 
 
