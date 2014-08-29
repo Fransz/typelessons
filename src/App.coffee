@@ -3,7 +3,7 @@ App = App or {}
 
 App.initialModels = _.map [
     # "asdfg","hjkl;"
-    "gh", "fj", "dj", "sl", "a;",
+    "gh", "fj", "dk", "sl", "a;",
 
     # "zxcvb","nm,./"
     # "bn", "vm", "c,", "x.", "z/",

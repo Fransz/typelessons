@@ -10,18 +10,23 @@ ExamModel = Backbone.Model.extend
         lastScore: ""
         completed: false
 
-        duration: 0
+        time: 0
         scores: {}
 
-
+    # Initialize a new model
+    # Some attributes might have to be initialized if this models object was not retrieved from storage.
+    #
+    # @return void
     initialize: () ->
-        # initialize the scores
-        s = {}
-        ls = @get "letters"
-        _.each ls, (e) -> s[e] = {pass: 0, fail: 0}
-        @set "scores", s
+        # initialize the scores, only if no scores where given.
+        if _.isEmpty @get("scores")
+            s = {}
+            ls = @get "letters"
+            _.each ls, (e) -> s[e] = {pass: 0, fail: 0}
+            @set "scores", s
 
-        @set "testString", @mkString()
+        @set "testString", @mkString() unless (@get "testString").length
+
 
     # Generate a random string consisting only of our letters.
     #
@@ -72,7 +77,9 @@ ExamModel = Backbone.Model.extend
         score = if typed is test then "pass" else "fail"
 
         # Add the score to the scores, and set last score.
-        @get("scores")[test][score]++
+        scores = @get "scores"
+        scores[test][score]++
+        @set "scores", scores
         @set "lastScore", score
 
 

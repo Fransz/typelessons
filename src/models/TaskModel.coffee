@@ -3,23 +3,28 @@ TaskModel = Backbone.Model.extend
         completed: false
         letters: []
         weights: []
-        exams: null
+        exams: []
 
+
+    # Initialize a new model
+    # Some attributes might have to be initialized if this models object was not retrieved from storage.
+    #
+    # @return void
     initialize: () ->
         # Be sure our letter array has one, and only one space, at its last position.
         ls = @get "letters"
         ls.push ' '
-        _.uniq ls
+        ls = _.uniq ls
         unless ls[ls.length - 1] is ' '
             ls = _.filter(ls, (e) -> e isnt ' ')
             ls.push(' ' )
         @set 'letters', ls
 
-        # calculate weights for each letter
-        @set "weights", @simpleWeights()
+        # calculate weights for each letter, if not given.
+        @set "weights", @simpleWeights() unless (@get "weights").length
 
         # init the examcollection
-        @set "exams", new ExamCollection()
+        @set "exams", new ExamCollection(@get "exams")
 
 
     # Calculate propability for each letter appearing in an exams string
@@ -42,6 +47,5 @@ TaskModel = Backbone.Model.extend
     # @param exam The completed exam
     # @return void
     completeExam: (exam) ->
-        exam.collection = @get "exams"
-        exam.save()
         @get("exams").add exam
+        @save()
