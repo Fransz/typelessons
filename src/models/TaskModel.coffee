@@ -42,4 +42,6 @@ TaskModel = Backbone.Model.extend
     # @param exam The completed exam
     # @return void
     completeExam: (exam) ->
+        exam.collection = @get "exams"
+        exam.save()
         @get("exams").add exam

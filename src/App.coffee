@@ -6,28 +6,28 @@ App.initialModels = _.map [
     "gh", "fj", "dj", "sl", "a;",
 
     # "zxcvb","nm,./"
-    "bn", "vm", "c,", "x.", "z/",
+    # "bn", "vm", "c,", "x.", "z/",
 
     # "qwert","yuiop"
-    "yt", "ur", "ie", "ow", "pq",
+    # "yt", "ur", "ie", "ow", "pq",
 
     # "12345","67890"
-    "56", "47","38", "29", "10",
+    # "56", "47","38", "29", "10",
 
     # "asdfg","hjkl;" "zxcvb","nm,./"
-    "ghbn", "fjvm", "dkc,", "slx.", "a;z.",
+    # "ghbn", "fjvm", "dkc,", "slx.", "a;z.",
 
     # "asdfg","hjkl;" "qwert","yuiop"
-    "ghty", "fjru", "dkie", "lsow", "a;qp",
+    # "ghty", "fjru", "dkie", "lsow", "a;qp",
 
     # "asdfg","hjkl;" "12345","67890"
-    "gh56", "fj47", "dk38", "sl29", "a;10",
+    # "gh56", "fj47", "dk38", "sl29", "a;10",
 
     # "asdfg","hjkl;" "zxcvb","nm,./" "qwert","yuiop"
-    "ghtybn", "fjruvm", "dkeicm", "slwox.", "qpa;z.",
+    # "ghtybn", "fjruvm", "dkeicm", "slwox.", "qpa;z.",
 
     # "asdfg","hjkl;" "zxcvb","nm,./" "qwert","yuiop" "12345","67890"
-    "azq1hnm6", "sxw2jmu7", "dce3k,i8", "fvr4l.o9", "gbt5;/p0"
+    # "azq1hnm6", "sxw2jmu7", "dce3k,i8", "fvr4l.o9", "gbt5;/p0"
 ], (s) -> s.split('')
 
 # Sample function.

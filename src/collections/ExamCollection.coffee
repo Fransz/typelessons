@@ -1,5 +1,6 @@
 ExamCollection = Backbone.Collection.extend
     model: ExamModel
+    localStorage: new Backbone.LocalStorage "typelessons.exams"
 
     # Calculate the cumm scores for all exams.
     #
