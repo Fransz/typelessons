@@ -30,4 +30,8 @@ App.ApplicationView = Backbone.View.extend
             model: task
         @taskViews.push taskView
 
-        @$el.append taskView.render().el
+        grp = task.get("letters").length - 1
+        el = @$ "##{grp}letters"
+        el = @$el unless el.length
+
+        el.append taskView.render().el
