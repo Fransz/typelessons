@@ -1,10 +1,10 @@
 App = App or {}
 
-App.TaskCollectionView = Backbone.View.extend
-    # A collection with al task models.
+App.ApplicationView = Backbone.View.extend
+    # A collection with all task models.
     tasks: null
 
-    # An array with a view for all endered tasks
+    # An array with views for all endered tasks
     taskViews: []
 
     el: "#tasks"
@@ -22,7 +22,6 @@ App.TaskCollectionView = Backbone.View.extend
     #
     # @return void
     _initializeTasks: () ->
-        # @tasks.create letters: ['x', 'y']
         _.each App.initialModels, (l) => @tasks.create letters: l
 
     render: (task) ->
@@ -31,4 +30,8 @@ App.TaskCollectionView = Backbone.View.extend
             model: task
         @taskViews.push taskView
 
-        @$el.append taskView.render().el
+        grp = task.get("letters").length - 1
+        el = @$ "##{grp}letters"
+        el = @$el unless el.length
+
+        el.append taskView.render().el
