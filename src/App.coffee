@@ -81,4 +81,4 @@ App.sample = (values, distribution, cnt) ->
     [pTable, aTable] = _initialize distribution
     _generate(values, pTable, aTable) for [0 ... cnt]
 
-App.theTaskCollectionView = new App.TaskCollectionView
+App.theApplicationView = new App.ApplicationView
