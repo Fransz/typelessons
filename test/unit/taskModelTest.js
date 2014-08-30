@@ -74,17 +74,54 @@ describe("An Task model", function () {
     });
 
     describe("when passed an completed exam", function() {
-        var exam, task;
+        var exam, task, taskCollection, localStorage;
 
-        beforeEach(function () {
+        before(function () {
             task = new App.TaskModel({letters: ['g', 'h']});
+            task.localStorage = new Backbone.LocalStorage("typelessons_test.tasks");
+
+            taskCollection = new App.TaskCollection();
+            taskCollection.localStorage = new Backbone.LocalStorage("typelessons_test.tasks");
+
+            localStorage = task.localStorage.localStorage();
+
             exam = new App.ExamModel({letters: ['g', 'h', ' '], weights: [0.25, 0.25, 0.5]});
             exam.set("completed", true);
+
+            task.completeExam(exam);
         });
 
-        it("Should add the given exam to the exam collection", function () {
-            task.completeExam(exam);
+        after(function() {
+            var keys = localStorage.getItem("typelessons_test.tasks").split(",");
+
+            for(var i = 0, l = keys.length; i < l; i++) {
+                var value = localStorage.getItem("typelessons_test.tasks" + '-' + keys[i]);
+                localStorage.removeItem("typelessons_test.tasks" + '-' + keys[i]);
+            }
+            localStorage.removeItem("typelessons_test.tasks");
+        });
+
+        it("should add the given exam to the exam collection", function () {
             expect(task.get("exams")).to.have.length(1);
+        });
+
+        it("should be saved in storage", function () {
+            keys = localStorage.getItem("typelessons_test.tasks").split(",");
+            expect(keys).to.have.length(1);
+
+            item = JSON.parse(localStorage.getItem("typelessons_test.tasks" + '-' + keys[0]));
+            expect(item.id).to.be.equal(task.get("id"));
+        });
+
+        it("should be retrievable from storage", function () {
+            task.set("letters", []);
+            task.fetch();
+            
+            var ls = task.get("letters");
+
+            expect(ls).to.contain('h');
+            expect(ls).to.contain('g');
+            expect(ls).to.contain(' ');
         });
 
     });
