@@ -17,8 +17,9 @@ App.NewTaskView = Backbone.View.extend
 
     initialize: () ->
         @listenTo @model, "change:letters", @render
-        # @model.set "letters", { "a": 1, "b": 2, "c": 3, "d": 4}
-        @model.set "letters", { "e": 1, "f": 2, "g": 3, "h": 4,  "a": 1, "b": 2, "c": 3, "d": 4, "x": 100}
+        # @model.set "letters", { "a": 1}
+        # @model.set "letters", { "e": 1, "f": 2, "g": 3, "h": 4,  "a": 1, "b": 2, "c": 3, "d": 4}
+        @render()
 
 
     # Collect all letters and weights on the form, reset our new model.
@@ -55,8 +56,7 @@ App.NewTaskView = Backbone.View.extend
             row.append @inputTemplate letter: p[0], weight: p[1] for p in ls_
             rowsElement.append row
 
-        @renderEmptyRow()
-
-    renderEmptyRow: () ->
-        rowsElement = @$ "#rows"
-        rowsElement.append @rowTemplate letter: "", weight: ""
+        # add a new input.
+        if n is 4 then row = $(@rowTemplate({}).trim())
+        row.append @inputTemplate letter: "", weight: ""
+        if n is 4 then rowsElement.append row
