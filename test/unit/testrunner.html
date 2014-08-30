@@ -19,6 +19,14 @@
     <script src="http://documentcloud.github.com/backbone/backbone-min.js"> </script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/backbone-localstorage.js/1.1.13/backbone.localStorage-min.js"> </script>
 
+
+    <script type="text/template" id="rowtemplate">
+        <div class="row">
+            <input class="letter" type="text" value="<%= letter %>" />
+            <input class="weight" type="text" value="<%= weight %>" />
+        </div>
+    </script>
+
     <script src="../../build/js/typelessons.js"></script>
 
 
@@ -27,6 +35,9 @@
 
     <script src="TaskModelTest.js"></script>
     <script src="TaskViewTest.js"></script>
+
+    <script src="NewTaskModelTest.js"></script>
+    <script src="NewTaskViewTest.js"></script>
 
     <script>
       if (window.mochaPhantomJS) { mochaPhantomJS.run(); }
