@@ -106,8 +106,22 @@
 
         </section>
 
+        <section id="newtask">
+            <script type="text/template" id="rowtemplate">
+                <div class="row">
+                    <input class="letter" type="text" value="<%= letter %>" />
+                    <input class="weight" type="text" value="<%= weight %>" />
+                </div>
+            </script>
+            <div id="rows"></div>
+            <div id="controls">
+                <button id="letters">auto letters</button>
+                <button id="weights">auto weights</button>
+                <button class="ok">ok</button>
+                <button class="cancel">cancel</button>
+            </div>
+        </section>
 
-        <!-- Tasks -->
         <section id="tasks">
             <div id="2letters"><div class="categorytitle">2 letters</div></div>
             <div id="4letters"><div class="categorytitle">4 letters</div></div>

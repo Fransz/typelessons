@@ -24,7 +24,7 @@ App.TaskView = Backbone.View.extend
                         weights: @model.get "weights"
         examView = new App.ExamView
                         model: examModel
-                        task: @.model
+                        task: @model
 
 
     # Render the task. We show the models letters, and stats for completed exams.
