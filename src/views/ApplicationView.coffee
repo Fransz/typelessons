@@ -57,5 +57,3 @@ App.ApplicationView = Backbone.View.extend
         @$("#newtask").show()
 
         @newTaskView = new App.NewTaskView model: new App.NewTaskModel()
-
-
