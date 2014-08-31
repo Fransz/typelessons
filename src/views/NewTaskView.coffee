@@ -5,11 +5,12 @@ App.NewTaskView = Backbone.View.extend
 
     rowTemplate: _.template @$("#newmodelrowtemplate").html()
     inputTemplate: _.template @$("#newmodelinputtemplate").html()
+    errorTemplate: _.template @$("#newmodelerrortemplate").html()
     spaceHtml: @$ "#newmodelspacetemplate"
 
     events:
-        "valueofaletter" : @resetLetters
-        "valueofaweight" : @resetWeights
+        "keypress .letter" : "addLetters"
+        "valueofaweight" : "resetWeights"
 
     # flag signs that some weight was filled in by the user.
     weightChanged: false
@@ -17,30 +18,75 @@ App.NewTaskView = Backbone.View.extend
 
     initialize: () ->
         @listenTo @model, "change:letters", @render
+        @listenTo @model, "invalid", @renderError
         # @model.set "letters", { "a": 1}
         # @model.set "letters", { "e": 1, "f": 2, "g": 3, "h": 4,  "a": 1, "b": 2, "c": 3, "d": 4}
         @render()
 
 
-    # Collect all letters and weights on the form, reset our new model.
+    # Add the given letter to our model.
     #
     # @param evt The event
     # #return void
-    # @resetLetters: () ->
+    addLetters: (evt) ->
+        elm = $(evt.target)
+        letter = String.fromCharCode evt.which
+        console.log letter
+
+        if elm.val()
+            return
+
+        @model.addLetter(letter)
+
+        # get the pressed key;
+        # if the input already has content, and the key is not bs
+        #   call @model.addLetter
+        #     if false
+        #       Error: This letter is in the task already
+        #
+        #     if true
+        #        if customWeightFlag
+        #           focus weight field.
+        #        call @model.setWeights unless customWeightFlag is set
+        # else Error: Only one letter at a time.
+
+
+
 
     # Set the custom weight flag, reset the NewModel.
     #
     # @param evt The event
     # #return void
-    # @resetWeights: () ->
+    resetWeights: () ->
+
+        # get the new weight
+        # get the letter
+        # set the weight for the letter
+        # set the customWeightFlag
+
+    cancel: () ->
+        # clear all letters and weights
+
+    submit: () ->
+        # validate weights
+        # if pass create new model
+        # if fail error message
+
+    autoLetters: () ->
+        # let the tasksCollection come up with an array of letters, weight pairs
+        # fill in
+
+    autoWeights: () ->
+        # let the newTaskModel come up with an array of letter, weight pairs
+        # fill in
 
     # render all letter and weight pairs of the NewModel, 4 in a row.
     #
     # @return void
     render: () ->
         console.log "rendering"
-        n = 4                                       # nr inputs on a row.
-        ls = _.pairs(@model.get "letters")                # letter weight tuppels
+        n = 4                                               # nr inputs on a row.
+        ls = _.pairs(@model.get "letters")                  # letter weight tuppels
 
         rowsElement = @$ "#rows"
         rowsElement.html @spaceHtml
@@ -60,3 +106,7 @@ App.NewTaskView = Backbone.View.extend
         if n is 4 then row = $(@rowTemplate({}).trim())
         row.append @inputTemplate letter: "", weight: ""
         if n is 4 then rowsElement.append row
+
+
+    renderError: (model, error) ->
+        @$el.append @errorTemplate error: error 

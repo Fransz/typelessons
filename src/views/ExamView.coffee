@@ -112,7 +112,6 @@ App.ExamView = Backbone.View.extend
     # @return void
     processKey: (evt) ->
         if not @ticker then @setTicker()
-        # evt.stopPropagation()
         evt.preventDefault()
         @model.addKeyStroke String.fromCharCode evt.which
 

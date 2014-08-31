@@ -45,3 +45,7 @@
 #completed {
     display:none;
 }
+
+#newtask .error {
+    color: red;
+}

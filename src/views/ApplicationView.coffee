@@ -4,7 +4,7 @@ App.ApplicationView = Backbone.View.extend
     # A collection with all task models.
     tasks: null
 
-    # An array with views for all endered tasks
+    # An array with views for all entered tasks
     taskViews: []
 
     # A view for new tasks.

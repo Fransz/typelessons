@@ -108,15 +108,20 @@
 
         <section id="newtask">
             <script type="text/template" id="newmodelrowtemplate">
-                <div class="row">
-                </div>
+                <div class="row"> </div>
             </script>
+
             <script type="text/template" id="newmodelinputtemplate">
                 <label for="<%= 'newtaskinput' + letter %>">l:</label>
-                <input id="<%= 'newtaskinput' + letter %>" class="letter" type="text" value="<%= letter %>" />
+                <input maxlength="1" id="<%= 'newtaskinput' + letter %>" class="letter" type="text" value="<%= letter %>" />
                 <label for="<%= 'newtaskinput' + letter  + 'w'%>">w:</label>
                 <input id="<%= 'newtaskinput' + letter  + 'w'%>" class="weight" type="text" value="<%= weight %>" />
             </script>
+
+            <script type="text/template" id="newmodelerrortemplate">
+                <div class="error"><%= error %></div>
+            </script>
+
             <div id="rows">
                 <div id="newmodelspacetemplate" class="row">
                     <label for="newtaskinputspace">l:</label>
