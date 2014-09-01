@@ -27,17 +27,30 @@ App.NewTaskModel = Backbone.Model.extend
     # @return boolean true if the weight could be set.
     addWeight: (letter, weight) ->
         ls = _.clone(@get "letters")
-        if weight > 1
+
+        w = Number.parseFloat weight.replace /,/g, "."
+
+        if _.isNaN w
             error = "Weights must be less then one"
             this.trigger('invalid', this, error, {validationError: error})
             return false
 
-        if !letter
+        if w > 1
+            error = "Weights must be less then one"
+            this.trigger('invalid', this, error, {validationError: error})
+            return false
+
+        if not letter
             error = "No letter for this weight"
             this.trigger('invalid', this, error, {validationError: error})
             return false
 
-        ls[letter] = weight
+        if _.reduce(@get("letters"), ((m, v) -> m + v), 0) + w > 1
+            error = "Weigths do not add up to 1"
+            this.trigger('invalid', this, error, {validationError: error})
+            return false
+
+        ls[letter] = w
         @set "letters", ls
         return true
 
