@@ -112,10 +112,12 @@
             </script>
 
             <script type="text/template" id="newmodelinputtemplate">
-                <label for="<%= 'newtaskinput' + letter %>">l:</label>
-                <input maxlength="1" id="<%= 'newtaskinput' + letter %>" class="letter" type="text" value="<%= letter %>" />
-                <label for="<%= 'newtaskinput' + letter  + 'w'%>">w:</label>
-                <input id="<%= 'newtaskinput' + letter  + 'w'%>" class="weight" type="text" value="<%= weight %>" />
+                <div id="letterweightpair">
+                    <label for="<%= 'newtaskinput' + letter %>">l:</label>
+                    <input disabled maxlength="1" id="<%= 'newtaskinput' + letter %>" class="letter" type="text" value="<%= letter %>" />
+                    <label for="<%= 'newtaskinput' + letter  + 'w'%>">w:</label>
+                    <input id="<%= 'newtaskinput' + letter  + 'w'%>" class="weight" type="text" value="<%= weight %>" />
+                </div>
             </script>
 
             <script type="text/template" id="newmodelerrortemplate">

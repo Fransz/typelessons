@@ -9,63 +9,52 @@ App.NewTaskView = Backbone.View.extend
     spaceHtml: @$ "#newmodelspacetemplate"
 
     events:
-        "keypress .letter" : "addLetters"
-        "valueofaweight" : "resetWeights"
+        "keypress .letter" : "addLetter"
+        "change .weight" : "addWeight"
 
     # flag signs that some weight was filled in by the user.
-    weightChanged: false
+    customWeights: false
     
 
     initialize: () ->
-        @listenTo @model, "change:letters", @render
+        # @listenTo @model, "change:letters", @render
         @listenTo @model, "invalid", @renderError
         # @model.set "letters", { "a": 1}
         # @model.set "letters", { "e": 1, "f": 2, "g": 3, "h": 4,  "a": 1, "b": 2, "c": 3, "d": 4}
         @render()
 
 
-    # Add the given letter to our model.
+    # Add the given letter to our model, disable the letter input, focus the weight input
     #
     # @param evt The event
     # #return void
-    addLetters: (evt) ->
-        elm = $(evt.target)
+    addLetter: (evt) ->
+        lElm = $(evt.target)
         letter = String.fromCharCode evt.which
-        console.log letter
 
-        if elm.val()
-            return
-
-        @model.addLetter(letter)
-
-        # get the pressed key;
-        # if the input already has content, and the key is not bs
-        #   call @model.addLetter
-        #     if false
-        #       Error: This letter is in the task already
-        #
-        #     if true
-        #        if customWeightFlag
-        #           focus weight field.
-        #        call @model.setWeights unless customWeightFlag is set
-        # else Error: Only one letter at a time.
-
-
+        if @model.addLetter(letter)
+            lElm.val(letter)
+            lElm.prop 'disabled', true
+            wElm = lElm.closest("#letterweightpair").children(".weight")
+            (wElm.get())[0].focus()
 
 
     # Set the custom weight flag, reset the NewModel.
     #
     # @param evt The event
     # #return void
-    resetWeights: () ->
+    addWeight: (evt) ->
+        elm = $(evt.target)
+        w = elm.val()
+        l = elm.closest("#letterweightpair").children(".letter").val()
 
-        # get the new weight
-        # get the letter
-        # set the weight for the letter
-        # set the customWeightFlag
+        @customWeights = true
+        if @model.addWeight l, w
+            @render()
 
     cancel: () ->
         # clear all letters and weights
+        # delete view model
 
     submit: () ->
         # validate weights
@@ -81,9 +70,13 @@ App.NewTaskView = Backbone.View.extend
         # fill in
 
     # render all letter and weight pairs of the NewModel, 4 in a row.
+    # all letters inputs will be disabled; the last empty letter input will receive focus.
     #
     # @return void
     render: () ->
+        error = @$el.find(".error")
+        error.remove()
+
         console.log "rendering"
         n = 4                                               # nr inputs on a row.
         ls = _.pairs(@model.get "letters")                  # letter weight tuppels
@@ -103,10 +96,15 @@ App.NewTaskView = Backbone.View.extend
             rowsElement.append row
 
         # add a new input.
-        if n is 4 then row = $(@rowTemplate({}).trim())
-        row.append @inputTemplate letter: "", weight: ""
-        if n is 4 then rowsElement.append row
+        if n is 4
+            row = $(@rowTemplate({}).trim())
+            rowsElement.append row
+
+        inp = $(@inputTemplate({letter: "", weight: ""}).trim())
+        inp.find(".letter").prop 'disabled', false
+        row.append inp
+        (inp.find(".letter").get())[0].focus()
 
 
     renderError: (model, error) ->
-        @$el.append @errorTemplate error: error 
+        @$el.append @errorTemplate error: error unless @$el.find(".error").length

@@ -4,18 +4,8 @@ App.NewTaskModel = Backbone.Model.extend
     defaults:
         letters: {}
 
-    # Validator for this model, checks letters for ascii;
-    # Check weights, but only if we create a task from this NewTask
-    #
-    # @param attrs The models attributes to be validated.
-    # @param options options for attribute
-    # @return undefined if all is well
-    #         an error messages when problems are found
-    # validate: (attrs, options) ->
-        
-
     # Add a letter to the array of letters.
-    # Adding a letter twice is easily prevented, we let our view know with a validation event.
+    # We have to validate here if the letter is in the task already.
     #
     # @param letter the letter to add
     # @return boolean true if the letter was added.
@@ -28,16 +18,28 @@ App.NewTaskModel = Backbone.Model.extend
 
         ls[l] = 0
         @set "letters", ls
+        return true
 
     # Add a weight for a letter
     #
     # @param letter the letter to add the weight for.
     # @param weight the weight for the letter
-    # @return void
+    # @return boolean true if the weight could be set.
     addWeight: (letter, weight) ->
-        ls = @get "letters"
+        ls = _.clone(@get "letters")
+        if weight > 1
+            error = "Weights must be less then one"
+            this.trigger('invalid', this, error, {validationError: error})
+            return false
+
+        if !letter
+            error = "No letter for this weight"
+            this.trigger('invalid', this, error, {validationError: error})
+            return false
+
         ls[letter] = weight
         @set "letters", ls
+        return true
 
     # get a weight for a letter
     #
