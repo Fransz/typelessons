@@ -49,3 +49,7 @@
 #newtask .error {
     color: red;
 }
+
+#newtask .letterweightpair {
+    display:inline;
+}

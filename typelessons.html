@@ -112,7 +112,7 @@
             </script>
 
             <script type="text/template" id="newmodelinputtemplate">
-                <div id="letterweightpair">
+                <div class="letterweightpair">
                     <label for="<%= 'newtaskinput' + letter %>">l:</label>
                     <input disabled maxlength="1" id="<%= 'newtaskinput' + letter %>" class="letter" type="text" value="<%= letter %>" />
                     <label for="<%= 'newtaskinput' + letter  + 'w'%>">w:</label>
@@ -124,14 +124,7 @@
                 <div class="error"><%= error %></div>
             </script>
 
-            <div id="rows">
-                <div id="newmodelspacetemplate" class="row">
-                    <label for="newtaskinputspace">l:</label>
-                    <input id="newtaskinputspace" class="letter" type="text" value="space" />
-                    <label for="newtaskinputspacew">w:</label>
-                    <input id="newtaskinputspacew" class="weight" type="text" value="0.1" />
-                </div>
-            </div>
+            <div id="rows"></div>
             <div id="controls">
                 <button id="letters">auto letters</button>
                 <button id="weights">auto weights</button>

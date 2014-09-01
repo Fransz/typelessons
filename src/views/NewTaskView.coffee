@@ -6,25 +6,24 @@ App.NewTaskView = Backbone.View.extend
     rowTemplate: _.template @$("#newmodelrowtemplate").html()
     inputTemplate: _.template @$("#newmodelinputtemplate").html()
     errorTemplate: _.template @$("#newmodelerrortemplate").html()
-    spaceHtml: @$ "#newmodelspacetemplate"
 
     events:
         "keypress .letter" : "addLetter"
         "change .weight" : "addWeight"
 
     # flag signs that some weight was filled in by the user.
-    customWeights: false
+    autoWeights: true
     
 
     initialize: () ->
-        # @listenTo @model, "change:letters", @render
-        @listenTo @model, "invalid", @renderError
         # @model.set "letters", { "a": 1}
         # @model.set "letters", { "e": 1, "f": 2, "g": 3, "h": 4,  "a": 1, "b": 2, "c": 3, "d": 4}
+        @listenTo @model, "invalid", @renderError
         @render()
 
 
-    # Add the given letter to our model, disable the letter input, focus the weight input
+    # Add the given letter to our model, 
+    # disable the letter input, focus the weight input or show autoweights
     #
     # @param evt The event
     # #return void
@@ -35,8 +34,16 @@ App.NewTaskView = Backbone.View.extend
         if @model.addLetter(letter)
             lElm.val(letter)
             lElm.prop 'disabled', true
-            wElm = lElm.closest("#letterweightpair").children(".weight")
-            (wElm.get())[0].focus()
+
+            if @autoWeights
+                @model.autoWeights()
+                @render()
+            else
+                wElm = lElm.closest(".letterweightpair").children(".weight")
+                (wElm.get())[0].focus()
+
+        evt.stopPropagation()
+        return false
 
 
     # Set the custom weight flag, reset the NewModel.
@@ -46,11 +53,14 @@ App.NewTaskView = Backbone.View.extend
     addWeight: (evt) ->
         elm = $(evt.target)
         w = elm.val()
-        l = elm.closest("#letterweightpair").children(".letter").val()
+        l = elm.closest(".letterweightpair").children(".letter").val()
 
-        @customWeights = true
+        @autoWeights = false
         if @model.addWeight l, w
             @render()
+
+        evt.stopPropagation()
+        return false
 
     cancel: () ->
         # clear all letters and weights
@@ -70,20 +80,31 @@ App.NewTaskView = Backbone.View.extend
         # fill in
 
     # render all letter and weight pairs of the NewModel, 4 in a row.
-    # all letters inputs will be disabled; the last empty letter input will receive focus.
+    # All letters inputs will be disabled; the last empty letter input will receive focus.
+    # The "space" letter is outputed first on a seperate row; It should always be present in the letters attribute
     #
     # @return void
     render: () ->
         error = @$el.find(".error")
         error.remove()
 
-        console.log "rendering"
-        n = 4                                               # nr inputs on a row.
-        ls = _.pairs(@model.get "letters")                  # letter weight tuppels
-
         rowsElement = @$ "#rows"
-        rowsElement.html @spaceHtml
+        rowsElement.html("")
 
+        n = 4                                               # nr inputs on a row.
+        letters_ = _.clone(@model.get("letters"))
+
+        # first render data for the "space" character
+        space = letters_["space"]
+        delete letters_["space"]
+
+        row = $(@rowTemplate({}).trim())
+        row.append @inputTemplate letter: "space", weight: space
+        row.find(".weight").prop 'disabled', true
+        rowsElement.append row
+
+        ls = _.pairs(letters_)                              # letter weight tuppels
+        # render rows with n letters
         while ls.length > 0
             row = $(@rowTemplate({}).trim())
 
@@ -95,7 +116,7 @@ App.NewTaskView = Backbone.View.extend
             row.append @inputTemplate letter: p[0], weight: p[1] for p in ls_
             rowsElement.append row
 
-        # add a new input.
+        # add a new input, maybe in a new row.
         if n is 4
             row = $(@rowTemplate({}).trim())
             rowsElement.append row

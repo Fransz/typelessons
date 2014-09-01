@@ -2,7 +2,8 @@ App = App or {}
 
 App.NewTaskModel = Backbone.Model.extend
     defaults:
-        letters: {}
+        letters:
+            space: 0.1                                                              # We always have a space with weight 0.1
 
     # Add a letter to the array of letters.
     # We have to validate here if the letter is in the task already.
@@ -11,8 +12,15 @@ App.NewTaskModel = Backbone.Model.extend
     # @return boolean true if the letter was added.
     addLetter: (l) ->
         ls = _.clone(@get "letters")
+
+        error = ""
         if l of ls
             error = "The letter is already in the task"
+
+        if l is " "
+            error = "The space should always be in a task; its weight cannot be changed"
+
+        if error
             this.trigger('invalid', this, error, {validationError: error})
             return false
 
@@ -21,6 +29,7 @@ App.NewTaskModel = Backbone.Model.extend
         return true
 
     # Add a weight for a letter
+    # We also validate the weight here.
     #
     # @param letter the letter to add the weight for.
     # @param weight the weight for the letter
@@ -30,23 +39,26 @@ App.NewTaskModel = Backbone.Model.extend
 
         w = Number.parseFloat weight.replace /,/g, "."
 
+        error = ""
         if _.isNaN w
             error = "Weights must be less then one"
-            this.trigger('invalid', this, error, {validationError: error})
-            return false
 
         if w > 1
             error = "Weights must be less then one"
-            this.trigger('invalid', this, error, {validationError: error})
-            return false
 
         if not letter
             error = "No letter for this weight"
-            this.trigger('invalid', this, error, {validationError: error})
-            return false
 
-        if _.reduce(@get("letters"), ((m, v) -> m + v), 0) + w > 1
+                # Validate if weights add up to one. Even if we don validate this test, still set with the given weigths.
+                # It cannot be submitted, and the user will have the intention to fix it.
+        delete ls[letter]
+        if Math.abs(_.reduce(ls, ((m, v) -> m + v), 0) + w - 1) > 0.00001
             error = "Weigths do not add up to 1"
+            
+            ls[letter] = w
+            @set "letters", ls
+
+        if error
             this.trigger('invalid', this, error, {validationError: error})
             return false
 
@@ -62,14 +74,17 @@ App.NewTaskModel = Backbone.Model.extend
         ls = @get "letters"
         ls[letter]
 
-    # calculate even weights for each letter
+    # calculate even weights for each letter.
+    # A letter "space" should exist.
     #
     # @return void
     autoWeights: () ->
-        # probability for the space character added in a real model.
-        space = 0.1
-
         ls = @get "letters"
+        space = ls["space"]
+        delete ls["space"]
+
         p = (1 - space) / _.keys(ls).length
         _.each(ls, (v, k) -> ls[k] = p)
+        ls["space"] = space
+
         @set "letters", ls
