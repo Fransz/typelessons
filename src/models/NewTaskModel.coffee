@@ -28,6 +28,21 @@ App.NewTaskModel = Backbone.Model.extend
         @set "letters", ls
         return true
 
+
+    # Delete a letter from the array of letters.
+    #
+    # @param letter the letter to delete
+    # @return void
+    deleteLetter: (letter) ->
+        if letter is ""
+            error = "No letter to delete"
+            this.trigger('invalid', this, error, {validationError: error})
+            return false
+
+        ls = _.clone(@get "letters")
+        delete ls[letter]
+        @set "letters", ls
+
     # Add a weight for a letter
     # We also validate the weight here.
     #

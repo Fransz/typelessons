@@ -10,6 +10,7 @@ App.NewTaskView = Backbone.View.extend
     events:
         "keypress .letter" : "addLetter"
         "change .weight" : "addWeight"
+        "click .delete" : "deleteLetter"
 
     # flag signs that some weight was filled in by the user.
     autoWeights: true
@@ -42,7 +43,6 @@ App.NewTaskView = Backbone.View.extend
                 wElm = lElm.closest(".letterweightpair").children(".weight")
                 (wElm.get())[0].focus()
 
-        evt.stopPropagation()
         return false
 
 
@@ -59,7 +59,19 @@ App.NewTaskView = Backbone.View.extend
         if @model.addWeight l, w
             @render()
 
-        evt.stopPropagation()
+        return false
+
+    # deletes the letter from the NewTask
+    #
+    # @param evt The event
+    # @return void
+    deleteLetter: (evt) ->
+        elm = $(evt.target)
+        l = elm.closest(".letterweightpair").children(".letter").val()
+
+        if @model.deleteLetter l
+            @render()
+
         return false
 
     cancel: () ->
@@ -101,6 +113,7 @@ App.NewTaskView = Backbone.View.extend
         row = $(@rowTemplate({}).trim())
         row.append @inputTemplate letter: "space", weight: space
         row.find(".weight").prop 'disabled', true
+        row.find(".delete").remove()
         rowsElement.append row
 
         ls = _.pairs(letters_)                              # letter weight tuppels
