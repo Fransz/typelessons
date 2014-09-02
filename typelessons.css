@@ -46,6 +46,10 @@
     display:none;
 }
 
+#newtask {
+    display: hidden;
+}
+
 #newtask .error {
     color: red;
 }

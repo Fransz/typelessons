@@ -12,6 +12,7 @@ App.NewTaskView = Backbone.View.extend
         "change .weight" : "addWeight"
         "click .delete" : "deleteLetter"
         "click #autoweights" : "fillAutoWeights"
+        "click #cancel" : "cancelFill"
 
     # flag signs that some weight was filled in by the user.
     autoWeights: true
@@ -75,9 +76,13 @@ App.NewTaskView = Backbone.View.extend
 
         return false
 
-    cancel: () ->
-        # clear all letters and weights
-        # delete view model
+    # cancel the creation of a new Task. We let our AppView know with an event.
+    #
+    # @param evt
+    # @return void
+    cancelFill: (evt) ->
+        @undelegateEvents()
+        @trigger "cancelNewTask"
 
     submit: () ->
         # validate weights

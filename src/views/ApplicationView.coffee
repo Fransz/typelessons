@@ -12,6 +12,10 @@ App.ApplicationView = Backbone.View.extend
 
     el: "body"
 
+    events: {
+        "click #appcontrols #newtask": "showNewTaskForm"
+    }
+
     initialize: () ->
         @$("#newtask").hide()
 
@@ -21,8 +25,6 @@ App.ApplicationView = Backbone.View.extend
         @tasks.fetch()
 
         @_initializeTasks() unless @tasks.length > 0
-
-        @newTask()
 
 
     # Add all predefined task to the collection, and save them in storage.
@@ -53,7 +55,15 @@ App.ApplicationView = Backbone.View.extend
     # enable the new task section
     #
     # @return void
-    newTask: () ->
+    showNewTaskForm: () ->
         @$("#newtask").show()
+        if @newTaskView
+            @stopListening @newTaskView
 
         @newTaskView = new App.NewTaskView model: new App.NewTaskModel()
+        @listenTo @newTaskView, "cancelNewTask", @hideNewTaskForm
+
+    hideNewTaskForm: (evt) ->
+        @stopListening @newTaskView
+        @$("#newtask").hide()
+
