@@ -64,8 +64,12 @@ App.NewTaskModel = Backbone.Model.extend
         if not letter
             error = "No letter for this weight"
 
-                # Validate if weights add up to one. Even if we don validate this test, still set with the given weigths.
-                # It cannot be submitted, and the user will have the intention to fix it.
+        if error
+            this.trigger('invalid', this, error, {validationError: error})
+            return false
+
+        # Validate if weights add up to one. Even if we don validate this test, still set with the given weigths.
+        # It cannot be submitted, and the user will have the intention to fix it.
         delete ls[letter]
         if Math.abs(_.reduce(ls, ((m, v) -> m + v), 0) + w - 1) > 0.00001
             error = "Weigths do not add up to 1"
@@ -73,7 +77,6 @@ App.NewTaskModel = Backbone.Model.extend
             ls[letter] = w
             @set "letters", ls
 
-        if error
             this.trigger('invalid', this, error, {validationError: error})
             return false
 

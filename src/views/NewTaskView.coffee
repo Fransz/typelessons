@@ -32,6 +32,8 @@ App.NewTaskView = Backbone.View.extend
     # #return void
     addLetter: (evt) ->
         lElm = $(evt.target)
+        wElm = lElm.closest(".letterweightpair").children(".weight")
+
         letter = String.fromCharCode evt.which
 
         if @model.addLetter(letter)
@@ -42,8 +44,8 @@ App.NewTaskView = Backbone.View.extend
                 @model.autoWeights()
                 @render()
             else
-                wElm = lElm.closest(".letterweightpair").children(".weight")
                 (wElm.get())[0].focus()
+                wElm.val('')
 
         return false
 
@@ -157,4 +159,5 @@ App.NewTaskView = Backbone.View.extend
 
 
     renderError: (model, error) ->
-        @$el.append @errorTemplate error: error unless @$el.find(".error").length
+        @$el.find(".error").remove()
+        @$el.append @errorTemplate error: error
