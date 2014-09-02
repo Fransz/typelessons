@@ -11,6 +11,7 @@ App.NewTaskView = Backbone.View.extend
         "keypress .letter" : "addLetter"
         "change .weight" : "addWeight"
         "click .delete" : "deleteLetter"
+        "click #autoweights" : "fillAutoWeights"
 
     # flag signs that some weight was filled in by the user.
     autoWeights: true
@@ -83,11 +84,16 @@ App.NewTaskView = Backbone.View.extend
         # if pass create new model
         # if fail error message
 
-    autoLetters: () ->
+    fillAutoLetters: () ->
         # let the tasksCollection come up with an array of letters, weight pairs
         # fill in
 
-    autoWeights: () ->
+    fillAutoWeights: () ->
+        @autoWeights = true
+        @model.autoWeights()
+        @render()
+
+        return false
         # let the newTaskModel come up with an array of letter, weight pairs
         # fill in
 
@@ -106,7 +112,7 @@ App.NewTaskView = Backbone.View.extend
         n = 4                                               # nr inputs on a row.
         letters_ = _.clone(@model.get("letters"))
 
-        # first render data for the "space" character
+        # first render data for the "space" character in its own row
         space = letters_["space"]
         delete letters_["space"]
 
@@ -116,7 +122,12 @@ App.NewTaskView = Backbone.View.extend
         row.find(".delete").remove()
         rowsElement.append row
 
+
+        # All other letters should be rendered in order.
         ls = _.pairs(letters_)                              # letter weight tuppels
+        ls.sort()
+
+
         # render rows with n letters
         while ls.length > 0
             row = $(@rowTemplate({}).trim())
