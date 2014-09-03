@@ -5,6 +5,15 @@ App.NewTaskModel = Backbone.Model.extend
         letters:
             space: 0.1                                                              # We always have a space with weight 0.1
 
+    # Validation for submitting a newTask. Validation for new letters weights is done seperatly
+    #
+    # @return error string if the model doesnt validate; "" if we do validate.
+    validate: () ->
+        error = ""
+        if _.size(@get "letters") <= 2 or not "space" of letters
+            error = "A task should have 2 or more letters and one space"
+        return error
+
     # Add a letter to the array of letters.
     # We have to validate here if the letter is in the task already.
     #

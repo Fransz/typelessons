@@ -62,8 +62,18 @@ App.ApplicationView = Backbone.View.extend
 
         @newTaskView = new App.NewTaskView model: new App.NewTaskModel()
         @listenTo @newTaskView, "cancelNewTask", @hideNewTaskForm
+        @listenTo @newTaskView, "submitNewTask", @submitNewTask
 
-    hideNewTaskForm: (evt) ->
+    hideNewTaskForm: () ->
         @stopListening @newTaskView
         @$("#newtask").hide()
+
+    submitNewTask: (letters) ->
+        console.log letters
+        @stopListening @newTaskView
+        @$("#newtask").hide()
+
+        ls = _.keys letters
+        ws = _.map(ls, ((l) -> letters[l]))
+        @tasks.create letters: ls, weights: ws
 
