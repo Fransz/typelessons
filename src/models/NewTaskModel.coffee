@@ -10,7 +10,8 @@ App.NewTaskModel = Backbone.Model.extend
     # @return error string if the model doesnt validate; "" if we do validate.
     validate: () ->
         error = ""
-        if _.size(@get "letters") <= 2 or not "space" of letters
+        ls = @get "letters"
+        if _.size(ls) <= 2 or not "space" of ls
             error = "A task should have 2 or more letters and one space"
         return error
 
@@ -48,9 +49,8 @@ App.NewTaskModel = Backbone.Model.extend
             this.trigger('invalid', this, error, {validationError: error})
             return false
 
-        ls = _.clone(@get "letters")
+        ls = @get "letters"
         delete ls[letter]
-        @set "letters", ls
 
     # Add a weight for a letter
     # We also validate the weight here.
@@ -60,8 +60,7 @@ App.NewTaskModel = Backbone.Model.extend
     # @return boolean true if the weight could be set.
     addWeight: (letter, weight) ->
         ls = _.clone(@get "letters")
-
-        w = Number.parseFloat weight.replace /,/g, "."
+        w = parseFloat weight.replace /,/g, "."
 
         error = ""
         if _.isNaN w

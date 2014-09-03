@@ -20,11 +20,23 @@
     <script src="http://cdnjs.cloudflare.com/ajax/libs/backbone-localstorage.js/1.1.13/backbone.localStorage-min.js"> </script>
 
 
-    <script type="text/template" id="rowtemplate">
-        <div class="row">
-            <input class="letter" type="text" value="<%= letter %>" />
-            <input class="weight" type="text" value="<%= weight %>" />
+    <!-- templates on which our code relies -->
+    <script type="text/template" id="newmodelrowtemplate">
+        <div class="row"> </div>
+    </script>
+
+    <script type="text/template" id="newmodelinputtemplate">
+        <div class="letterweightpair">
+            <label for="<%= 'newtaskinput' + letter %>">l:</label>
+            <input disabled maxlength="1" id="<%= 'newtaskinput' + letter %>" class="letter" type="text" value="<%= letter %>" />
+            <label for="<%= 'newtaskinput' + letter  + 'w'%>">w:</label>
+            <input id="<%= 'newtaskinput' + letter  + 'w'%>" class="weight" type="text" value="<%= weight %>" />
+            <span class="delete">X</span>
         </div>
+    </script>
+
+    <script type="text/template" id="newmodelerrortemplate">
+        <div class="error"><%= error %></div>
     </script>
 
     <script src="../../build/js/typelessons.js"></script>

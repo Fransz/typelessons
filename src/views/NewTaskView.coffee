@@ -91,6 +91,9 @@ App.NewTaskView = Backbone.View.extend
     submit: () ->
         console.log "submit"
         if @model.isValid()
+            ls = @model.get "letters"
+            ls[" "] = ls["space"]
+            delete ls["space"]
             @trigger "submitNewTask", @model.get "letters"
             @undelegateEvents()
 
