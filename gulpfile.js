@@ -1,18 +1,24 @@
+// jshint ignore: start
+
 "use strict"
 
 var gulp = require('gulp'),
     util = require('gulp-util'),
     coffee = require('gulp-coffee'),
+    less = require('gulp-less'),
     concat = require('gulp-concat'),
     uglify = require('gulp-uglify'),
     livereload = require('gulp-livereload'),
     sourcemaps = require('gulp-sourcemaps'),
     mocha = require('gulp-mocha'),
     mochaPhantomJs = require('gulp-mocha-phantomjs'),
-    del = require('del');
+    del = require('del'),
+
+    path = require('path');
 
 var paths = {
-    src: ['src/models/**/*', 'src/collections/**/*', 'src/views/**/*', 'src/**/*'],
+    src: ['src/models/**/*.coffee', 'src/collections/**/*.coffee', 'src/views/**/*.coffee', 'src/**/*.coffee'],
+    style: ['src/less/**/*.less'],
     build: ['build/js'],
     test: {
         integration: ['test/integration/**/*'], unit: ['test/unit/**/testrunner.html']
@@ -21,18 +27,35 @@ var paths = {
 
 
 
-gulp.task('clean', function(cb) {
-  del(['build/**/*', 'dist/**/*'], cb);
+gulp.task('clean-js', function(cb) {
+  del(['build/js/**/*', 'dist/js/**/*'], cb);
+});
+
+gulp.task('clean-css', function(cb) {
+  del(['build/css/**/*', 'dist/css/**/*'], cb);
+});
+
+gulp.task('clean', ['clean-js', 'clean-css'], function () {
 });
 
 
-gulp.task('build', ['clean'], function() {
+gulp.task('build', ['clean-js'], function() {
     return gulp.src(paths.src)
         .pipe(sourcemaps.init())
         .pipe(coffee({bare: true})).on('error', util.log)
         .pipe(concat('typelessons.js'))
         .pipe(sourcemaps.write())
         .pipe(gulp.dest('build/js'));
+});
+
+gulp.task('style', ['clean-css'], function () {
+    return gulp.src(paths.style)
+        .pipe(sourcemaps.init())
+        .pipe(less({
+            paths: [ path.join(__dirname, "less", "includes")]
+        }))
+        .pipe(sourcemaps.write())
+        .pipe(gulp.dest('build/css'))
 });
 
 
@@ -73,6 +96,7 @@ gulp.task('compress', function() {
 gulp.task('watch', function() {
   livereload.listen();
   gulp.watch(paths.src, ['build']).on('change', livereload.changed);
+  gulp.watch(paths.style, ['style']).on('change', livereload.changed);
 });
 
 // The default task (called when you run `gulp` from cli)
