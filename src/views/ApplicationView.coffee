@@ -4,18 +4,28 @@ App.ApplicationView = Backbone.View.extend
     # A collection with all task models.
     tasks: null
 
-    # An array with views for all endered tasks
+    # An array with views for all entered tasks
     taskViews: []
 
-    el: "#tasks"
+    # A view for new tasks.
+    newTaskView: null
+
+    el: "body"
+
+    events: {
+        "click #appcontrols #newtask": "showNewTaskForm"
+    }
 
     initialize: () ->
+        @$("#newtask").hide()
+
         @tasks = new App.TaskCollection()
 
-        @listenTo @tasks, "add", @render
+        @listenTo @tasks, "add", @renderTask
         @tasks.fetch()
 
         @_initializeTasks() unless @tasks.length > 0
+
 
     # Add all predefined task to the collection, and save them in storage.
     # This should only be done if no tasks are found in storage.
@@ -24,14 +34,46 @@ App.ApplicationView = Backbone.View.extend
     _initializeTasks: () ->
         _.each App.initialModels, (l) => @tasks.create letters: l
 
-    render: (task) ->
-        # create a taskView for the tobe rendered task, keep it.
+
+    # render a single task
+    # For the task a view is made, we keep these views.
+    #
+    # @param task the task to be rendered
+    # @return void
+    renderTask: (task) ->
         taskView = new App.TaskView
             model: task
         @taskViews.push taskView
 
         grp = task.get("letters").length - 1
-        el = @$ "##{grp}letters"
-        el = @$el unless el.length
+        el = @$ "#tasks ##{grp}letters"
+        el = @$ "#tasks" unless el.length
 
         el.append taskView.render().el
+
+
+    # enable the new task section
+    #
+    # @return void
+    showNewTaskForm: () ->
+        @$("#newtask").show()
+        if @newTaskView
+            @stopListening @newTaskView
+
+        @newTaskView = new App.NewTaskView model: new App.NewTaskModel()
+        @listenTo @newTaskView, "cancelNewTask", @hideNewTaskForm
+        @listenTo @newTaskView, "submitNewTask", @submitNewTask
+
+    hideNewTaskForm: () ->
+        @stopListening @newTaskView
+        @$("#newtask").hide()
+
+    submitNewTask: (letters) ->
+        console.log letters
+        @stopListening @newTaskView
+        @$("#newtask").hide()
+
+        ls = _.keys letters
+        ws = _.map(ls, ((l) -> letters[l]))
+        @tasks.create letters: ls, weights: ws
+

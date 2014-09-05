@@ -6,7 +6,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <title>typelessons</title>
-        <link rel="stylesheet" href="typelessons.css" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="build/css/typelessons.css" />
     </head>
     <body>
         <!--[if lt IE 8]>
@@ -15,7 +16,6 @@
                 Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.
             </p>
         <![endif]-->
-
         <section id="exam">
             <div id="strings">
                 <div id="typedstring"></div>
@@ -106,8 +106,38 @@
 
         </section>
 
+        <section id="newtask">
+            <script type="text/template" id="newmodelrowtemplate">
+                <div class="row"> </div>
+            </script>
 
-        <!-- Tasks -->
+            <script type="text/template" id="newmodelinputtemplate">
+                <div class="letterweightpair">
+                    <label for="<%= 'newtaskinput' + letter %>">l:</label>
+                    <input disabled maxlength="1" id="<%= 'newtaskinput' + letter %>" class="letter" type="text" value="<%= letter %>" />
+                    <label for="<%= 'newtaskinput' + letter  + 'w'%>">w:</label>
+                    <input id="<%= 'newtaskinput' + letter  + 'w'%>" class="weight" type="text" value="<%= weight %>" />
+                    <span class="delete">X</span>
+                </div>
+            </script>
+
+            <script type="text/template" id="newmodelerrortemplate">
+                <div class="error"><%= error %></div>
+            </script>
+
+            <div id="rows"></div>
+            <div id="controls">
+                <button id="letters">auto letters</button>
+                <button id="autoweights">auto weights</button>
+                <button id="ok">ok</button>
+                <button id="cancel">cancel</button>
+            </div>
+        </section>
+
+        <section id="appcontrols">
+            <button id="newtask">new task</button>
+        </section>
+
         <section id="tasks">
             <div id="2letters"><div class="categorytitle">2 letters</div></div>
             <div id="4letters"><div class="categorytitle">4 letters</div></div>
