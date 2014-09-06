@@ -1,7 +1,33 @@
-#keyboard {
-    border: 1px solid green;
+/* @import "src/less/bootstrap/bootstrap.less"; */
+@import "variables.less";
+@import "mixins/grid.less";
+
+.make_key(@size) {
+    .row {
+        border-spacing: floor(@size / 8) floor(@size / 16);
+        border-collapse: seperate;
+    }
+    .key {
+        display:table-cell;
+        width: @size + floor(@size / 8);
+        height: @size + floor(@size / 4);
+
+        border:2px solid black; 
+        padding: floor(@size / 8) floor(@size / 4);
+
+        vertical-align:middle;
+    }
+    .letter {
+        color: gray;
+        font-size: @size;
+        font-family:monospace;
+        line-height: @size;
+    }
 }
 
-.classed {
-    width: (1 + 1px);
+#keyboard {
+    display: table;
+    .make-md-column(8);
+    border: 1px solid green;
+    .make_key(48px);
 }

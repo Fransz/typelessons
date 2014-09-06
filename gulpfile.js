@@ -18,7 +18,7 @@ var gulp = require('gulp'),
 
 var paths = {
     src: ['src/models/**/*.coffee', 'src/collections/**/*.coffee', 'src/views/**/*.coffee', 'src/**/*.coffee'],
-    style: ['src/less/**/*.less'],
+    style: ['src/less/**/typelessons.less'],
     build: ['build/js'],
     test: {
         integration: ['test/integration/**/*'], unit: ['test/unit/**/testrunner.html']
@@ -52,7 +52,7 @@ gulp.task('style', ['clean-css'], function () {
     return gulp.src(paths.style)
         .pipe(sourcemaps.init())
         .pipe(less({
-            paths: [ path.join(__dirname, "less", "includes")]
+            paths: [ path.join(__dirname, "src", "less", "bootstrap")],
         }))
         .pipe(sourcemaps.write())
         .pipe(gulp.dest('build/css'))
