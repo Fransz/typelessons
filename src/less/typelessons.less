@@ -3,26 +3,59 @@
 @import "variables.less";
 @import "mixins/grid.less";
 
+@failColor: red;
+@passColor: #7fff00;
+
+#exam {
+    .make-md-column(5);
+    border: 1px solid green;
+
+    #teststring {
+        margin:1em;
+        border:1px solid black;
+        padding: 0.25em;
+
+        overflow:hidden;
+
+        font-size: 24px;
+        color:gray;
+    }
+
+    #keyboard {
+        display: table;
+        .make_key(32px);
+
+        /* space character key. */
+        #keyspace {
+            width: 15.2em;
+        }
+
+        /* indent the keyboard rows. */
+        .keyboardrow {
+            margin-left: 1em;
+        }
+        .keyboardrow + .keyboardrow{
+            margin-left: 2em;
+        }
+        .keyboardrow + .keyboardrow + .keyboardrow{
+            margin-left: 3em;
+        }
+        .keyboardrow + .keyboardrow + .keyboardrow + .keyboardrow{
+            margin-left: 1em;
+        }
+        .keyboardrow + .keyboardrow + .keyboardrow + .keyboardrow + .keyboardrow {
+            margin-left: 10.4em;
+        }
+    }
+}
+
+
 .make_key(@size) {
     .keyboardrow {
         border-spacing: floor(@size / 8) floor(@size / 16);
         border-collapse: seperate;
     }
-    .keyboardrow {
-        margin-left: 1em;
-    }
-    .keyboardrow + .keyboardrow{
-        margin-left: 2em;
-    }
-    .keyboardrow + .keyboardrow + .keyboardrow{
-        margin-left: 3em;
-    }
-    .keyboardrow + .keyboardrow + .keyboardrow + .keyboardrow{
-        margin-left: 1em;
-    }
-    .keyboardrow + .keyboardrow + .keyboardrow + .keyboardrow + .keyboardrow {
-        margin-left: 10.4em;
-    }
+
     .key {
         display:table-cell;
         width: @size + floor(@size / 8);
@@ -33,25 +66,24 @@
 
         vertical-align:middle;
         text-align:center;
-    }
-    .letter {
+
         color: gray;
+    }
+
+    .letter {
         font-size: @size;
         font-family:monospace;
         line-height: @size;
     }
-}
 
-#keyboard {
-    .make-md-column(5);
-    border: 1px solid green;
+    .key.fail {
+        color: @failColor;
+        border:2px solid @failColor;
+    }
 
-    display: table;
-    .make_key(32px);
-
-    #keyspace {
-        width: 15.2em;
+    .key.pass {
+        color: @passColor;
+        border:2px solid @passColor;
     }
 }
-
 
