@@ -25,16 +25,10 @@ App.ExamView = Backbone.View.extend
         @$("#teststring #content").html @toBeTypedString
         @$("#teststring").css visibility: "visible"
 
-        @listenTo @model, "change:testString", @renderTestString
-        @model.trigger "change:testString"
-
         @listenTo @model, "change:lastChar", @showKey
         @listenTo @model, "change:lastChar", @renderScores
         @listenTo @model, "change:lastChar", @renderToBeTypedString
         @listenTo @model, "change:completed", @examCompleted
-
-        @$("#completed").hide()
-        @$("#typedstring").html ''
 
         # This is tedious; The key event cannot be bound to the views element, cause that doesnt receive the event,
         # So we bind it to the document with jQuery's bind, and make sure we can use this by using underscores bindAll
@@ -96,8 +90,8 @@ App.ExamView = Backbone.View.extend
     # @return void
     renderScores: () ->
         scores = @model.sumScore()
-        @$("#scores #pass").html scores.pass
-        @$("#scores #fail").html scores.fail
+        @$("#scores #pass .score").html scores.pass
+        @$("#scores #fail .score").html scores.fail
 
 
     
@@ -115,7 +109,7 @@ App.ExamView = Backbone.View.extend
     # @return void
     setTicker: () ->
         [m, s] = [0, 0]
-        e = @$ "#scores #time"
+        e = @$ "#scores #time .score"
         @ticks = 0
 
         _ticker = () =>
@@ -147,7 +141,6 @@ App.ExamView = Backbone.View.extend
         @showKey()
         @renderScores()
 
-        @$('#completed').show()
         @$("#teststring #content").html "&nbsp;"
         @$("#teststring").css visibility: "hidden"
 
