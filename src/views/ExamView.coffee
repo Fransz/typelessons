@@ -23,6 +23,7 @@ App.ExamView = Backbone.View.extend
         # Show our testString.
         @toBeTypedString = @model.get("testString")
         @$("#teststring #content").html @toBeTypedString
+        @$("#teststring").css visibility: "visible"
 
         @listenTo @model, "change:testString", @renderTestString
         @model.trigger "change:testString"
@@ -145,7 +146,10 @@ App.ExamView = Backbone.View.extend
         @renderToBeTypedString()
         @showKey()
         @renderScores()
+
         @$('#completed').show()
+        @$("#teststring #content").html "&nbsp;"
+        @$("#teststring").css visibility: "hidden"
 
         @model.set "time", @ticks - 1
         @task.completeExam @model
