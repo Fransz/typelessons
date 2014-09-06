@@ -22,7 +22,7 @@ App.ExamView = Backbone.View.extend
 
         # Show our testString.
         @toBeTypedString = @model.get("testString")
-        @$("#teststring").html @toBeTypedString
+        @$("#teststring #content").html @toBeTypedString
 
         @listenTo @model, "change:testString", @renderTestString
         @model.trigger "change:testString"
@@ -80,12 +80,12 @@ App.ExamView = Backbone.View.extend
         @toBeTypedString = @toBeTypedString[1 ...]
 
         # A leading (or the first) space should be replaced by a &nbsp;
-        @$("#teststring").html @toBeTypedString.replace(' ', "&nbsp;")
+        @$("#teststring #content").html @toBeTypedString.replace(' ', "&nbsp;")
 
         className = @model.get "lastScore"
-        @$("#stringwrapper").addClass(className)
+        @$("#teststring").addClass(className)
 
-        _f = () -> @$("#stringwrapper").removeClass(className)
+        _f = () -> @$("#teststring").removeClass(className)
         setTimeout _f, 200
     
 
