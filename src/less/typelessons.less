@@ -1,11 +1,27 @@
 /* @import "src/less/bootstrap/bootstrap.less"; */
+
 @import "variables.less";
 @import "mixins/grid.less";
 
 .make_key(@size) {
-    .row {
+    .keyboardrow {
         border-spacing: floor(@size / 8) floor(@size / 16);
         border-collapse: seperate;
+    }
+    .keyboardrow {
+        margin-left: 1em;
+    }
+    .keyboardrow + .keyboardrow{
+        margin-left: 2em;
+    }
+    .keyboardrow + .keyboardrow + .keyboardrow{
+        margin-left: 3em;
+    }
+    .keyboardrow + .keyboardrow + .keyboardrow + .keyboardrow{
+        margin-left: 1em;
+    }
+    .keyboardrow + .keyboardrow + .keyboardrow + .keyboardrow + .keyboardrow {
+        margin-left: 10.4em;
     }
     .key {
         display:table-cell;
@@ -16,6 +32,7 @@
         padding: floor(@size / 8) floor(@size / 4);
 
         vertical-align:middle;
+        text-align:center;
     }
     .letter {
         color: gray;
@@ -26,8 +43,15 @@
 }
 
 #keyboard {
-    display: table;
-    .make-md-column(8);
+    .make-md-column(5);
     border: 1px solid green;
-    .make_key(48px);
+
+    display: table;
+    .make_key(32px);
+
+    #keyspace {
+        width: 15.2em;
+    }
 }
+
+
