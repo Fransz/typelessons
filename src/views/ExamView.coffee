@@ -1,9 +1,6 @@
 App = App or {}
 
 App.ExamView = Backbone.View.extend
-    # The typed strings last character is marked.
-    typedStringTemplate: _.template '<%= shortenedString %><span class="<%= lastScore %>"><%= lastChar %></span>'
-
     # The views element already exists.
     el: "#exam"
 
@@ -16,15 +13,23 @@ App.ExamView = Backbone.View.extend
     # The taskModel for which we created this exam.
     task: null
 
+    # The remaining string to be typed
+    toBeTypedString: ""
+
+
     initialize: (args) ->
         @task = args.task
+
+        # Show our testString.
+        @toBeTypedString = @model.get("testString")
+        @$("#teststring").html @toBeTypedString
 
         @listenTo @model, "change:testString", @renderTestString
         @model.trigger "change:testString"
 
         @listenTo @model, "change:lastChar", @showKey
-        @listenTo @model, "change:lastChar", @renderTypedString
         @listenTo @model, "change:lastChar", @renderScores
+        @listenTo @model, "change:lastChar", @renderToBeTypedString
         @listenTo @model, "change:completed", @examCompleted
 
         @$("#completed").hide()
@@ -34,14 +39,6 @@ App.ExamView = Backbone.View.extend
         # So we bind it to the document with jQuery's bind, and make sure we can use this by using underscores bindAll
         _.bindAll @, 'processKey'
         $(document).bind 'keypress', @processKey
-
-
-    # Shows our testString.
-    # Event handler for change:testString event on this views model.
-    #
-    # @return void
-    renderTestString: () ->
-        @$("#teststring").html @model.get "testString"
 
 
     # Set a class on the last pressed key element, remove it after 200ms.
@@ -70,29 +67,26 @@ App.ExamView = Backbone.View.extend
         id = if idMap[key] then idMap[key] else "#key#{key}"
 
         className = @model.get "lastScore"
-
         $(id).addClass(className)
 
         _f = () -> $(id).removeClass(className)
         setTimeout _f, 200
 
 
-    # Shows our typedString, with the last character highlighted.
-    # Event handler for change:lastKey event on this views model.
+    # Shows whats left of the string to be typed.
     #
-    # @param mark  wheter the last character should be marked with its score
     # @return void
-    renderTypedString: (mark=true) ->
-        typedString = @model.get "typedString"
-        last = typedString.length - 1
-        shortenedString = typedString[0 ... last]
-        lastChar = typedString[last]
+    renderToBeTypedString: () ->
+        @toBeTypedString = @toBeTypedString[1 ...]
 
-        lastScore = ''
-        lastScore = @model.get "lastScore" if mark
+        # A leading (or the first) space should be replaced by a &nbsp;
+        @$("#teststring").html @toBeTypedString.replace(' ', "&nbsp;")
 
-        @$("#typedstring").html @typedStringTemplate { shortenedString: shortenedString, lastChar: lastChar, lastScore: lastScore }
+        className = @model.get "lastScore"
+        @$("#stringwrapper").addClass(className)
 
+        _f = () -> @$("#stringwrapper").removeClass(className)
+        setTimeout _f, 200
     
 
     # Show the last scores
@@ -148,7 +142,7 @@ App.ExamView = Backbone.View.extend
         @stopListening()
         $(document).unbind 'keypress'
 
-        @renderTypedString false
+        @renderToBeTypedString()
         @showKey()
         @renderScores()
         @$('#completed').show()
