@@ -38,6 +38,23 @@
     <script type="text/template" id="newmodelerrortemplate">
         <div class="error"><%= error %></div>
     </script>
+    <script type="text/template" id="tasktemplate">
+            <div class="keyboardrow">
+                <% for(var i = 0, l = letters.length; i < l ; i++) { %>
+                    <div class="key">
+                        <span class="letter"><%= letters[i] %></span>
+                    </div>
+                <% }; %>
+            </div>
+            <div class="scores">
+                <span><%= score.pass %></span>
+                <span><%= score.fail %></span>
+                <span><%= score.time %></span>
+                <span><%= score.tries %></span>
+            </div>
+    </script>
+
+
 
     <script src="../../build/js/typelessons.js"></script>
 
