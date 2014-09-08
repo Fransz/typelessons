@@ -3,6 +3,7 @@
 @import "variables.less";
 @import "mixins/grid.less";
 @import "mixins/center-block.less";
+@import "mixins/clearfix.less";
 
 @failColor: red;
 @passColor: #7fff00;
@@ -170,8 +171,14 @@
 
     .taskgroup {
         .make-md-column(3);
-        border:1px solid black;
-
         .make_key(16px);
+
+        padding:0 0;
+
+        .task {
+            margin:0.2em 0;
+            border: 1px solid yellow;
+            padding:0.5em 0.5em;
+        }
     }
 }
