@@ -231,17 +231,17 @@
 
                     <div class="row">
                         <div id="scores">
-                            <div id="pass">
+                            <div class="pass">
                                 <h1>Pass</h1> 
                                 <span class="score">0</span>
                                 <span class="glyphicon glyphicon-ok"></span>
                             </div>
-                            <div id="fail">
+                            <div class="fail">
                                 <h1>Fail</h1> 
                                 <span class="score">0</span>
                                 <span class="glyphicon glyphicon-remove"></span>
                             </div>
-                            <div id="time">
+                            <div class="time">
                                 <h1>Time</h1> <span class="score">00:00</span>
                             </div>
                         </div>
@@ -259,10 +259,21 @@
                                 <% }; %>
                             </div>
                             <div class="scores">
-                            <span><%= score.pass %></span>
-                            <span><%= score.fail %></span>
-                            <span><%= score.time %></span>
-                            <span><%= score.tries %></span>
+                                <div class="pass">
+                                    <span class="score"><%= score.pass %></span>
+                                    <span class="glyphicon glyphicon-ok"></span>
+                                </div>
+                                <div class="fail">
+                                    <span class="glyphicon glyphicon-remove"></span>
+                                    <span class="score"><%= score.fail %></span>
+                                </div>
+                                <div class="time">
+                                    <span class="score"><%= score.tries %></span>
+                                </div>
+                                <div class="tries">
+                                    <span class="glyphicon glyphicon-star"></span>
+                                    <span class="score"><%= score.tries %></span>
+                                </div>
                             </div>
                     </script>
 

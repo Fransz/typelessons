@@ -8,6 +8,7 @@
 @failColor: red;
 @passColor: #7fff00;
 @timeColor: blue;
+@triesColor: darkorange;
 
 #exam {
     .make-md-column(5);
@@ -72,7 +73,7 @@
         .center-block();
         margin-top:5em;
 
-        #pass, #fail, #time {
+        .pass, .fail, .time {
             .make-md-column(3);
 
             padding: 0 1em;
@@ -96,7 +97,7 @@
             }
         }
 
-        #pass {
+        .pass {
             .make-md-column-offset(1);
             border: 4px solid @passColor;
             background-color: #ddffdd;     
@@ -105,7 +106,7 @@
                 color: @passColor;
             }
         }
-        #fail {
+        .fail {
             .make-md-column-offset(1);
             border: 4px solid @failColor;
             background-color: #ffdddd;     
@@ -114,7 +115,7 @@
                 color: @failColor;
             }
         }
-        #time {
+        .time {
             .make-md-column-offset(1);
             border: 4px solid @timeColor;
             background-color: #ddddff;     
@@ -192,6 +193,36 @@
 
             .scores {
                 .clearfix();
+                margin:0.2em 0.5em 0 0.5em;
+
+                .pass, .time {
+                    float:left;
+                }
+                .fail, .tries {
+                    float:right;
+                }
+
+                .pass {
+                    .glyphicon {
+                        color: @passColor;
+                    }
+                }
+                .fail {
+                    .glyphicon {
+                        color: @failColor;
+                    }
+                }
+                .time {
+                    clear:right;
+                    .glyphicon {
+                        color: @timeColor;
+                    }
+                }
+                .tries {
+                    .glyphicon {
+                        color: @triesColor;
+                    }
+                }
             }
         }
 
