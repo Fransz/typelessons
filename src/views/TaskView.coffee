@@ -1,15 +1,10 @@
 App = App or {}
 
 App.TaskView = Backbone.View.extend
-    template: _.template """
-        <div class="task">
-            <%= letters %>
-            <span><%= score.pass %></span>
-            <span><%= score.fail %></span>
-            <span><%= score.time %></span>
-            <span><%= score.tries %></span>
-        </div>
-    """
+    tagName: "div"
+    className: "task"
+
+    template: _.template @$("#tasktemplate").html()
     
     events:
         dblclick: "createExam"
@@ -27,11 +22,11 @@ App.TaskView = Backbone.View.extend
                         task: @model
 
 
-    # Render the task. We show the models letters, and stats for completed exams.
+    # Render the task. We show the models letters but not spaces, and stats for completed exams.
     #
     # @return void
     render: () ->
-        letters = @model.get "letters"
+        letters = _.filter(@model.get("letters"), (l) -> l isnt ' ')
         score = @model.get("exams").cummScore()
         @$el.html @template letters: letters, score: score
         return @

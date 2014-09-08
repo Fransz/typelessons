@@ -248,6 +248,36 @@
                     </div>
                 </section>
 
+
+                <section id="tasks">
+                    <script type="text/template" id="tasktemplate">
+                            <div class="keyboardrow">
+                                <% for(var i = 0, l = letters.length; i < l ; i++) { %>
+                                    <div class="key">
+                                        <span class="letter"><%= letters[i] %></span>
+                                    </div>
+                                <% }; %>
+                            </div>
+                            <div class="scores">
+                            <span><%= score.pass %></span>
+                            <span><%= score.fail %></span>
+                            <span><%= score.time %></span>
+                            <span><%= score.tries %></span>
+                            </div>
+                    </script>
+
+                    <div class="row">
+                        <div id="2lettertasks" class="taskgroup"><div class="categorytitle">2 letters</div></div>
+                        <div id="4lettertasks" class="taskgroup"><div class="categorytitle">4 letters</div></div>
+                        <div id="6lettertasks" class="taskgroup"><div class="categorytitle">8 letters</div></div>
+                        <div id="8lettertasks" class="taskgroup"><div class="categorytitle">8 letters</div></div>
+                    </div>
+                </section>
+
+            </div>
+        </div>
+
+
                 <section id="newtask">
                     <script type="text/template" id="newmodelrowtemplate">
                         <div class="row"> </div>
@@ -279,16 +309,6 @@
                 <section id="appcontrols">
                     <button id="newtask">new task</button>
                 </section>
-
-                <section id="tasks">
-                    <div id="2letters"><div class="categorytitle">2 letters</div></div>
-                    <div id="4letters"><div class="categorytitle">4 letters</div></div>
-                    <div id="6letters"><div class="categorytitle">8 letters</div></div>
-                    <div id="8letters"><div class="categorytitle">8 letters</div></div>
-                </section>
-
-            </div>
-        </div>
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"> </script>
         <script src="http://documentcloud.github.com/underscore/underscore-min.js"> </script>

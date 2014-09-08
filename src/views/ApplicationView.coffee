@@ -46,7 +46,7 @@ App.ApplicationView = Backbone.View.extend
         @taskViews.push taskView
 
         grp = task.get("letters").length - 1
-        el = @$ "#tasks ##{grp}letters"
+        el = @$ "#tasks ##{grp}lettertasks"
         el = @$ "#tasks" unless el.length
 
         el.append taskView.render().el
@@ -69,7 +69,6 @@ App.ApplicationView = Backbone.View.extend
         @$("#newtask").hide()
 
     submitNewTask: (letters) ->
-        console.log letters
         @stopListening @newTaskView
         @$("#newtask").hide()
 
