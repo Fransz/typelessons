@@ -249,77 +249,82 @@
                 </section>
 
 
-                <section id="tasks">
-                    <script type="text/template" id="tasktemplate">
-                            <div class="keyrow">
-                                <% for(var i = 0, l = letters.length; i < l ; i++) { %>
-                                    <div class="key">
-                                        <span class="letter"><%= letters[i] %></span>
+                <div id="otherthenexam">
+                    <section id="tasks">
+                        <script type="text/template" id="tasktemplate">
+                                <div class="keyrow">
+                                    <% for(var i = 0, l = letters.length; i < l ; i++) { %>
+                                        <div class="key">
+                                            <span class="letter"><%= letters[i] %></span>
+                                        </div>
+                                    <% }; %>
+                                </div>
+                                <div class="scores">
+                                    <div class="pass">
+                                        <span class="score"><%= score.pass %></span>
+                                        <span class="glyphicon glyphicon-ok"></span>
                                     </div>
-                                <% }; %>
-                            </div>
-                            <div class="scores">
-                                <div class="pass">
-                                    <span class="score"><%= score.pass %></span>
-                                    <span class="glyphicon glyphicon-ok"></span>
+                                    <div class="fail">
+                                        <span class="glyphicon glyphicon-remove"></span>
+                                        <span class="score"><%= score.fail %></span>
+                                    </div>
+                                    <div class="time">
+                                        <span class="score"><%= score.time %></span>
+                                    </div>
+                                    <div class="tries">
+                                        <span class="glyphicon glyphicon-star"></span>
+                                        <span class="score"><%= score.tries %></span>
+                                    </div>
                                 </div>
-                                <div class="fail">
-                                    <span class="glyphicon glyphicon-remove"></span>
-                                    <span class="score"><%= score.fail %></span>
-                                </div>
-                                <div class="time">
-                                    <span class="score"><%= score.time %></span>
-                                </div>
-                                <div class="tries">
-                                    <span class="glyphicon glyphicon-star"></span>
-                                    <span class="score"><%= score.tries %></span>
-                                </div>
-                            </div>
-                    </script>
+                        </script>
 
-                    <div class="row">
-                        <div id="2lettertasks" class="taskgroup"><h1 class="categorytitle">2 letters</h1></div>
-                        <div id="4lettertasks" class="taskgroup"><h1 class="categorytitle">4 letters</h1></div>
-                        <div id="6lettertasks" class="taskgroup"><h1 class="categorytitle">6 letters</h1></div>
-                        <div id="8lettertasks" class="taskgroup"><h1 class="categorytitle">8 letters</h1></div>
+                        <div class="row">
+                            <div id="2lettertasks" class="taskgroup"><h1 class="categorytitle">2 letters</h1></div>
+                            <div id="4lettertasks" class="taskgroup"><h1 class="categorytitle">4 letters</h1></div>
+                            <div id="6lettertasks" class="taskgroup"><h1 class="categorytitle">6 letters</h1></div>
+                            <div id="8lettertasks" class="taskgroup"><h1 class="categorytitle">8 letters</h1></div>
+                        </div>
+                    </section>
+
+                    <div id="controls">
+                        <section id="appcontrols">
+                            <button id="newtaskcontrol">new task</button>
+                        </section>
+
+                        <section id="newtask">
+                            <script type="text/template" id="newmodelrowtemplate">
+                                <div class="row"> </div>
+                            </script>
+
+                            <script type="text/template" id="newmodelinputtemplate">
+                                <div class="letterweightpair">
+                                    <label for="<%= 'newtaskinput' + letter %>">l:</label>
+                                    <input disabled maxlength="1" id="<%= 'newtaskinput' + letter %>" class="letter" type="text" value="<%= letter %>" />
+                                    <label for="<%= 'newtaskinput' + letter  + 'w'%>">w:</label>
+                                    <input id="<%= 'newtaskinput' + letter  + 'w'%>" class="weight" type="text" value="<%= weight %>" />
+                                    <span class="delete">X</span>
+                                </div>
+                            </script>
+
+                            <script type="text/template" id="newmodelerrortemplate">
+                                <div class="error"><%= error %></div>
+                            </script>
+
+                            <div id="rows"></div>
+                            <div id="controls">
+                                <button id="letters">auto letters</button>
+                                <button id="autoweights">auto weights</button>
+                                <button id="ok">ok</button>
+                                <button id="cancel">cancel</button>
+                            </div>
+                        </section>
                     </div>
-                </section>
+                </div>
 
             </div>
         </div>
 
 
-                <section id="newtask">
-                    <script type="text/template" id="newmodelrowtemplate">
-                        <div class="row"> </div>
-                    </script>
-
-                    <script type="text/template" id="newmodelinputtemplate">
-                        <div class="letterweightpair">
-                            <label for="<%= 'newtaskinput' + letter %>">l:</label>
-                            <input disabled maxlength="1" id="<%= 'newtaskinput' + letter %>" class="letter" type="text" value="<%= letter %>" />
-                            <label for="<%= 'newtaskinput' + letter  + 'w'%>">w:</label>
-                            <input id="<%= 'newtaskinput' + letter  + 'w'%>" class="weight" type="text" value="<%= weight %>" />
-                            <span class="delete">X</span>
-                        </div>
-                    </script>
-
-                    <script type="text/template" id="newmodelerrortemplate">
-                        <div class="error"><%= error %></div>
-                    </script>
-
-                    <div id="rows"></div>
-                    <div id="controls">
-                        <button id="letters">auto letters</button>
-                        <button id="autoweights">auto weights</button>
-                        <button id="ok">ok</button>
-                        <button id="cancel">cancel</button>
-                    </div>
-                </section>
-
-                <section id="appcontrols">
-                    <button id="newtask">new task</button>
-                </section>
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"> </script>
         <script src="http://documentcloud.github.com/underscore/underscore-min.js"> </script>

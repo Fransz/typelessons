@@ -157,78 +157,86 @@
 }
 
 
-#tasks {
+#otherthenexam
+{
     .make-md-column-offset(1);
     .make-md-column(4);
 
+    #tasks {
+        .taskgroup {
+            .make-md-column(3);
+            max-height: 600px;
+            padding:0 0.1em;
 
-    .taskgroup {
-        .make-md-column(3);
-        max-height: 600px;
-        padding:0 0.1em;
+            overflow:scroll;
 
-        overflow:scroll;
+            h1 {
+                font-size:16px;
+                margin:1em 0;
+                text-align:center;
+            }
 
-        h1 {
-            font-size:16px;
-            margin:1em 0;
-            text-align:center;
+
+            .task {
+                margin:0.2em 0px;
+                border: 1px solid yellow;
+                padding:0.5em 0.5em;
+                    
+                .keyrow {
+                    .clearfix();
+                    .make_key(16px);
+
+                    .key {
+                        border:1px solid #dcdcdc;
+                        padding-bottom:2px;
+                    };
+                }
+
+                .key:nth-child(4) {
+                    .clearfix();
+                }
+
+                .scores {
+                    .clearfix();
+                    margin:0.2em 0.5em 0 0.5em;
+
+                    .pass, .time {
+                        float:left;
+                    }
+                    .fail, .tries {
+                        float:right;
+                    }
+
+                    .pass {
+                        .glyphicon {
+                            color: @passColor;
+                        }
+                    }
+                    .fail {
+                        .glyphicon {
+                            color: @failColor;
+                        }
+                    }
+                    .time {
+                        clear:right;
+                        .glyphicon {
+                            color: @timeColor;
+                        }
+                    }
+                    .tries {
+                        .glyphicon {
+                            color: @triesColor;
+                        }
+                    }
+                }
+            }
         }
+    }
 
 
-        .task {
-            margin:0.2em 0px;
-            border: 1px solid yellow;
-            padding:0.5em 0.5em;
-                
-            .keyrow {
-                .clearfix();
-                .make_key(16px);
-
-                .key {
-                    border:1px solid #dcdcdc;
-                    padding-bottom:2px;
-                };
-            }
-
-            .key:nth-child(4) {
-                .clearfix();
-            }
-
-            .scores {
-                .clearfix();
-                margin:0.2em 0.5em 0 0.5em;
-
-                .pass, .time {
-                    float:left;
-                }
-                .fail, .tries {
-                    float:right;
-                }
-
-                .pass {
-                    .glyphicon {
-                        color: @passColor;
-                    }
-                }
-                .fail {
-                    .glyphicon {
-                        color: @failColor;
-                    }
-                }
-                .time {
-                    clear:right;
-                    .glyphicon {
-                        color: @timeColor;
-                    }
-                }
-                .tries {
-                    .glyphicon {
-                        color: @triesColor;
-                    }
-                }
-            }
-        }
-
+    #appcontrols {
+        margin:2em -15px;
+        border:1px solid yellow;
+        padding:0.5em 0.5em;
     }
 }
