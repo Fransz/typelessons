@@ -21,11 +21,11 @@
 
 
     <!-- templates on which our code relies -->
-    <script type="text/template" id="newmodelrowtemplate">
+    <script type="text/template" id="newtaskrowtemplate">
         <div class="row"> </div>
     </script>
 
-    <script type="text/template" id="newmodelinputtemplate">
+    <script type="text/template" id="newtaskinputtemplate">
         <div class="letterweightpair">
             <label for="<%= 'newtaskinput' + letter %>">l:</label>
             <input disabled maxlength="1" id="<%= 'newtaskinput' + letter %>" class="letter" type="text" value="<%= letter %>" />
@@ -35,7 +35,7 @@
         </div>
     </script>
 
-    <script type="text/template" id="newmodelerrortemplate">
+    <script type="text/template" id="newtaskerrortemplate">
         <div class="error"><%= error %></div>
     </script>
     <script type="text/template" id="tasktemplate">
