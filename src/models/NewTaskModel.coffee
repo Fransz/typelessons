@@ -104,7 +104,7 @@ App.NewTaskModel = Backbone.Model.extend
     # A letter "space" should exist.
     #
     # @return void
-    autoWeights: () ->
+    evenWeights: () ->
         ls = @get "letters"
         space = ls["space"]
         delete ls["space"]

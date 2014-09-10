@@ -11,12 +11,12 @@ App.NewTaskView = Backbone.View.extend
         "keypress .letter" : "addLetter"
         "change .weight" : "addWeight"
         "click .delete" : "deleteLetter"
-        "click #autoweights" : "fillAutoWeights"
-        "click #cancel" : "cancel"
-        "click #ok" : "submit"
+        "click #newtaskevenweights" : "fillEvenWeights"
+        "click #newtaskcancel" : "cancel"
+        "click #newtaskok" : "submit"
 
     # flag signs that some weight was filled in by the user.
-    autoWeights: true
+    evenWeights: true
     
 
     initialize: () ->
@@ -27,7 +27,7 @@ App.NewTaskView = Backbone.View.extend
 
 
     # Add the given letter to our model, 
-    # disable the letter input, focus the weight input or show autoweights
+    # disable the letter input, focus the weight input or show evenweights
     #
     # @param evt The event
     # #return void
@@ -41,8 +41,8 @@ App.NewTaskView = Backbone.View.extend
             lElm.val(letter)
             lElm.prop 'disabled', true
 
-            if @autoWeights
-                @model.autoWeights()
+            if @evenWeights
+                @model.evenWeights()
                 @render()
             else
                 (wElm.get())[0].focus()
@@ -60,7 +60,7 @@ App.NewTaskView = Backbone.View.extend
         w = elm.val()
         l = elm.closest(".letterweightpair").children(".letter").val()
 
-        @autoWeights = false
+        @evenWeights = false
         if @model.addWeight l, w
             @render()
 
@@ -105,14 +105,12 @@ App.NewTaskView = Backbone.View.extend
         # let the tasksCollection come up with an array of letters, weight pairs
         # fill in
 
-    fillAutoWeights: () ->
-        @autoWeights = true
-        @model.autoWeights()
+    fillEvenWeights: () ->
+        @evenWeights = true
+        @model.evenWeights()
         @render()
 
         return false
-        # let the newTaskModel come up with an array of letter, weight pairs
-        # fill in
 
     # render all letter and weight pairs of the NewModel, 4 in a row.
     # All letters inputs will be disabled; the last empty letter input will receive focus.
