@@ -41,6 +41,7 @@ App.ApplicationView = Backbone.View.extend
     # @param task the task to be rendered
     # @return void
     renderTask: (task) ->
+        console.log "render"
         taskView = new App.TaskView
             model: task
         @taskViews.push taskView
@@ -56,23 +57,22 @@ App.ApplicationView = Backbone.View.extend
     #
     # @return void
     showNewTaskForm: () ->
+        @hideNewTaskForm()
         @$("#newtask").show()
-        if @newTaskView
-            @stopListening @newTaskView
 
         @newTaskView = new App.NewTaskView model: new App.NewTaskModel()
         @listenTo @newTaskView, "cancelNewTask", @hideNewTaskForm
         @listenTo @newTaskView, "submitNewTask", @submitNewTask
 
     hideNewTaskForm: () ->
+        @newTaskView?.undelegateEvents()
         @stopListening @newTaskView
         @$("#newtask").hide()
+        @newTaskView = null
 
     submitNewTask: (letters) ->
-        @stopListening @newTaskView
-        @$("#newtask").hide()
-
+        @hideNewTaskForm()
         ls = _.keys letters
         ws = _.map(ls, ((l) -> letters[l]))
-        @tasks.create letters: ls, weights: ws
+        @tasks.create {letters: ls, weights: ws}, { wait: true }
 

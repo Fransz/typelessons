@@ -85,6 +85,7 @@ App.NewTaskView = Backbone.View.extend
         console.log "cancel"
         @undelegateEvents()
         @trigger "cancelNewTask"
+        return false
 
     submit: () ->
         console.log "submit"
@@ -92,7 +93,7 @@ App.NewTaskView = Backbone.View.extend
             ls = @model.get "letters"
             ls[" "] = ls["space"]
             delete ls["space"]
-            @trigger "submitNewTask", @model.get "letters"
+            @trigger "submitNewTask", ls
             @undelegateEvents()
 
         return false
