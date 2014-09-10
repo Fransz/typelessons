@@ -20,8 +20,6 @@ App.NewTaskView = Backbone.View.extend
     
 
     initialize: () ->
-        # @model.set "letters", { "a": 1}
-        # @model.set "letters", { "e": 1, "f": 2, "g": 3, "h": 4,  "a": 1, "b": 2, "c": 3, "d": 4}
         @listenTo @model, "invalid", @renderError
         @render()
 

@@ -215,5 +215,9 @@ describe("An New Task model", function () {
             r = newTask.addWeight('i', "0.1125");
             expect(newTask.isValid()).to.be.false;
         });
+
+        it.skip("should not validate when a task with the same letters is already known", function () {
+
+        });
     });
 });
