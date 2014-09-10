@@ -13,7 +13,7 @@ App.ApplicationView = Backbone.View.extend
     el: "body"
 
     events: {
-        "click #appcontrols #newtask": "showNewTaskForm"
+        "click #appcontrols #newtaskcontrol": "showNewTaskForm"
     }
 
     initialize: () ->

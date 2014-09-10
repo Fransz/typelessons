@@ -292,31 +292,33 @@
                         </section>
 
                         <section id="newtask">
-                            <script type="text/template" id="newmodelrowtemplate">
-                                <div class="row"> </div>
+                            <script type="text/template" id="newtaskrowtemplate">
+                                <div class="letterweightpairrow"> </div>
                             </script>
 
-                            <script type="text/template" id="newmodelinputtemplate">
+                            <script type="text/template" id="newtaskinputtemplate">
                                 <div class="letterweightpair">
-                                    <label for="<%= 'newtaskinput' + letter %>">l:</label>
+                                    <label for="<%= 'newtaskinput' + letter %>">letter</label>
                                     <input disabled maxlength="1" id="<%= 'newtaskinput' + letter %>" class="letter" type="text" value="<%= letter %>" />
-                                    <label for="<%= 'newtaskinput' + letter  + 'w'%>">w:</label>
+                                    <label for="<%= 'newtaskinput' + letter  + 'w'%>">weight</label>
                                     <input id="<%= 'newtaskinput' + letter  + 'w'%>" class="weight" type="text" value="<%= weight %>" />
-                                    <span class="delete">X</span>
+                                    <span class="delete glyphicon glyphicon-remove"></span>
                                 </div>
                             </script>
 
-                            <script type="text/template" id="newmodelerrortemplate">
+                            <script type="text/template" id="newtaskerrortemplate">
                                 <div class="error"><%= error %></div>
                             </script>
 
-                            <div id="rows"></div>
-                            <div id="controls">
-                                <button id="letters">auto letters</button>
-                                <button id="autoweights">auto weights</button>
-                                <button id="ok">ok</button>
-                                <button id="cancel">cancel</button>
-                            </div>
+                            <form>
+                                <div class="letterweightpairrows"></div>
+                                <div class="controls">
+                                    <button id="newtaskletters">auto letters</button>
+                                    <button id="newtaskautoweights">auto weights</button>
+                                    <button id="newtaskok">ok</button>
+                                    <button id="newtaskcancel">cancel</button>
+                                </div>
+                            </form>
                         </section>
                     </div>
                 </div>

@@ -3,9 +3,9 @@ App = App or {}
 App.NewTaskView = Backbone.View.extend
     el: "#newtask"
 
-    rowTemplate: _.template @$("#newmodelrowtemplate").html()
-    inputTemplate: _.template @$("#newmodelinputtemplate").html()
-    errorTemplate: _.template @$("#newmodelerrortemplate").html()
+    rowTemplate: _.template @$("#newtaskrowtemplate").html()
+    inputTemplate: _.template @$("#newtaskinputtemplate").html()
+    errorTemplate: _.template @$("#newtaskerrortemplate").html()
 
     events:
         "keypress .letter" : "addLetter"
@@ -123,13 +123,13 @@ App.NewTaskView = Backbone.View.extend
         error = @$el.find(".error")
         error.remove()
 
-        rowsElement = @$ "#rows"
+        rowsElement = @$ ".letterweightpairrows"
         rowsElement.html("")
 
-        n = 4                                               # nr inputs on a row.
+        n = 2                                               # nr inputs on a row.
         letters_ = _.clone(@model.get("letters"))
 
-        # first render data for the "space" character in its own row
+        # first render data for the "space" character in its own row, with its own style
         space = letters_["space"]
         delete letters_["space"]
 
@@ -158,7 +158,7 @@ App.NewTaskView = Backbone.View.extend
             rowsElement.append row
 
         # add a new input, maybe in a new row.
-        if n is 4
+        if n is 2
             row = $(@rowTemplate({}).trim())
             rowsElement.append row
 
