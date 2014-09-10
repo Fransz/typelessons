@@ -165,7 +165,7 @@
     #tasks {
         .taskgroup {
             .make-md-column(3);
-            max-height: 600px;
+            max-height: 400px;
             padding:0 0.1em;
 
             overflow:scroll;
@@ -287,9 +287,16 @@
                 }
             }
 
-            .controls {
-                margin-top:5em;
+            #newtaskcontrols {
                 clear:both;
+
+                margin:2em -15px;
+                border:1px solid yellow;
+                padding:0.5em 0.5em;
+
+                button {
+                    margin:0 1em;
+                }
             }
         }
 
