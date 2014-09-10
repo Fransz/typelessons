@@ -97,9 +97,7 @@ App.NewTaskView = Backbone.View.extend
             @trigger "submitNewTask", @model.get "letters"
             @undelegateEvents()
 
-        # validate weights
-        # if pass create new model
-        # if fail error message
+        return false
 
     fillAutoLetters: () ->
         # let the tasksCollection come up with an array of letters, weight pairs

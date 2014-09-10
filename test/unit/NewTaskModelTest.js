@@ -139,17 +139,80 @@ describe("An New Task model", function () {
     });
 
     describe("upon submission", function () {
-        before(function () {
+        beforeEach(function () {
             newTask = new App.NewTaskModel();
         });
 
-        it("should only validate with 3 letters, one of which is space", function () {
+        it("should validate with 3, 5, 7, 9  letters, one of which is space", function () {
             /* jshint -W030, -W069 */
-            r = newTask.addWeight('a', "0.1");
-            r = newTask.addWeight('b', "0.9");
+            r = newTask.addWeight('a', "0.45");
+            r = newTask.addWeight('b', "0.45");
             expect(newTask.isValid()).to.be.true;
 
-            newTask.deleteLetter('a');
+            r = newTask.addWeight('c', "0.225");
+            r = newTask.addWeight('d', "0.225");
+            expect(newTask.isValid()).to.be.true;
+
+            r = newTask.addWeight('e', "0.15");
+            r = newTask.addWeight('f', "0.15");
+            expect(newTask.isValid()).to.be.true;
+
+            r = newTask.addWeight('g', "0.1125");
+            r = newTask.addWeight('h', "0.1125");
+            expect(newTask.isValid()).to.be.true;
+        });
+
+        it("should not validate with 3, 5, 7, 9  letters, none of which is space", function () {
+            /* jshint -W030, -W069 */
+            newTask.deleteLetter('space');
+
+            r = newTask.addWeight('s', "0.1");
+            r = newTask.addWeight('a', "0.45");
+            r = newTask.addWeight('b', "0.45");
+            expect(newTask.isValid()).to.be.false;
+
+            r = newTask.addWeight('c', "0.225");
+            r = newTask.addWeight('d', "0.225");
+            expect(newTask.isValid()).to.be.false;
+
+            r = newTask.addWeight('e', "0.15");
+            r = newTask.addWeight('f', "0.15");
+            expect(newTask.isValid()).to.be.false;
+
+            r = newTask.addWeight('g', "0.1125");
+            r = newTask.addWeight('h', "0.1125");
+            expect(newTask.isValid()).to.be.false;
+        });
+
+        it("should not validate with 2, 4, 6, 8  letters, one of which is space", function () {
+            /* jshint -W030, -W069 */
+            r = newTask.addWeight('b', "0.45");
+            expect(newTask.isValid()).to.be.false;
+
+            r = newTask.addWeight('c', "0.225");
+            r = newTask.addWeight('d', "0.225");
+            expect(newTask.isValid()).to.be.false;
+
+            r = newTask.addWeight('e', "0.15");
+            r = newTask.addWeight('f', "0.15");
+            expect(newTask.isValid()).to.be.false;
+
+            r = newTask.addWeight('g', "0.1125");
+            r = newTask.addWeight('h', "0.1125");
+            expect(newTask.isValid()).to.be.false;
+        });
+
+        it("should not validate with 10 letters, one of which is space", function () {
+            /* jshint -W030, -W069 */
+            r = newTask.addWeight('a', "0.45");
+            r = newTask.addWeight('b', "0.45");
+            r = newTask.addWeight('c', "0.225");
+            r = newTask.addWeight('d', "0.225");
+            r = newTask.addWeight('e', "0.15");
+            r = newTask.addWeight('f', "0.15");
+            r = newTask.addWeight('g', "0.1125");
+            r = newTask.addWeight('h', "0.1125");
+            r = newTask.addWeight('i', "0.1125");
             expect(newTask.isValid()).to.be.false;
         });
     });
