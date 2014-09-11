@@ -90,11 +90,10 @@ App.NewTaskView = Backbone.View.extend
     submit: () ->
         console.log "submit"
         if @model.isValid()
-            ls = @model.get "letters"
+            ls = _.clone(@model.get "letters")
             ls[" "] = ls["space"]
             delete ls["space"]
             @trigger "submitNewTask", ls
-            @undelegateEvents()
 
         return false
 
@@ -144,7 +143,7 @@ App.NewTaskView = Backbone.View.extend
         while ls.length > 0
             row = $(@rowTemplate({}).trim())
 
-            # n is 4, or nr of left if nr of left < 4
+            # n is 2, or nr of left if nr of left < 2
             n = if n > ls.length then ls.length else n
             ls_ = ls[0 .. n - 1]
             ls = ls[n ..]

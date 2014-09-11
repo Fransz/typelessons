@@ -20,7 +20,6 @@ App.ApplicationView = Backbone.View.extend
         @$("#newtask").hide()
 
         @tasks = new App.TaskCollection()
-
         @listenTo @tasks, "add", @renderTask
         @tasks.fetch()
 
@@ -65,8 +64,10 @@ App.ApplicationView = Backbone.View.extend
         @listenTo @newTaskView, "submitNewTask", @submitNewTask
 
     hideNewTaskForm: () ->
-        @newTaskView?.undelegateEvents()
-        @stopListening @newTaskView
+        if @newTaskView
+            @newTaskView.undelegateEvents()
+            @stopListening @newTaskView
+
         @$("#newtask").hide()
         @newTaskView = null
 
@@ -74,5 +75,5 @@ App.ApplicationView = Backbone.View.extend
         @hideNewTaskForm()
         ls = _.keys letters
         ws = _.map(ls, ((l) -> letters[l]))
-        @tasks.create {letters: ls, weights: ws}, { wait: true }
+        @tasks.create letters: ls, weights: ws
 
