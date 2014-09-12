@@ -27,7 +27,7 @@ App.TaskModel = Backbone.Model.extend
         if @get("weights").length
             # weights are given, be sure given they count up to 1 by manipulating the last (space) weight.
             ws = @get "weights"
-            ws[ws.length - 1] = 1 - _.reduce ws[0 ... -1], ((m, v) -> m + v)
+            ws[ws.length - 1] = 1 - _.reduce ws[0 ... -1], ((m, v) -> m + v), 0
         else
             # weights are not given, calculate weights for each letter.
             @set "weights", @simpleWeights()
@@ -35,6 +35,22 @@ App.TaskModel = Backbone.Model.extend
         # init the examcollection
         @set "exams", new App.ExamCollection(@get "exams")
 
+
+    # Validates a taskmodel
+    #
+    # @return error string if the model doesnt validate; "" if we do validate.
+    validate: () ->
+        error = ""
+        ls = @get "letters"
+        ws = @get "weights"
+
+        if ls[ls.length - 1] isnt ' '
+            error = 'A tasks letters should have a space in its last position'
+
+        if ws[ws.length - 1] isnt 1 - _.reduce ws[0 ... -1], ((m, v) -> m + v), 0
+            error = 'A tasks weights (without space) should sum up to 1 - spaces weight'
+
+        return error
 
     # Calculate propability for each letter appearing in an exams string
     # For ' ' we have probability as given, all other letters have equal probability
@@ -47,7 +63,7 @@ App.TaskModel = Backbone.Model.extend
         p = (1 - space) / (ls.length - 1)
 
         ws = _.map ls, ((e) -> if e is ' ' then space else p)
-        ws[ws.length - 1] = 1 - _.reduce ws[0 ... -1], ((m, v) -> m + v)
+        ws[ws.length - 1] = 1 - _.reduce ws[0 ... -1], ((m, v) -> m + v), 0
         return ws
     
         
