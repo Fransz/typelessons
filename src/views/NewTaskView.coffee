@@ -82,13 +82,11 @@ App.NewTaskView = Backbone.View.extend
     # @param evt
     # @return void
     cancel: (evt) ->
-        console.log "cancel"
         @undelegateEvents()
         @trigger "cancelNewTask"
         return false
 
     submit: () ->
-        console.log "submit"
         if @model.isValid()
             ls = _.clone(@model.get "letters")
             ls[" "] = ls["space"]

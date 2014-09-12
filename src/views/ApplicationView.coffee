@@ -40,7 +40,6 @@ App.ApplicationView = Backbone.View.extend
     # @param task the task to be rendered
     # @return void
     renderTask: (task) ->
-        console.log "render"
         taskView = new App.TaskView
             model: task
         @taskViews.push taskView
