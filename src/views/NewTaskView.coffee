@@ -3,31 +3,29 @@ App = App or {}
 App.NewTaskView = Backbone.View.extend
     el: "#newtask"
 
-    rowTemplate: _.template @$("#newmodelrowtemplate").html()
-    inputTemplate: _.template @$("#newmodelinputtemplate").html()
-    errorTemplate: _.template @$("#newmodelerrortemplate").html()
+    rowTemplate: _.template @$("#newtaskrowtemplate").html()
+    inputTemplate: _.template @$("#newtaskinputtemplate").html()
+    errorTemplate: _.template @$("#newtaskerrortemplate").html()
 
     events:
         "keypress .letter" : "addLetter"
         "change .weight" : "addWeight"
         "click .delete" : "deleteLetter"
-        "click #autoweights" : "fillAutoWeights"
-        "click #cancel" : "cancel"
-        "click #ok" : "submit"
+        "click #newtaskevenweights" : "fillEvenWeights"
+        "click #newtaskcancel" : "cancel"
+        "click #newtaskok" : "submit"
 
     # flag signs that some weight was filled in by the user.
-    autoWeights: true
+    evenWeights: true
     
 
     initialize: () ->
-        # @model.set "letters", { "a": 1}
-        # @model.set "letters", { "e": 1, "f": 2, "g": 3, "h": 4,  "a": 1, "b": 2, "c": 3, "d": 4}
         @listenTo @model, "invalid", @renderError
         @render()
 
 
     # Add the given letter to our model, 
-    # disable the letter input, focus the weight input or show autoweights
+    # disable the letter input, focus the weight input or show evenweights
     #
     # @param evt The event
     # #return void
@@ -35,14 +33,15 @@ App.NewTaskView = Backbone.View.extend
         lElm = $(evt.target)
         wElm = lElm.closest(".letterweightpair").children(".weight")
 
-        letter = String.fromCharCode evt.which
+        # @see http://stackoverflow.com/questions/5566937/javascript-map-array-with-fromcharcode-character-length
+        letter = String.fromCharCode(evt.which)
 
         if @model.addLetter(letter)
             lElm.val(letter)
             lElm.prop 'disabled', true
 
-            if @autoWeights
-                @model.autoWeights()
+            if @evenWeights
+                @model.evenWeights()
                 @render()
             else
                 (wElm.get())[0].focus()
@@ -60,7 +59,7 @@ App.NewTaskView = Backbone.View.extend
         w = elm.val()
         l = elm.closest(".letterweightpair").children(".letter").val()
 
-        @autoWeights = false
+        @evenWeights = false
         if @model.addWeight l, w
             @render()
 
@@ -84,35 +83,29 @@ App.NewTaskView = Backbone.View.extend
     # @param evt
     # @return void
     cancel: (evt) ->
-        console.log "cancel"
         @undelegateEvents()
         @trigger "cancelNewTask"
+        return false
 
     submit: () ->
-        console.log "submit"
         if @model.isValid()
-            ls = @model.get "letters"
+            ls = _.clone(@model.get "letters")
             ls[" "] = ls["space"]
             delete ls["space"]
-            @trigger "submitNewTask", @model.get "letters"
-            @undelegateEvents()
+            @trigger "submitNewTask", ls
 
-        # validate weights
-        # if pass create new model
-        # if fail error message
+        return false
 
     fillAutoLetters: () ->
         # let the tasksCollection come up with an array of letters, weight pairs
         # fill in
 
-    fillAutoWeights: () ->
-        @autoWeights = true
-        @model.autoWeights()
+    fillEvenWeights: () ->
+        @evenWeights = true
+        @model.evenWeights()
         @render()
 
         return false
-        # let the newTaskModel come up with an array of letter, weight pairs
-        # fill in
 
     # render all letter and weight pairs of the NewModel, 4 in a row.
     # All letters inputs will be disabled; the last empty letter input will receive focus.
@@ -120,16 +113,16 @@ App.NewTaskView = Backbone.View.extend
     #
     # @return void
     render: () ->
-        error = @$el.find(".error")
+        error = @$el.find(".newtaskerror")
         error.remove()
 
-        rowsElement = @$ "#rows"
+        rowsElement = @$ ".letterweightpairrows"
         rowsElement.html("")
 
-        n = 4                                               # nr inputs on a row.
+        n = 2                                               # nr inputs on a row.
         letters_ = _.clone(@model.get("letters"))
 
-        # first render data for the "space" character in its own row
+        # first render data for the "space" character in its own row, with its own style
         space = letters_["space"]
         delete letters_["space"]
 
@@ -149,7 +142,7 @@ App.NewTaskView = Backbone.View.extend
         while ls.length > 0
             row = $(@rowTemplate({}).trim())
 
-            # n is 4, or nr of left if nr of left < 4
+            # n is 2, or nr of left if nr of left < 2
             n = if n > ls.length then ls.length else n
             ls_ = ls[0 .. n - 1]
             ls = ls[n ..]
@@ -158,7 +151,7 @@ App.NewTaskView = Backbone.View.extend
             rowsElement.append row
 
         # add a new input, maybe in a new row.
-        if n is 4
+        if n is 2
             row = $(@rowTemplate({}).trim())
             rowsElement.append row
 
@@ -169,5 +162,5 @@ App.NewTaskView = Backbone.View.extend
 
 
     renderError: (model, error) ->
-        @$el.find(".error").remove()
+        @$el.find(".newtaskerror").remove()
         @$el.append @errorTemplate error: error

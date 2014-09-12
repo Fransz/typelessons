@@ -13,14 +13,13 @@ App.ApplicationView = Backbone.View.extend
     el: "body"
 
     events: {
-        "click #appcontrols #newtask": "showNewTaskForm"
+        "click #appcontrols #newtaskcontrol": "showNewTaskForm"
     }
 
     initialize: () ->
         @$("#newtask").hide()
 
         @tasks = new App.TaskCollection()
-
         @listenTo @tasks, "add", @renderTask
         @tasks.fetch()
 
@@ -46,33 +45,37 @@ App.ApplicationView = Backbone.View.extend
         @taskViews.push taskView
 
         grp = task.get("letters").length - 1
-        el = @$ "#tasks ##{grp}letters"
-        el = @$ "#tasks" unless el.length
+        el = @$ "#tasks ##{grp}lettertasks"
 
         el.append taskView.render().el
+
+        # nr of tasks
+        hdr = el.closest(".taskgroupwrapper").find(".taskgroupheader .count")
+        nr = el.children().length
+        hdr.html "#{nr} tasks"
 
 
     # enable the new task section
     #
     # @return void
     showNewTaskForm: () ->
+        @hideNewTaskForm()
         @$("#newtask").show()
-        if @newTaskView
-            @stopListening @newTaskView
 
         @newTaskView = new App.NewTaskView model: new App.NewTaskModel()
         @listenTo @newTaskView, "cancelNewTask", @hideNewTaskForm
         @listenTo @newTaskView, "submitNewTask", @submitNewTask
 
     hideNewTaskForm: () ->
-        @stopListening @newTaskView
+        if @newTaskView
+            @newTaskView.undelegateEvents()
+            @stopListening @newTaskView
+
         @$("#newtask").hide()
+        @newTaskView = null
 
     submitNewTask: (letters) ->
-        console.log letters
-        @stopListening @newTaskView
-        @$("#newtask").hide()
-
+        @hideNewTaskForm()
         ls = _.keys letters
         ws = _.map(ls, ((l) -> letters[l]))
         @tasks.create letters: ls, weights: ws

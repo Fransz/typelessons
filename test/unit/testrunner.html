@@ -21,11 +21,11 @@
 
 
     <!-- templates on which our code relies -->
-    <script type="text/template" id="newmodelrowtemplate">
+    <script type="text/template" id="newtaskrowtemplate">
         <div class="row"> </div>
     </script>
 
-    <script type="text/template" id="newmodelinputtemplate">
+    <script type="text/template" id="newtaskinputtemplate">
         <div class="letterweightpair">
             <label for="<%= 'newtaskinput' + letter %>">l:</label>
             <input disabled maxlength="1" id="<%= 'newtaskinput' + letter %>" class="letter" type="text" value="<%= letter %>" />
@@ -35,9 +35,26 @@
         </div>
     </script>
 
-    <script type="text/template" id="newmodelerrortemplate">
+    <script type="text/template" id="newtaskerrortemplate">
         <div class="error"><%= error %></div>
     </script>
+    <script type="text/template" id="tasktemplate">
+            <div class="keyboardrow">
+                <% for(var i = 0, l = letters.length; i < l ; i++) { %>
+                    <div class="key">
+                        <span class="letter"><%= letters[i] %></span>
+                    </div>
+                <% }; %>
+            </div>
+            <div class="scores">
+                <span><%= score.pass %></span>
+                <span><%= score.fail %></span>
+                <span><%= score.time %></span>
+                <span><%= score.tries %></span>
+            </div>
+    </script>
+
+
 
     <script src="../../build/js/typelessons.js"></script>
 
