@@ -46,9 +46,13 @@ App.ApplicationView = Backbone.View.extend
 
         grp = task.get("letters").length - 1
         el = @$ "#tasks ##{grp}lettertasks"
-        el = @$ "#tasks" unless el.length
 
         el.append taskView.render().el
+
+        # nr of tasks
+        hdr = el.closest(".taskgroupwrapper").find(".taskgroupheader .count")
+        nr = el.children().length
+        hdr.html "#{nr} tasks"
 
 
     # enable the new task section
