@@ -32,6 +32,9 @@ App.NewTaskModel = Backbone.Model.extend
         if l of ls
             error = "The letter is already in the task"
 
+        if l is ""
+            error = "No valid letter"
+
         if l is " "
             error = "The space should always be in a task; its weight cannot be changed"
 
