@@ -24,8 +24,13 @@ App.TaskModel = Backbone.Model.extend
             ls.push(' ' )
         @set 'letters', ls
 
-        # calculate weights for each letter, if not given.
-        @set "weights", @simpleWeights() unless (@get "weights").length
+        if @get("weights").length
+            # weights are given, be sure given they count up to 1 by manipulating the last (space) weight.
+            ws = @get "weights"
+            ws[ws.length - 1] = 1 - _.reduce ws[0 ... -1], ((m, v) -> m + v)
+        else
+            # weights are not given, calculate weights for each letter.
+            @set "weights", @simpleWeights()
 
         # init the examcollection
         @set "exams", new App.ExamCollection(@get "exams")
