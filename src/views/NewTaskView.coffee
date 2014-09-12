@@ -34,7 +34,7 @@ App.NewTaskView = Backbone.View.extend
         wElm = lElm.closest(".letterweightpair").children(".weight")
 
         # @see http://stackoverflow.com/questions/5566937/javascript-map-array-with-fromcharcode-character-length
-        letter = String.fromCharCode(evt.which).trim()
+        letter = String.fromCharCode(evt.which)
 
         if @model.addLetter(letter)
             lElm.val(letter)

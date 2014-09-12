@@ -29,14 +29,14 @@ App.NewTaskModel = Backbone.Model.extend
         ls = _.clone(@get "letters")
 
         error = ""
-        if l of ls
+        if !error and l of ls
             error = "The letter is already in the task"
 
-        if l is ""
-            error = "No valid letter"
-
-        if l is " "
+        if !error and l is " "
             error = "The space should always be in a task; its weight cannot be changed"
+
+        if !error and l.trim() is ""
+            error = "No valid letter"
 
         if error
             this.trigger('invalid', this, error, {validationError: error})
