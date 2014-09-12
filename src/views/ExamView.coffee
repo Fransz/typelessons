@@ -109,7 +109,7 @@ App.ExamView = Backbone.View.extend
     # @return void
     setTicker: () ->
         [m, s] = [0, 0]
-        e = @$ "#scores #time .score"
+        e = @$ "#scores .time .score"
         @ticks = 0
 
         _ticker = () =>
