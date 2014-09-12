@@ -114,7 +114,7 @@ App.NewTaskView = Backbone.View.extend
     #
     # @return void
     render: () ->
-        error = @$el.find(".error")
+        error = @$el.find(".newtaskerror")
         error.remove()
 
         rowsElement = @$ ".letterweightpairrows"
@@ -163,5 +163,5 @@ App.NewTaskView = Backbone.View.extend
 
 
     renderError: (model, error) ->
-        @$el.find(".error").remove()
+        @$el.find(".newtaskerror").remove()
         @$el.append @errorTemplate error: error
