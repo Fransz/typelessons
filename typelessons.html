@@ -311,41 +311,45 @@
                         </div>
                     </section>
 
-                    <div id="controls">
-                        <section id="appcontrols">
-                            <button id="newtaskcontrol">new task</button>
-                        </section>
+                    <section id="appcontrols">
+                        <button id="newtaskcontrol">new task</button>
+                    </section>
 
-                        <section id="newtask">
-                            <script type="text/template" id="newtaskrowtemplate">
-                                <div class="letterweightpairrow"> </div>
-                            </script>
+                    <section id="newtask">
+                        <script type="text/template" id="newtaskrowtemplate">
+                            <div class="letterweightpairrow"> </div>
+                        </script>
 
-                            <script type="text/template" id="newtaskinputtemplate">
-                                <div class="letterweightpair">
-                                    <label for="<%= 'newtaskinput' + letter %>">letter</label>
-                                    <input disabled maxlength="1" id="<%= 'newtaskinput' + letter %>" class="letter" type="text" value="<%= letter %>" />
-                                    <label for="<%= 'newtaskinput' + letter  + 'w'%>">weight</label>
-                                    <input id="<%= 'newtaskinput' + letter  + 'w'%>" class="weight" type="text" value="<%= weight %>" />
-                                    <span class="delete glyphicon glyphicon-remove"></span>
-                                </div>
-                            </script>
+                        <script type="text/template" id="newtaskinputtemplate">
+                            <div class="letterweightpair">
+                                <label for="<%= 'newtaskinput' + letter %>">letter</label>
+                                <input disabled maxlength="1" id="<%= 'newtaskinput' + letter %>" class="letter" type="text" value="<%= letter %>" />
+                                <label for="<%= 'newtaskinput' + letter  + 'w'%>">weight</label>
+                                <input id="<%= 'newtaskinput' + letter  + 'w'%>" class="weight" type="text" value="<%= weight %>" />
+                                <span class="delete glyphicon glyphicon-remove"></span>
+                            </div>
+                        </script>
 
-                            <script type="text/template" id="newtaskerrortemplate">
-                                <div class="newtaskerror"><%= error %></div>
-                            </script>
+                        <script type="text/template" id="newtaskerrortemplate">
+                            <div class="newtaskerror"><%= error %></div>
+                        </script>
 
-                            <form>
-                                <div class="letterweightpairrows"></div>
-                                <div id="newtaskcontrols">
-                                    <button id="newtaskok">ok</button>
-                                    <button id="newtaskletters">auto letters</button>
-                                    <button id="newtaskevenweights">even weights</button>
-                                    <button id="newtaskcancel">cancel</button>
-                                </div>
-                            </form>
-                        </section>
-                    </div>
+                        <form>
+                            <div class="letterweightpairrows"></div>
+                            <div id="newtaskcontrols">
+                                <button id="newtaskok">ok</button>
+                                <button id="newtaskletters">auto letters</button>
+                                <button id="newtaskevenweights">even weights</button>
+                                <button id="newtaskcancel">cancel</button>
+                            </div>
+                        </form>
+                    </section>
+
+                    <section id="taskdetail">
+                        TEST
+                        <script type="text/template" id="">
+                        </script>
+                    </section>
                 </div>
 
             </div>

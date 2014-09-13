@@ -22,18 +22,18 @@ describe("User Interface", function () {
             usingServer(server.address()).
             withCapabilities(webdriver.Capabilities.htmlunit()).
             build();
-        done()
+        done();
     });
 
     after(function(done) { 
       driver.quit().then(done);
-    })
+    });
 
 
     describe("#when opened", function(done) {
-         this.timeout(10000)
+         this.timeout(10000);
 
-         it("should have title 'typelessons'.", function (done) {
+         it.skip("should have title 'typelessons'.", function (done) {
              driver.get(mainUrl);
              driver.wait(function() {
                  driver.getTitle().then(function(title) {
@@ -42,28 +42,22 @@ describe("User Interface", function () {
             }, 5000);
         });
 
-         it("should have one element with id 'text' which has no content.", function (done) {
+         it.skip("should have one element with id 'exam'.", function (done) {
              driver.wait(function() {
-                 driver.findElements(webdriver.By.id("text")).then(function(elms) {
+                /* jshint -W030 , -W069*/
+                 driver.findElements(webdriver.By.id("exam")).then(function(elms) {
                      expect(elms).to.have.length(1);
-
-                     elms[0].getInnerHtml().then(function (content) {
-                         expect(content).to.be.empty
-                     });
                  }).then(done);
              }, 5000);
          });
 
-         it("should have an element with id 'typed' which has no content.", function (done) {
-             driver.wait(function() {
-                 driver.findElements(webdriver.By.id("typed")).then(function(elms) {
-                     expect(elms).to.have.length(1);
-
-                     elms[0].getInnerHtml().then(function (content) {
-                         expect(content).to.be.empty
-                     });
-                 }).then(done);
-             }, 5000);
-         });
-     }) 
- })
+         it.skip("should have an element with id 'taskdetail'.", function (done) {
+            driver.wait(function() {
+                /* jshint -W030 , -W069*/
+                driver.findElements(webdriver.By.id("taskdetail")).then(function(elms) {
+                    expect(elms).to.have.length(1);
+                }).then(done);
+            }, 5000);
+        });
+    });
+ });
