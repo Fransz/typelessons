@@ -23,8 +23,7 @@ App.TaskView = Backbone.View.extend
                         task: @model
 
     showDetail: () ->
-        detail = $('#taskdetail')
-        detail.show(0)
+        taskDetailView = new App.TaskDetailView model: @model
 
     # Render the task. We show the models letters but not spaces, and stats for completed exams.
     #

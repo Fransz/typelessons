@@ -38,9 +38,8 @@
 
 
     #keyboard {
-        display: table;
         .keyboardrow {
-            .make_key(32px);
+            .makekey(32px);
         }
 
         /* space character key. */
@@ -120,7 +119,7 @@
 }
 
 
-.make_key(@size) {
+.makekey(@size) {
     .key {
         float:left;
         width: @size + floor(@size / 8);
@@ -194,7 +193,7 @@
                         
                     .keyrow {
                         .clearfix();
-                        .make_key(16px);
+                        .makekey(16px);
 
                         .key {
                             border:1px solid #dcdcdc;
@@ -326,5 +325,19 @@
 
     #taskdetail {
         display:none;
+
+        margin:2em -15px 1em;
+        border:1px solid yellow;
+        padding:0.5em 0.5em;
+
+        .keyrow {
+            .clearfix();
+            .makekey(16px);
+
+            .key {
+                border:1px solid #dcdcdc;
+                padding-bottom:2px;
+            };
+        }
     }
 }

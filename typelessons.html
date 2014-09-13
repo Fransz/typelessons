@@ -346,9 +346,48 @@
                     </section>
 
                     <section id="taskdetail">
-                        TEST
-                        <script type="text/template" id="">
+                        <script type="text/template" id="taskdetaillettertemplate">
+                            <div class="keyrow">
+                                <% for(var i = 0, l = letters.length; i < l ; i++) { %>
+                                    <div class="key">
+                                        <span class="letter"><%= letters[i] %></span>
+                                    </div>
+                                <% }; %>
+                            </div>
                         </script>
+
+                        <div class="letters"></div>
+                        <div class="weights"></div>
+                        <div class="scores"></div>
+                        <!--
+                            <div class="keyrow">
+                                    <div class="key">
+                                        <span class="letter">a</span>
+                                    </div>
+                                    <div class="key">
+                                        <span class="letter">z</span>
+                                    </div>
+                                    <div class="key">
+                                        <span class="letter">q</span>
+                                    </div>
+                                    <div class="key">
+                                        <span class="letter">1</span>
+                                    </div>
+                                    <div class="key">
+                                        <span class="letter">h</span>
+                                    </div>
+                                    <div class="key">
+                                        <span class="letter">m</span>
+                                    </div>
+                                    <div class="key">
+                                        <span class="letter">n</span>
+                                    </div>
+                                    <div class="key">
+                                        <span class="letter">4</span>
+                                    </div>
+                            </div>
+                            -->
+
                     </section>
                 </div>
 
