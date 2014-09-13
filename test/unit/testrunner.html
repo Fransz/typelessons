@@ -24,7 +24,6 @@
     <script type="text/template" id="newtaskrowtemplate">
         <div class="row"> </div>
     </script>
-
     <script type="text/template" id="newtaskinputtemplate">
         <div class="letterweightpair">
             <label for="<%= 'newtaskinput' + letter %>">l:</label>
@@ -34,10 +33,10 @@
             <span class="delete">X</span>
         </div>
     </script>
-
     <script type="text/template" id="newtaskerrortemplate">
         <div class="error"><%= error %></div>
     </script>
+
     <script type="text/template" id="tasktemplate">
             <div class="keyboardrow">
                 <% for(var i = 0, l = letters.length; i < l ; i++) { %>
@@ -52,6 +51,16 @@
                 <span><%= score.time %></span>
                 <span><%= score.tries %></span>
             </div>
+    </script>
+
+    <script type="text/template" id="taskdetaillettertemplate">
+        <div class="keyrow">
+            <% for(var i = 0, l = letters.length; i < l ; i++) { %>
+                <div class="key">
+                    <span class="letter"><%= letters[i] %></span>
+                </div>
+            <% }; %>
+        </div>
     </script>
 
 
