@@ -100,6 +100,7 @@ App.ApplicationView = Backbone.View.extend
     #
     # @return void
     showExam: (taskModel) ->
+        @hideExam()
         @$("#exam").show()
         examModel = new App.ExamModel
                         letters: taskModel.get "letters"
@@ -113,12 +114,16 @@ App.ApplicationView = Backbone.View.extend
 
     # Submits a finished exam.
     # Event handler for the current examView's finishExam event.
+    # Make sure the examView doesn't listen to any event anymore. The keypress event could only be bound by jquery to
+    # the view.
     #
     # return void
     hideExam: () ->
-        if @currentExam
+        if @currentExamView
             @currentExamView.undelegateEvents()
+            @currentExamView.stopListening()
+            $(document).unbind 'keypress'
             @stopListening @currentExamView
 
         @$("#exam").hide()
-        @currentExam = null
+        @currentExamView = null
