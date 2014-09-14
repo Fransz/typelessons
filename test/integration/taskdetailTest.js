@@ -215,10 +215,46 @@ describe("The task detail panel", function () {
             }).then(done);
         });
 
-        it.skip("should show average scores", function (done) {
+        it("should show average scores", function (done) {
+            /* jshint -W030 */
+            driver.findElements(webdriver.By.css("#taskdetail .scores .avgscore")).then(function (avgScores) {
+                avgScores[0].findElements(webdriver.By.css(".pass .score")).then(function (scores) {
+                    scores[0].getText().then(function (text) {
+                        expect(text).to.be.not.empty;
+                    });
+                });
+                avgScores[0].findElements(webdriver.By.css(".fail .score")).then(function (scores) {
+                    scores[0].getText().then(function (text) {
+                        expect(text).to.be.not.empty;
+                    });
+                });
+                avgScores[0].findElements(webdriver.By.css(".time .score")).then(function (scores) {
+                    scores[0].getText().then(function (text) {
+                        expect(text).to.be.not.empty;
+                    });
+                });
+            }).then(done);
         });
 
-        it.skip("should show last scores", function (done) {
+        it("should show last scores", function (done) {
+            /* jshint -W030 */
+            driver.findElements(webdriver.By.css("#taskdetail .scores .avgscore")).then(function (lastScores) {
+                lastScores[0].findElements(webdriver.By.css(".pass .score")).then(function (scores) {
+                    scores[0].getText().then(function (text) {
+                        expect(text).to.be.not.empty;
+                    });
+                });
+                lastScores[0].findElements(webdriver.By.css(".fail .score")).then(function (scores) {
+                    scores[0].getText().then(function (text) {
+                        expect(text).to.be.not.empty;
+                    });
+                });
+                lastScores[0].findElements(webdriver.By.css(".time .score")).then(function (scores) {
+                    scores[0].getText().then(function (text) {
+                        expect(text).to.be.not.empty;
+                    });
+                });
+            }).then(done);
         });
 
         it("should have a try button", function (done) {
