@@ -75,12 +75,12 @@
         .pass, .fail, .time {
             .make-md-column(3);
 
-            padding: 0 1em;
+            padding:0 0.1em;
             text-align:center;
 
-            -webkit-border-radius: 25px;
-            -moz-border-radius: 25px;
-            border-radius: 25px;
+            -webkit-border-radius: 15px;
+            -moz-border-radius: 15px;
+            border-radius: 15px;
 
             .score {
                 font-size:32px;
@@ -95,7 +95,7 @@
 
         .pass {
             .make-md-column-offset(1);
-            border: 4px solid @passColor;
+            border: 3px solid @passColor;
             background-color: #ddffdd;     
 
             .glyphicon {
@@ -104,7 +104,7 @@
         }
         .fail {
             .make-md-column-offset(1);
-            border: 4px solid @failColor;
+            border: 3px solid @failColor;
             background-color: #ffdddd;     
 
             .glyphicon {
@@ -113,7 +113,7 @@
         }
         .time {
             .make-md-column-offset(1);
-            border: 4px solid @timeColor;
+            border: 3px solid @timeColor;
             background-color: #ddddff;     
         }
     }
@@ -230,7 +230,6 @@
                         .time {
                             clear:right;
                             .glyphicon {
-                                visibility:hidden;
                                 color: @timeColor;
                             }
                         }

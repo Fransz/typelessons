@@ -113,7 +113,7 @@ App.ExamView = Backbone.View.extend
         @ticks = 0
 
         _ticker = () =>
-            e.html "#{if(m < 10) then '0' + m else m}:#{if(s < 10) then '0' + s else s}"
+            e.html "#{m}:#{if(s < 10) then '0' + s else s}"
             if (++s == 60)
                 s = 0
                 m++
