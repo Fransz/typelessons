@@ -173,7 +173,46 @@ describe("The task detail panel", function () {
             }).then(done);
         });
 
-        it.skip("should show total scores", function (done) {
+        it("should show total scores", function (done) {
+            var detailPassScore, detailFailScore, detailTimeScore;
+
+            /* scrap values from the detail view. */
+            driver.findElements(webdriver.By.css("#taskdetail .scores .sumscore")).then(function (sumScores) {
+                sumScores[0].findElements(webdriver.By.css(".pass .score")).then(function (scores) {
+                    scores[0].getText().then(function (text) {
+                        detailPassScore = text;
+                    });
+                });
+                sumScores[0].findElements(webdriver.By.css(".fail .score")).then(function (scores) {
+                    scores[0].getText().then(function (text) {
+                        detailFailScore = text;
+                    });
+                });
+                sumScores[0].findElements(webdriver.By.css(".time .score")).then(function (scores) {
+                    scores[0].getText().then(function (text) {
+                        detailTimeScore = text;
+                    });
+                });
+            }).then(function() {
+                /* scrap values from the task view, en test */
+                driver.findElements(webdriver.By.css("#8lettertasks .scores")).then(function (taskScores) {
+                    taskScores[0].findElements(webdriver.By.css(".pass .score")).then(function (scores) {
+                        scores[0].getText().then(function (text) {
+                            expect(text).to.be.equal(detailPassScore);
+                        });
+                    });
+                    taskScores[0].findElements(webdriver.By.css(".fail .score")).then(function (scores) {
+                        scores[0].getText().then(function (text) {
+                            expect(text).to.be.equal(detailFailScore);
+                        });
+                    });
+                    taskScores[0].findElements(webdriver.By.css(".time .score")).then(function (scores) {
+                        scores[0].getText().then(function (text) {
+                            expect(text).to.be.equal(detailTimeScore);
+                        });
+                    });
+                });
+            }).then(done);
         });
 
         it.skip("should show average scores", function (done) {
