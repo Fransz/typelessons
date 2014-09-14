@@ -398,21 +398,11 @@
                 line-height:38px;
             }
 
-            button {
-                float:right;
-                margin:0.5em 1em 0 0;
-
-                background-color:lightgray;
-                border:2px solid gray;
-                -webkit-border-radius: 5px;
-                -moz-border-radius: 5px;
-                border-radius: 5px;
-            }
         }
 
         .scores .avgscore, .scores .sumscore, .scores .lastscore{
             .clearfix();
-            margin-top:1em;
+            margin-top:1.5em;
 
             span, div {
                 float:left;
@@ -444,6 +434,26 @@
             .glyphicon {
                 line-height:38px;
                 width: 36px;
+            }
+        }
+
+        .buttons {
+            .clearfix();
+            margin:2em 0 0 0;
+            height:48px;
+            button {
+                float:left;
+                margin:0 0 0 5.2em;
+
+                background-color:lightgray;
+                border:2px solid gray;
+                -webkit-border-radius: 5px;
+                -moz-border-radius: 5px;
+                border-radius: 5px;
+            }
+            button + button {
+                float:right;
+                margin:0 5em 0 0em;
             }
         }
 
