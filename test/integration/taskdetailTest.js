@@ -276,5 +276,15 @@ describe("The task detail panel", function () {
                 });
             }).then(done);
         });
+
+        it("should have a cancel button", function (done) {
+            driver.findElements(webdriver.By.css("#taskdetail .buttons #taskdetailcancelbutton")).then(function (buttons) {
+                expect(buttons).to.have.length(1);
+                buttons[0].getText().then(function(text) {
+                    // @TODO test click behaviour
+                    expect(text).to.be.equal("cancel");
+                });
+            }).then(done);
+        });
     });
 });
