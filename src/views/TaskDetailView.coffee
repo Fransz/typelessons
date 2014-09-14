@@ -4,6 +4,7 @@ App.TaskDetailView = Backbone.View.extend
     lettertemplate: _.template @$("#taskdetaillettertemplate").html()
     weighttemplate: _.template @$("#taskdetailweighttemplate").html()
     triestemplate: _.template @$("#taskdetailtriestemplate").html()
+    scoretemplate: _.template @$("#taskdetailscoretemplate").html()
     
     el: "#taskdetail"
 
@@ -30,6 +31,8 @@ App.TaskDetailView = Backbone.View.extend
         @$(".weights").html @weighttemplate weights: weights
 
         cummScore = @model.get("exams").cummScore()
-        @$(".tries").html @triestemplate score: cummScore
+        @$(".tries").html @triestemplate tries: cummScore.tries
 
-        return @
+        @$(".avgscore .scorewrapper").html @scoretemplate score: cummScore
+        @$(".sumscore .scorewrapper").html @scoretemplate score: cummScore
+        @$(".lastscore .scorewrapper").html @scoretemplate score: cummScore
