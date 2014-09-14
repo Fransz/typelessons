@@ -15,12 +15,7 @@ App.TaskView = Backbone.View.extend
         @listenTo @model, "sync", @render
 
     createExam: () ->
-        examModel = new App.ExamModel
-                        letters: @model.get "letters"
-                        weights: @model.get "weights"
-        examView = new App.ExamView
-                        model: examModel
-                        task: @model
+        @trigger "newExam", @model
 
     showDetail: () ->
         taskDetailView = new App.TaskDetailView model: @model

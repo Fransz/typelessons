@@ -137,6 +137,7 @@ App.ExamView = Backbone.View.extend
         @stopListening()
         $(document).unbind 'keypress'
 
+        # Process last keystroke.
         @renderToBeTypedString()
         @showKey()
         @renderScores()
@@ -145,4 +146,9 @@ App.ExamView = Backbone.View.extend
         @$("#teststring").css visibility: "hidden"
 
         @model.set "time", @ticks - 1
+
+        # Our task Model will process this exam.
         @task.completeExam @model
+
+        # Our app view will destroy us.
+        @trigger "hideExam"

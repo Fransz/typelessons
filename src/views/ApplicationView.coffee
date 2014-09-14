@@ -7,8 +7,11 @@ App.ApplicationView = Backbone.View.extend
     # An array with views for all entered tasks
     taskViews: []
 
-    # A view for new tasks.
+    # A view for defining new tasks.
     newTaskView: null
+
+    # A view for an exam.
+    currentExamView: null
 
     el: "body"
 
@@ -20,9 +23,10 @@ App.ApplicationView = Backbone.View.extend
         @$("#newtask").hide()
 
         @tasks = new App.TaskCollection()
-        @listenTo @tasks, "add", @renderTask
-        @tasks.fetch()
 
+        @listenTo @tasks, "add", @renderTask
+
+        @tasks.fetch()
         @_initializeTasks() unless @tasks.length > 0
 
 
@@ -35,13 +39,15 @@ App.ApplicationView = Backbone.View.extend
 
 
     # render a single task
-    # For the task a view is made, we keep these views.
+    # For the task a view is made, we this these views, and listen to it.
     #
     # @param task the task to be rendered
     # @return void
     renderTask: (task) ->
         taskView = new App.TaskView
             model: task
+        @listenTo taskView, "newExam", @showExam
+
         @taskViews.push taskView
 
         grp = task.get("letters").length - 1
@@ -55,7 +61,8 @@ App.ApplicationView = Backbone.View.extend
         hdr.html "#{nr} tasks"
 
 
-    # enable the new task section
+    # Enable the new task section.
+    # Dom Eventhandler for the newtask button.
     #
     # @return void
     showNewTaskForm: () ->
@@ -66,6 +73,10 @@ App.ApplicationView = Backbone.View.extend
         @listenTo @newTaskView, "cancelNewTask", @hideNewTaskForm
         @listenTo @newTaskView, "submitNewTask", @submitNewTask
 
+    # Disable the new task section, clean up.
+    # Eventhandler for the newTaskView's submitNewTask event.
+    #
+    # @return void
     hideNewTaskForm: () ->
         if @newTaskView
             @newTaskView.undelegateEvents()
@@ -74,9 +85,40 @@ App.ApplicationView = Backbone.View.extend
         @$("#newtask").hide()
         @newTaskView = null
 
+    # Add a new task, disable tasksection.
+    # Eventhandler for the newTaskView's cancelNewTask event.
+    #
+    # @return void
     submitNewTask: (letters) ->
         @hideNewTaskForm()
         ls = _.keys letters
         ws = _.map(ls, ((l) -> letters[l]))
         @tasks.create letters: ls, weights: ws
 
+    # Open a new exam view.
+    # Eventhandler for all taskView's newExam event.
+    #
+    # @return void
+    showExam: (taskModel) ->
+        @$("#exam").show()
+        examModel = new App.ExamModel
+                        letters: taskModel.get "letters"
+                        weights: taskModel.get "weights"
+        examView = new App.ExamView
+                        model: examModel
+                        task: taskModel
+
+        @currentExamView = examView
+        @listenTo examView, "hideExam", @hideExam
+
+    # Submits a finished exam.
+    # Event handler for the current examView's finishExam event.
+    #
+    # return void
+    hideExam: () ->
+        if @currentExam
+            @currentExamView.undelegateEvents()
+            @stopListening @currentExamView
+
+        @$("#exam").hide()
+        @currentExam = null
