@@ -8,9 +8,18 @@ App.TaskDetailView = Backbone.View.extend
     
     el: "#taskdetail"
 
+    events:
+        "click #taskdetailcancelbutton": "cancel"
+
     initialize: () ->
         @$el.show()
         @render()
+
+    # Cancels the detail view.
+    #
+    # @return void
+    cancel: () ->
+        @$el.hide()
 
     # displays the details of a task
     # Weights are displayed in 3 decimals without the leading zero.
