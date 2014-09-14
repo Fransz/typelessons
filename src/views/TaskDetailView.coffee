@@ -3,6 +3,7 @@ App = App or {}
 App.TaskDetailView = Backbone.View.extend
     lettertemplate: _.template @$("#taskdetaillettertemplate").html()
     weighttemplate: _.template @$("#taskdetailweighttemplate").html()
+    triestemplate: _.template @$("#taskdetailtriestemplate").html()
     
     el: "#taskdetail"
 
@@ -27,4 +28,8 @@ App.TaskDetailView = Backbone.View.extend
         weights = _.clone(@model.get "weights")
         weights = weights.map(((w) -> w.toFixed(3)[1 ..]))
         @$(".weights").html @weighttemplate weights: weights
+
+        cummScore = @model.get("exams").cummScore()
+        @$(".tries").html @triestemplate score: cummScore
+
         return @

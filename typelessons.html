@@ -366,11 +366,17 @@
                                 <% }; %>
                             </div>
                         </script>
+                        <script type="text/template" id="taskdetailtriestemplate">
+                            <span class="legenda">tries</span>
+                            <span class="score"><%= score.tries %></span>
+                            <span class="glyphicon glyphicon-star"></span>
+                            <button id="taskdetailtrybutton">try</button>
+                            <button id="taskdetailremovebutton">remove</button>
+                        </script>
 
                         <div class="letters"></div>
                         <div class="weights"></div>
                         <div class="tries"></div>
-                        <div class="buttons"></div>
                         <div class="scores"></div>
                         <!--
                             <div class="keyrow">

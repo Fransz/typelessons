@@ -134,7 +134,43 @@ describe("The task detail panel", function () {
                 ).then(done);
         });
 
-        it.skip("should show the number of tries", function (done) {
+        it("should show the number of tries", function (done) {
+            var tries;
+            function detailTest(text) {
+                tries = text.replace(/\n/g, "");
+            }
+            function detailTries (cb) {
+                return function(tries) {
+                    tries[0].getText().then(cb);
+                };
+            }
+
+            function taskTest(text) {
+                text = text.replace(/\n/g, "");
+                expect(text).to.be.equal(tries);
+            }
+            function taskTriesText (cb) {
+                return function (tries) {
+                    tries[0].getText().then(cb);
+                };
+            }
+            function taskTries (cb) {
+                return function (tasks) {
+                    tasks[0].findElements(webdriver.By.css(".tries .score")).then(cb);
+                };
+            }
+            function taskTasks (cb) {
+                return function (lettertasks) {
+                    lettertasks[0].findElements(webdriver.By.className("task")).then(cb);
+                };
+            }
+            driver.findElements(webdriver.By.css("#taskdetail .tries .score")).then(
+                    detailTries(detailTest)
+            ).then(function () {
+                        driver.findElements(webdriver.By.id("8lettertasks")).then(
+                        taskTasks(taskTries(taskTriesText(taskTest)))
+                );
+            }).then(done);
         });
 
         it.skip("should show total scores", function (done) {
