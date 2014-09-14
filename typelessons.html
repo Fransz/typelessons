@@ -348,9 +348,18 @@
                     <section id="taskdetail">
                         <script type="text/template" id="taskdetaillettertemplate">
                             <div class="keyrow">
+                                <span class="legenda">letters</span>
                                 <% for(var i = 0, l = letters.length; i < l ; i++) { %>
                                     <div class="key">
                                         <span class="letter"><%= letters[i] %></span>
+                                    </div>
+                                <% }; %>
+                            </div>
+                            <div class="weightrow">
+                                <span class="legenda">weights</span>
+                                <% for(var i = 0, l = weights.length; i < l ; i++) { %>
+                                    <div class="key">
+                                        <span class="weight"><%= weights[i] %></span>
                                     </div>
                                 <% }; %>
                             </div>

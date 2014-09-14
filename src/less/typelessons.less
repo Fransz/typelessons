@@ -38,6 +38,7 @@
 
 
     #keyboard {
+        display:table;
         .keyboardrow {
             .makekey(32px);
         }
@@ -330,14 +331,36 @@
         border:1px solid yellow;
         padding:0.5em 0.5em;
 
-        .keyrow {
+        .keyrow, .weightrow {
             .clearfix();
-            .makekey(16px);
+            .makekey(32px);
 
             .key {
                 border:1px solid #dcdcdc;
                 padding-bottom:2px;
             };
+
+            .legenda {
+                float:left;
+                border:none;
+                width:5em;
+                line-height:64px;
+                vertical-align:bottom;
+            }
+
+        }
+        .weightrow .key {
+            width: 36px;
+            height: 24px;
+
+            margin:0.2em 0.2em;
+            border:none;
+
+            text-align:center;
+            line-height:16px;
+        }
+        .weightrow .legenda {
+            line-height:20px;
         }
     }
 }
