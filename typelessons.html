@@ -373,11 +373,71 @@
                             <button id="taskdetailtrybutton">try</button>
                             <button id="taskdetailremovebutton">remove</button>
                         </script>
+                        <script type="text/template" id="taskdetailscorestemplate">
+                                <div class="pass">
+                                    <span class="glyphicon glyphicon-ok"></span>
+                                    <span class="score"><%= score.pass %></span>
+                                </div>
+                                <div class="fail">
+                                    <span class="score"><%= score.fail %></span>
+                                    <span class="glyphicon glyphicon-remove"></span>
+                                </div>
+                                <div class="time">
+                                    <span class="glyphicon glyphicon-star"></span>
+                                    <span class="score"><%= score.time %></span>
+                                </div>
+                        </script>
 
                         <div class="letters"></div>
                         <div class="weights"></div>
                         <div class="tries"></div>
-                        <div class="scores"></div>
+                        <div class="scores">
+                            <div class="avgscore">
+                                <span class="legenda">average</span>
+                                <div class="pass">
+                                    <span class="score">100</span>
+                                    <span class="glyphicon glyphicon-ok"></span>
+                                </div>
+                                <div class="fail">
+                                    <span class="score">133</span>
+                                    <span class="glyphicon glyphicon-remove"></span>
+                                </div>
+                                <div class="time">
+                                    <span class="score">100:23</span>
+                                    <span class="glyphicon glyphicon-star"></span>
+                                </div>
+                            </div>
+                            <div class="sumscore">
+                                <span class="legenda">sum</span>
+                                <div class="pass">
+                                    <span class="score">100</span>
+                                    <span class="glyphicon glyphicon-ok"></span>
+                                </div>
+                                <div class="fail">
+                                    <span class="score">133</span>
+                                    <span class="glyphicon glyphicon-remove"></span>
+                                </div>
+                                <div class="time">
+                                    <span class="score">100:23</span>
+                                    <span class="glyphicon glyphicon-star"></span>
+                                </div>
+                            </div>
+                            <div class="lastscore">
+                                <span class="legenda">last</span>
+                                <div class="pass">
+                                    <span class="score">100</span>
+                                    <span class="glyphicon glyphicon-ok"></span>
+                                </div>
+                                <div class="fail">
+                                    <span class="score">133</span>
+                                    <span class="glyphicon glyphicon-remove"></span>
+                                </div>
+                                <div class="time">
+                                    <span class="score">100:23</span>
+                                    <span class="glyphicon glyphicon-star"></span>
+                                </div>
+                            </div>
+                        </div>
                         <!--
                             <div class="keyrow">
                                     <div class="key">

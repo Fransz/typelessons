@@ -410,5 +410,42 @@
             }
         }
 
+        .scores .avgscore, .scores .sumscore, .scores .lastscore{
+            .clearfix();
+            margin-top:1em;
+
+            span, div {
+                float:left;
+            }
+
+            .score, .glyphicon {
+                font-size:32px;
+                height: 40px;
+
+                margin:0em 0.2em;
+                color:gray;
+            }
+
+            .legenda {
+                height: 32px;
+                width:5em;
+                line-height:48px;
+            }
+
+            .pass .glyphicon {
+                color: @passColor;
+            }
+            .fail .glyphicon {
+                color: @failColor;
+            }
+            .time .glyphicon {
+                color: @timeColor;
+            }
+            .glyphicon {
+                line-height:38px;
+                width: 36px;
+            }
+        }
+
     }
 }
