@@ -16,8 +16,13 @@ App.NewTaskModel = Backbone.Model.extend
         delete ls_["space"]
         s = _.size(ls_)                                                           # size without space
 
+        # validate letters cnt; space existence.
         if s is 0 or s %% 2 is 1 or s > 8 or not "space" of ls
-            error = "A task should have 2 or more letters and one space"
+            error = "A task should have 2, 4, 6 or 8 letters and one space!"
+
+        # validate weights;
+        if Math.abs(_.reduce(ls, ((m, v) -> m + v), 0) - 1) > 0.00001
+            error = "Weigths do not add up to 1!"
         return error
 
     # Add a letter to the array of letters.
