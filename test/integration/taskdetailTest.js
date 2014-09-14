@@ -182,10 +182,24 @@ describe("The task detail panel", function () {
         it.skip("should show last scores", function (done) {
         });
 
-        it.skip("should have a remove button", function (done) {
+        it("should have a try button", function (done) {
+            driver.findElements(webdriver.By.css("#taskdetail .buttons #taskdetailtrybutton")).then(function (buttons) {
+                expect(buttons).to.have.length(1);
+                buttons[0].getText().then(function(text) {
+                    // @TODO test click behaviour
+                    expect(text).to.be.equal("try");
+                });
+            }).then(done);
         });
 
-        it.skip("should have a exam button", function (done) {
+        it("should have a remove button", function (done) {
+            driver.findElements(webdriver.By.css("#taskdetail .buttons #taskdetailremovebutton")).then(function (buttons) {
+                expect(buttons).to.have.length(1);
+                buttons[0].getText().then(function(text) {
+                    // @TODO test click behaviour
+                    expect(text).to.be.equal("remove");
+                });
+            }).then(done);
         });
     });
 });
