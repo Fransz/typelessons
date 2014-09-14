@@ -31,6 +31,7 @@ App.TaskDetailView = Backbone.View.extend
         @$(".weights").html @weighttemplate weights: weights
 
         cummScore = @model.get("exams").cummScore()
+        cummScore.time = "#{if(m < 10) then '0' + m else m}:#{if(s < 10) then '0' + s else s}"
         @$(".tries").html @triestemplate tries: cummScore.tries
 
         @$(".avgscore .scorewrapper").html @scoretemplate score: cummScore
