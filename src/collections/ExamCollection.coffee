@@ -16,3 +16,14 @@ App.ExamCollection = Backbone.Collection.extend
             time: _.reduce(ts, ((m, s) -> m + s), 0)
             tries: ss.length
 
+    # calculate the average score for all exams.
+    #
+    # @return object { pass: fail: time: tries: }
+    avgScore: () ->
+        sumScore = @sumScore()
+        tries = if sumScore.tries then sumScore.tries else 1
+
+        score =
+            pass: sumScore.pass / tries
+            fail: sumScore.fail / tries
+            time: sumScore.time / tries

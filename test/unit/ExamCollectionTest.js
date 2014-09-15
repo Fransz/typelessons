@@ -19,7 +19,7 @@ describe("An Exam collection", function () {
             expect(ss.tries).to.be.equal(0);
         });
 
-        it.skip("should have average scores with all values 0", function () {
+        it("should have average scores with all values 0", function () {
             ss = collection.avgScore();
             expect(ss.fail).to.be.equal(0);
             expect(ss.pass).to.be.equal(0);
@@ -68,10 +68,10 @@ describe("An Exam collection", function () {
 
         });
 
-        it.skip("should have the correct average scores", function () {
+        it("should have the correct average scores", function () {
             ss = collection.avgScore();
-            expect(ss.pass).to.be.equal(15);
-            expect(ss.fail).to.be.closeTo(18.3333, 0.00004);
+            expect(ss.pass).to.be.equal(45);
+            expect(ss.fail).to.be.equal(55);
             expect(ss.time).to.be.equal(100);
 
         });
