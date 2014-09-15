@@ -20,10 +20,15 @@ App.ExamView = Backbone.View.extend
     initialize: (args) ->
         @task = args.task
 
-        # Show our testString.
+        @$el.show()
+
+        # Show our testString, and inital scores.
         @toBeTypedString = @model.get("testString")
         @$("#teststring #content").html @toBeTypedString
         @$("#teststring").css visibility: "visible"
+        @$("#scores .pass .score").html "0"
+        @$("#scores .fail .score").html "0"
+        @$("#scores .time .score").html "0:00"
 
         @listenTo @model, "change:lastChar", @showKey
         @listenTo @model, "change:lastChar", @renderScores
@@ -128,14 +133,29 @@ App.ExamView = Backbone.View.extend
     clearTicker: () ->
         clearInterval @ticker
 
+    # Stops an exam.
+    # Cleans up the exam.
+    #
+    # return: void
+    stopExam: () ->
+        @clearTicker()
+        @stopListening()
+        @undelegateEvents()
+        $(document).unbind 'keypress'
+
+
+    # Hides the exam: () ->
+    #
+    # return void
+    hideExam: () ->
+        @$el.hide()
+
     # Mark he model for this exam as completed, clean up our exam.
     # eventhandler for change:completed
     #
     # @return void
     examCompleted: () ->
-        @clearTicker()
-        @stopListening()
-        $(document).unbind 'keypress'
+        @stopExam()
 
         # Process last keystroke.
         @renderToBeTypedString()
