@@ -57,7 +57,7 @@ App.TaskDetailView = Backbone.View.extend
     #
     # @return void
     render: () ->
-        # score = @model.get("exams").cummScore()
+        # score = @model.get("exams").sumScore()
 
         # s = score.time % 60
         # m = Math.floor(score.time / 60)
@@ -70,12 +70,12 @@ App.TaskDetailView = Backbone.View.extend
         weights = weights.map(((w) -> w.toFixed(3)[1 ..]))
         @$(".weights").html @weighttemplate weights: weights
 
-        cummScore = @model.get("exams").cummScore()
-        s = cummScore.time % 60
-        m = Math.floor(cummScore.time / 60)
-        cummScore.time = "#{if(m < 10) then '0' + m else m}:#{if(s < 10) then '0' + s else s}"
-        @$(".tries").html @triestemplate tries: cummScore.tries
+        sumScore = @model.get("exams").sumScore()
+        s = sumScore.time % 60
+        m = Math.floor(sumScore.time / 60)
+        sumScore.time = "#{if(m < 10) then '0' + m else m}:#{if(s < 10) then '0' + s else s}"
+        @$(".tries").html @triestemplate tries: sumScore.tries
 
-        @$(".avgscore .scorewrapper").html @scoretemplate score: cummScore
-        @$(".sumscore .scorewrapper").html @scoretemplate score: cummScore
-        @$(".lastscore .scorewrapper").html @scoretemplate score: cummScore
+        @$(".avgscore .scorewrapper").html @scoretemplate score: sumScore
+        @$(".sumscore .scorewrapper").html @scoretemplate score: sumScore
+        @$(".lastscore .scorewrapper").html @scoretemplate score: sumScore

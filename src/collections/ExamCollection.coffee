@@ -3,10 +3,10 @@ App = App or {}
 App.ExamCollection = Backbone.Collection.extend
     model: App.ExamModel
 
-    # Calculate the cumm scores for all exams.
+    # Calculate the sum scores for all exams.
     #
     # @return object { pass: fail: time: tries }
-    cummScore: () ->
+    sumScore: () ->
         ss = _.map @models, (m) -> m.sumScore()                             # Array with total scores for each exam
         ts = _.map @models, (m) -> m.get "time"                             # Array with times for each exam
 

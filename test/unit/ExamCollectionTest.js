@@ -12,7 +12,7 @@ describe("An Exam collection", function () {
         });
 
         it("should have cummelative scores with all values 0", function() {
-            ss = collection.cummScore();
+            ss = collection.sumScore();
             expect(ss.fail).to.be.equal(0);
             expect(ss.pass).to.be.equal(0);
             expect(ss.time).to.be.equal(0);
@@ -60,7 +60,7 @@ describe("An Exam collection", function () {
         });
 
         it("should have the correct cummelative scores", function () {
-            ss = collection.cummScore();
+            ss = collection.sumScore();
             expect(ss.pass).to.be.equal(135);
             expect(ss.fail).to.be.equal(165);
             expect(ss.time).to.be.equal(300);

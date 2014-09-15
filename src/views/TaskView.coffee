@@ -28,7 +28,7 @@ App.TaskView = Backbone.View.extend
     # @return void
     render: () ->
         letters = _.filter(@model.get("letters"), (l) -> l isnt ' ')
-        score = @model.get("exams").cummScore()
+        score = @model.get("exams").sumScore()
 
         s = score.time % 60
         m = Math.floor(score.time / 60)
