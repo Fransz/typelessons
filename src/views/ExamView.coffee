@@ -94,7 +94,7 @@ App.ExamView = Backbone.View.extend
     #
     # @return void
     renderScores: () ->
-        scores = @model.sumScore()
+        scores = @model.totalScore()
         @$("#scores .pass .score").html scores.pass
         @$("#scores .fail .score").html scores.fail
 

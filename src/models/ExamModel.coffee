@@ -88,7 +88,7 @@ App.ExamModel = Backbone.Model.extend
     # Calculate the sum off all pass and fail scores.
     #
     # @return Object
-    sumScore: () ->
+    totalScore: () ->
         scores = @get "scores"
         f = (m, v, i, l) -> m + v
 

@@ -181,12 +181,12 @@ describe("An Exam model", function () {
             expect(exam.get("typedString")).to.be.equal("x");
         });
 
-        it("should calculate sum scores", function () {
+        it("should calculate total scores", function () {
             _.forEach("hghghg ghghgh", function (e, i, l) { exam.addKeyStroke(e); });
-            sum = exam.sumScore();
+            total = exam.totalScore();
 
-            expect(sum.pass).to.be.equal(7);
-            expect(sum.fail).to.be.equal(6);
+            expect(total.pass).to.be.equal(7);
+            expect(total.fail).to.be.equal(6);
         });
 
         it("should be marked complete after typing 13 characters", function () {
@@ -200,7 +200,7 @@ describe("An Exam model", function () {
         it("should have a score of 13 after typing 13 characters, and being marked complete", function () {
             _.forEach("hghghg ghghgh", function (e, i, l) { exam.addKeyStroke(e); });
 
-            var s = exam.sumScore();
+            var s = exam.totalScore();
             expect(s.fail + s.pass).to.be.equal(13);
         });
     });

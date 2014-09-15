@@ -57,12 +57,6 @@ App.TaskDetailView = Backbone.View.extend
     #
     # @return void
     render: () ->
-        # score = @model.get("exams").sumScore()
-
-        # s = score.time % 60
-        # m = Math.floor(score.time / 60)
-        # score.time = "#{if(m < 10) then '0' + m else m}:#{if(s < 10) then '0' + s else s}"
-
         letters = @model.get "letters"
         @$(".letters").html @lettertemplate letters: letters
 

@@ -7,7 +7,7 @@ App.ExamCollection = Backbone.Collection.extend
     #
     # @return object { pass: fail: time: tries }
     sumScore: () ->
-        ss = _.map @models, (m) -> m.sumScore()                             # Array with total scores for each exam
+        ss = _.map @models, (m) -> m.totalScore()                             # Array with total scores for each exam
         ts = _.map @models, (m) -> m.get "time"                             # Array with times for each exam
 
         score =
@@ -34,7 +34,7 @@ App.ExamCollection = Backbone.Collection.extend
     lastScore: () ->
         exam = @at @length - 1
         if exam?
-            score = exam.sumScore()
+            score = exam.totalScore()
             score.time = exam.get "time"
         else
             score = { pass: 0, fail:0 , time: 0 } 
