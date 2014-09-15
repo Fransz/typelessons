@@ -70,6 +70,21 @@ App.TaskDetailView = Backbone.View.extend
         weights = weights.map(((w) -> w.toFixed(3)[1 ..]))
         @$(".weights").html @weighttemplate weights: weights
 
+        # Get last scores, rewrite time
+        lastScore = @model.get("exams").lastScore()
+        s = lastScore.time % 60
+        m = Math.floor(lastScore.time / 60)
+        lastScore.time = "#{if(m < 10) then '0' + m else m}:#{if(s < 10) then '0' + s else s}"
+        @$(".lastscore .scorewrapper").html @scoretemplate score: lastScore
+
+        # Get sum scores, rewrite time
+        sumScore = @model.get("exams").sumScore()
+        s = sumScore.time % 60
+        m = Math.floor(sumScore.time / 60)
+        sumScore.time = "#{if(m < 10) then '0' + m else m}:#{if(s < 10) then '0' + s else s}"
+        @$(".sumscore .scorewrapper").html @scoretemplate score: sumScore
+        @$(".tries").html @triestemplate tries: sumScore.tries
+        
         # Get avg scores, round, rewrite time
         avgScore = @model.get("exams").avgScore()
         avgScore.pass = avgScore.pass.toFixed(1)
@@ -79,13 +94,3 @@ App.TaskDetailView = Backbone.View.extend
         m = Math.floor(avgScore.time / 60)
         avgScore.time = "#{if(m < 10) then '0' + m else m}:#{if(s < 10) then '0' + s else s}"
         @$(".avgscore .scorewrapper").html @scoretemplate score: avgScore
-
-        # Get sum scores, rewrite time
-        sumScore = @model.get("exams").sumScore()
-        s = sumScore.time % 60
-        m = Math.floor(sumScore.time / 60)
-        sumScore.time = "#{if(m < 10) then '0' + m else m}:#{if(s < 10) then '0' + s else s}"
-        @$(".sumscore .scorewrapper").html @scoretemplate score: sumScore
-        @$(".tries").html @triestemplate tries: sumScore.tries
-
-        @$(".lastscore .scorewrapper").html @scoretemplate score: sumScore

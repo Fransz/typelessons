@@ -27,3 +27,16 @@ App.ExamCollection = Backbone.Collection.extend
             pass: sumScore.pass / tries
             fail: sumScore.fail / tries
             time: sumScore.time / tries
+
+    # calculate the last exam score.
+    #
+    # @return object { pass: fail: time: tries: }
+    lastScore: () ->
+        exam = @at @length - 1
+        if exam?
+            score = exam.sumScore()
+            score.time = exam.get "time"
+        else
+            score = { pass: 0, fail:0 , time: 0 } 
+        return score
+
