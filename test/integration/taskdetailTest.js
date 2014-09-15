@@ -258,11 +258,20 @@ describe("The task detail panel", function () {
         });
 
         it("should have a try button", function (done) {
+            /* jshint -W030 */
             driver.findElements(webdriver.By.css("#taskdetail .buttons #taskdetailtrybutton")).then(function (buttons) {
                 expect(buttons).to.have.length(1);
+
                 buttons[0].getText().then(function(text) {
-                    // @TODO test click behaviour
                     expect(text).to.be.equal("try");
+                });
+
+                buttons[0].click().then(function () {
+                    driver.findElements(webdriver.By.id("exam")).then(function(exams) {
+                        exams[0].isDisplayed().then(function(val) {
+                            expect(val).to.be.true;
+                        });
+                    });
                 });
             }).then(done);
         });
