@@ -10,6 +10,7 @@ App.TaskDetailView = Backbone.View.extend
 
     events:
         "click #taskdetailcancelbutton": "cancel"
+        "click #taskdetailtrybutton": "try"
 
     # Initialize the view.
     #
@@ -19,7 +20,16 @@ App.TaskDetailView = Backbone.View.extend
         @$el.show()
         @render()
 
-    # Cancels the detail view, the Application view dispatches that.
+    # Strats an exam for this detailViews task. 
+    # The Application view takes care of that.
+    #
+    # @return void
+    try: () ->
+        @trigger "newExam", @model
+        @$("#taskdetailtrybutton").blur()
+
+    # Cancels the detail view. 
+    # The Application view takes care of that.
     #
     # @return void
     cancel: () ->

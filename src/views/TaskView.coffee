@@ -7,15 +7,19 @@ App.TaskView = Backbone.View.extend
     template: _.template @$("#tasktemplate").html()
     
     events:
-        dblclick: "createExam"
         click: "showTaskDetail"
 
+    # Initialize the taskview
+    #
+    # @return void
     initialize: () ->
         @listenTo @model, "sync", @render
 
-    createExam: () ->
-        @trigger "newExam", @model
-
+    # Shows a tasks detail
+    # Event handler for the DOM click event on this taskview
+    # We just fire an onther event listened to by the Application view.
+    #
+    # @return void
     showTaskDetail: () ->
         @trigger "showDetail", @model
 

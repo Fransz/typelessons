@@ -131,10 +131,12 @@ App.ApplicationView = Backbone.View.extend
     #
     # return @void
     showTaskDetail: (taskModel) ->
+        @hideTaskDetail()
         detailView = new App.TaskDetailView model: taskModel
 
         @currentDetailView = detailView
         @listenTo detailView, "hideDetail", @hideTaskDetail
+        @listenTo detailView, "newExam", @showExam
 
     # Hide a tasks detail
     # Eventhandler for the current detailViews's hideDetail event.

@@ -106,8 +106,10 @@ App.ExamView = Backbone.View.extend
     # @return void
     processKey: (evt) ->
         if not @ticker then @setTicker()
-        evt.preventDefault()
         @model.addKeyStroke String.fromCharCode evt.which
+
+        evt.preventDefault()
+        evt.stopPropagation()
 
     # A ticker for keeping time
     #
