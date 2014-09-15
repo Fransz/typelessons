@@ -23,13 +23,14 @@ App.ApplicationView = Backbone.View.extend
     }
 
     initialize: () ->
-        @$("#newtask").hide()
+        @hideExam()
+        @hideNewTaskForm()
+        @hideTaskDetail()
 
         @tasks = new App.TaskCollection()
-
         @listenTo @tasks, "add", @renderTask
-
         @tasks.fetch()
+
         @_initializeTasks() unless @tasks.length > 0
 
 
@@ -71,7 +72,8 @@ App.ApplicationView = Backbone.View.extend
     # @return void
     showNewTaskForm: () ->
         @hideNewTaskForm()
-        @$("#newtask").show()
+        @hideExam()
+        @hideTaskDetail()
 
         @newTaskView = new App.NewTaskView model: new App.NewTaskModel()
         @listenTo @newTaskView, "cancelNewTask", @hideNewTaskForm
@@ -83,10 +85,10 @@ App.ApplicationView = Backbone.View.extend
     # @return void
     hideNewTaskForm: () ->
         if @newTaskView
-            @newTaskView.undelegateEvents()
+            @newTaskView.stop()
+            @newTaskView.hide()
             @stopListening @newTaskView
 
-        @$("#newtask").hide()
         @newTaskView = null
 
     # Add a new task, disable tasksection.
@@ -105,6 +107,8 @@ App.ApplicationView = Backbone.View.extend
     # @return void
     showExam: (taskModel) ->
         @hideExam()
+        @hideNewTaskForm()
+
         examModel = new App.ExamModel
                         letters: taskModel.get "letters"
                         weights: taskModel.get "weights"
@@ -133,6 +137,7 @@ App.ApplicationView = Backbone.View.extend
     # return @void
     showTaskDetail: (taskModel) ->
         @hideTaskDetail()
+        @hideNewTaskForm()
         @hideExam()
 
         detailView = new App.TaskDetailView model: taskModel

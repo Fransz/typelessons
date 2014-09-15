@@ -20,6 +20,7 @@ App.NewTaskView = Backbone.View.extend
     
 
     initialize: () ->
+        @$el.show()
         @listenTo @model, "invalid", @renderError
         @render()
 
@@ -161,6 +162,22 @@ App.NewTaskView = Backbone.View.extend
         (inp.find(".letter").get())[0].focus()
 
 
-    renderError: (model, error) ->
+    # renders an error
+    #
+    # return void
+    renderError: () ->
         @$el.find(".newtaskerror").remove()
         @$el.append @errorTemplate error: error
+
+    # Stops defining a new task.
+    #
+    # @return void
+    stop: () ->
+        @undelegateEvents()
+        @stopListening @model
+
+    # hides the form for adding a new task
+    #
+    # @return void
+    hide: () ->
+        @$el.hide()

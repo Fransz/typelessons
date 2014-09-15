@@ -20,6 +20,8 @@ App.TaskDetailView = Backbone.View.extend
         @$el.show()
         @render()
 
+        @listenTo @model, "sync", @render
+
     # Strats an exam for this detailViews task. 
     # The Application view takes care of that.
     #
@@ -47,6 +49,7 @@ App.TaskDetailView = Backbone.View.extend
     # return void
     stopDetail: () ->
         @undelegateEvents()
+        @stopListening @model
 
 
     # displays the details of a task
