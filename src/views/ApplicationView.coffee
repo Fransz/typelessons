@@ -123,6 +123,7 @@ App.ApplicationView = Backbone.View.extend
         if @currentExamView
             @currentExamView.stopExam()
             @currentExamView.hideExam()
+            @stopListening(@currentExamView)
 
         @currentExamView = null
 
@@ -147,5 +148,6 @@ App.ApplicationView = Backbone.View.extend
         if @currentDetailView
             @currentDetailView.stopDetail()
             @currentDetailView.hideDetail()
+            @stopListening(@currentDetailView)
 
         @currentDetailView = null
