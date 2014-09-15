@@ -11,15 +11,33 @@ App.TaskDetailView = Backbone.View.extend
     events:
         "click #taskdetailcancelbutton": "cancel"
 
+    # Initialize the view.
+    #
+    # @param  model  the taskModel for which this view is created
+    # @return void
     initialize: () ->
         @$el.show()
         @render()
 
-    # Cancels the detail view.
+    # Cancels the detail view, the Application view dispatches that.
     #
     # @return void
     cancel: () ->
+        @trigger "hideDetail"
+
+    # Hides the current detail view.
+    #
+    # @return void
+    hideDetail: () ->
         @$el.hide()
+
+    # Stops the current task detai.
+    # Clean up and unlisten.
+    #
+    # return void
+    stopDetail: () ->
+        @undelegateEvents()
+
 
     # displays the details of a task
     # Weights are displayed in 3 decimals without the leading zero.

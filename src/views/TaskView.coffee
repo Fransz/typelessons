@@ -8,8 +8,7 @@ App.TaskView = Backbone.View.extend
     
     events:
         dblclick: "createExam"
-        click: "showDetail"
-
+        click: "showTaskDetail"
 
     initialize: () ->
         @listenTo @model, "sync", @render
@@ -17,8 +16,8 @@ App.TaskView = Backbone.View.extend
     createExam: () ->
         @trigger "newExam", @model
 
-    showDetail: () ->
-        taskDetailView = new App.TaskDetailView model: @model
+    showTaskDetail: () ->
+        @trigger "showDetail", @model
 
     # Render the task. We show the models letters but not spaces, and stats for completed exams.
     #

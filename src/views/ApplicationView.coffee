@@ -13,6 +13,9 @@ App.ApplicationView = Backbone.View.extend
     # A view for an exam.
     currentExamView: null
 
+    # A view for a task detail.
+    currentDetailView: null
+
     el: "body"
 
     events: {
@@ -39,7 +42,7 @@ App.ApplicationView = Backbone.View.extend
 
 
     # render a single task
-    # For the task a view is made, we this these views, and listen to it.
+    # For the task a view is made, we keep these views, and listen to it.
     #
     # @param task the task to be rendered
     # @return void
@@ -47,6 +50,7 @@ App.ApplicationView = Backbone.View.extend
         taskView = new App.TaskView
             model: task
         @listenTo taskView, "newExam", @showExam
+        @listenTo taskView, "showDetail", @showTaskDetail
 
         @taskViews.push taskView
 
@@ -112,7 +116,7 @@ App.ApplicationView = Backbone.View.extend
         @listenTo examView, "hideExam", @hideExam
 
     # Hides a finished, or unfinished exam.
-    # Event handler for the current examView's finishExam event.
+    # Event handler for the current examView's hideExam event.
     #
     # return void
     hideExam: () ->
@@ -121,3 +125,25 @@ App.ApplicationView = Backbone.View.extend
             @currentExamView.hideExam()
 
         @currentExamView = null
+
+    # Opens a new detail view.
+    # EventHandler for all taskViews showDetail events.
+    #
+    # return @void
+    showTaskDetail: (taskModel) ->
+        detailView = new App.TaskDetailView model: taskModel
+
+        @currentDetailView = detailView
+        @listenTo detailView, "hideDetail", @hideTaskDetail
+
+    # Hide a tasks detail
+    # Eventhandler for the current detailViews's hideDetail event.
+    #
+    # return void
+    hideTaskDetail: () ->
+        if @currentDetailView
+            @currentDetailView.stopDetail()
+            @currentDetailView.hideDetail()
+
+        @currentDetailView = null
+
