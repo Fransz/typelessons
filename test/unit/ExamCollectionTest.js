@@ -19,6 +19,20 @@ describe("An Exam collection", function () {
             expect(ss.tries).to.be.equal(0);
         });
 
+        it.skip("should have average scores with all values 0", function () {
+            ss = collection.avgScore();
+            expect(ss.fail).to.be.equal(0);
+            expect(ss.pass).to.be.equal(0);
+            expect(ss.time).to.be.equal(0);
+        });
+
+        it.skip("should have kast scores with all values 0", function () {
+            ss = collection.lastScore();
+            expect(ss.fail).to.be.equal(0);
+            expect(ss.pass).to.be.equal(0);
+            expect(ss.time).to.be.equal(0);
+        });
+
     });
 
     describe("when having 3 completed exams for with letters 'gh '", function() {
@@ -47,9 +61,26 @@ describe("An Exam collection", function () {
 
         it("should have the correct cummelative scores", function () {
             ss = collection.cummScore();
-            expect(ss.fail).to.be.equal(165);
             expect(ss.pass).to.be.equal(135);
+            expect(ss.fail).to.be.equal(165);
             expect(ss.time).to.be.equal(300);
+            expect(ss.tries).to.be.equal(3);
+
+        });
+
+        it.skip("should have the correct average scores", function () {
+            ss = collection.avgScore();
+            expect(ss.pass).to.be.equal(15);
+            expect(ss.fail).to.be.closeTo(18.3333, 0.00004);
+            expect(ss.time).to.be.equal(100);
+
+        });
+
+        it.skip("should have the correct last scores", function () {
+            ss = collection.lastScore();
+            expect(ss.fail).to.be.equal(5);
+            expect(ss.pass).to.be.equal(5);
+            expect(ss.time).to.be.equal(100);
             expect(ss.tries).to.be.equal(3);
 
         });
