@@ -132,8 +132,9 @@ App.ApplicationView = Backbone.View.extend
     # return @void
     showTaskDetail: (taskModel) ->
         @hideTaskDetail()
-        detailView = new App.TaskDetailView model: taskModel
+        @hideExam()
 
+        detailView = new App.TaskDetailView model: taskModel
         @currentDetailView = detailView
         @listenTo detailView, "hideDetail", @hideTaskDetail
         @listenTo detailView, "newExam", @showExam
@@ -148,4 +149,3 @@ App.ApplicationView = Backbone.View.extend
             @currentDetailView.hideDetail()
 
         @currentDetailView = null
-
