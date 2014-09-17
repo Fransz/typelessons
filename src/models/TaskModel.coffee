@@ -76,3 +76,9 @@ App.TaskModel = Backbone.Model.extend
     completeExam: (exam) ->
         @get("exams").add exam
         @save()
+
+    # Creates a string from all letters in the task
+    #
+    # @return string
+    letterString: () ->
+        return @get("letters").sort().join('')

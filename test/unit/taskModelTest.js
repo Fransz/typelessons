@@ -29,8 +29,13 @@ describe("An Task model", function () {
         it("Should not have completed exams", function () {
             expect(task.get("exams")).to.have.length(0);
         });
-        describe("its weights", function () {
 
+        it("Should have letterString 'gh '", function () {
+            expect(task.letterString()).to.be.equal(" gh");
+        });
+
+
+        describe("its weights", function () {
             it("should be 0.45 for 'g' and 'h', and 0.1 for ' ', as default", function() {
                 var ws = task.get('weights');
                 var space = 1 - _.reduce(ws.slice(0, -1), function(m, v) { return m + v; }, 0);
@@ -124,5 +129,32 @@ describe("An Task model", function () {
             expect(ls).to.contain(' ');
         });
 
+    });
+
+
+    describe("when newly created with letters 'qwertyuiop'", function () {
+        before(function () {
+            task = new App.TaskModel({letters: ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p']});
+            ls = task.get('letters');
+            completed = task.get('completed');
+        });
+
+
+        it("should have letterString 'eiopqrtuwy'", function () {
+            expect(task.letterString()).to.be.equal(" eiopqrtuwy");
+        });
+    });
+
+    describe("when newly created with letters ''", function () {
+        before(function () {
+            task = new App.TaskModel({letters: []});
+            ls = task.get('letters');
+            completed = task.get('completed');
+        });
+
+
+        it("should have letterString ''", function () {
+            expect(task.letterString()).to.be.equal(" ");
+        });
     });
 });
