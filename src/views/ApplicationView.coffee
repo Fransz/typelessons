@@ -24,7 +24,7 @@ App.ApplicationView = Backbone.View.extend
 
     initialize: () ->
         @hideExam()
-        @hideNewTaskForm()
+        @hideNewTask()
         @hideTaskDetail()
 
         @tasks = new App.TaskCollection()
@@ -73,19 +73,19 @@ App.ApplicationView = Backbone.View.extend
     #
     # @return void
     showNewTaskForm: () ->
-        @hideNewTaskForm()
+        @hideNewTask()
         @hideExam()
         @hideTaskDetail()
 
         @newTaskView = new App.NewTaskView model: new App.NewTaskModel({tasks: @tasks})
-        @listenTo @newTaskView, "cancelNewTask", @hideNewTaskForm
-        @listenTo @newTaskView, "submitNewTask", @submitNewTask
+        @listenTo @newTaskView, "cancelNewTask", @hideNewTask
+        @listenTo @newTaskView, "hideNewTask", @hideNewTask
 
     # Disable the new task section, clean up.
     # Eventhandler for the newTaskView's submitNewTask event.
     #
     # @return void
-    hideNewTaskForm: () ->
+    hideNewTask: () ->
         if @newTaskView
             @newTaskView.stop()
             @newTaskView.hide()
@@ -101,7 +101,7 @@ App.ApplicationView = Backbone.View.extend
     # @return void
     showExam: (taskModel) ->
         @hideExam()
-        @hideNewTaskForm()
+        @hideNewTask()
 
         examModel = new App.ExamModel
                         letters: taskModel.get "letters"
@@ -133,7 +133,7 @@ App.ApplicationView = Backbone.View.extend
     # return @void
     showTaskDetail: (taskModel) ->
         @hideTaskDetail()
-        @hideNewTaskForm()
+        @hideNewTask()
         @hideExam()
 
         detailView = new App.TaskDetailView model: taskModel

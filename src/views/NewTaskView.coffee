@@ -95,12 +95,13 @@ App.NewTaskView = Backbone.View.extend
     submit: () ->
         if @model.isValid()
             letters_ = _.clone(@model.get "letters")
-            letters_[" "] = ls["space"]
+            letters_[" "] = letters_["space"]
             delete letters_["space"]
 
             ls = _.keys letters_
             ws = _.map(ls, ((l) -> letters_[l]))
-            @tasks.create letters: ls, weights: ws
+            tasks = @model.get "tasks"
+            tasks.create letters: ls, weights: ws
 
             @trigger "hideNewTask"
 
