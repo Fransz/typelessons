@@ -6,14 +6,17 @@ App.NewTaskModel = Backbone.Model.extend
         letters:
             space: 0.1                                                              # We always have a space with weight 0.1
 
-    # Validation for submitting a newTask. Validation for new letters and weights is done while adding the letter or weight.
+    # Validation for submitting a newTask. 
+    # Validation for new letters and weights is done while adding the letter or weight.
     #
+    # @param attrs the attributes of this model.
+    # @param options passes to set, save.
     # @return error string if the model doesnt validate; "" if we do validate.
-    validate: () ->
+    validate: (attrs, opts) ->
         error = ""
-        ls = @get "letters"
+        ls = attrs.letters
+        ls_ = _.clone attrs.letters
 
-        ls_ = _.clone(@get "letters")
         delete ls_["space"]
         s = _.size(ls_)                                                           # size without space
 

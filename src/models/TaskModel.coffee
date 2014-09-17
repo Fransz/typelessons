@@ -40,11 +40,13 @@ App.TaskModel = Backbone.Model.extend
 
     # Validates a taskmodel
     #
+    # @param attrs the attributes of this model.
+    # @param options passes to set, save.
     # @return error string if the model doesnt validate; "" if we do validate.
-    validate: () ->
+    validate: (attrs, opts) ->
         error = ""
-        ls = @get "letters"
-        ws = @get "weights"
+        ls = attrs.letters
+        ws = attrs.weights
 
         if ls[ls.length - 1] isnt ' '
             error = 'A tasks letters should have a space in its last position'

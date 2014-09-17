@@ -29,7 +29,7 @@ App.ApplicationView = Backbone.View.extend
 
         @tasks = new App.TaskCollection()
         @listenTo @tasks, "add", @renderTask
-        @tasks.fetch()
+        @tasks.fetch(validate: true)
 
         @_initializeTasks() unless @tasks.length > 0
 
