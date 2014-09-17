@@ -377,29 +377,29 @@
 
         .tries {
             .clearfix();
+            .make-row(12px);
 
-            .legenda, .score, .glyphicon {
-                float:left;
+            .trie {
+                .make-md-column(3);
             }
 
             .score, .glyphicon {
-                font-size:32px;
-                width: 36px;
+                font-size:28px;
                 height: 40px;
+                line-height:38px;
 
-                margin:0em 0.2em;
                 color:gray;
             }
 
             .legenda {
+                .make-md-column(2);
                 height: 32px;
-                width:5em;
                 line-height:48px;
             }
 
             .glyphicon {
                 color: @triesColor;
-                line-height:38px;
+                float:right;
             }
 
         }
@@ -407,23 +407,29 @@
         .scores .avgscore, .scores .sumscore, .scores .lastscore{
             .clearfix();
             margin-top:1.5em;
-
-            span, div {
-                float:left;
-            }
+            .make-row(12px);
 
             .score, .glyphicon {
-                font-size:32px;
+                font-size:28px;
                 height: 40px;
+                line-height:38px;
 
-                margin:0em 0.2em;
                 color:gray;
             }
 
             .legenda {
+                .make-md-column(2);
+
                 height: 32px;
-                width:5em;
                 line-height:48px;
+            }
+
+            .pass, .fail {
+                .make-md-column(3);
+            }
+
+            .time {
+                .make-md-column(4);
             }
 
             .pass .glyphicon {
@@ -436,8 +442,7 @@
                 color: @timeColor;
             }
             .glyphicon {
-                line-height:38px;
-                width: 36px;
+                float:right;
             }
         }
 
