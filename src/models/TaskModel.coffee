@@ -83,4 +83,4 @@ App.TaskModel = Backbone.Model.extend
     #
     # @return string
     letterString: () ->
-        return @get("letters").sort().join('')
+        return _.clone(@get("letters")).sort().join('')
