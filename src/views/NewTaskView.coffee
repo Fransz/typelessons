@@ -88,12 +88,21 @@ App.NewTaskView = Backbone.View.extend
         @trigger "cancelNewTask"
         return false
 
+    # Submit a new Task.
+    # The collection is known in the model to add, we used it for validation also.
+    #
+    # @return void
     submit: () ->
         if @model.isValid()
-            ls = _.clone(@model.get "letters")
-            ls[" "] = ls["space"]
-            delete ls["space"]
-            @trigger "submitNewTask", ls
+            letters_ = _.clone(@model.get "letters")
+            letters_[" "] = ls["space"]
+            delete letters_["space"]
+
+            ls = _.keys letters_
+            ws = _.map(ls, ((l) -> letters_[l]))
+            @tasks.create letters: ls, weights: ws
+
+            @trigger "hideNewTask"
 
         return false
 

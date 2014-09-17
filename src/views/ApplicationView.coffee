@@ -44,6 +44,7 @@ App.ApplicationView = Backbone.View.extend
 
     # render a single task
     # For the task a view is made, we keep these views, and listen to it.
+    # eventhandler for tasks:add
     #
     # @param task the task to be rendered
     # @return void
@@ -64,6 +65,7 @@ App.ApplicationView = Backbone.View.extend
         hdr = el.closest(".taskgroupwrapper").find(".taskgroupheader .count")
         nr = el.children().length
         hdr.html "#{nr} tasks"
+
 
 
     # Enable the new task section.
@@ -91,15 +93,7 @@ App.ApplicationView = Backbone.View.extend
 
         @newTaskView = null
 
-    # Add a new task, disable tasksection.
-    # Eventhandler for the newTaskView's cancelNewTask event.
-    #
-    # @return void
-    submitNewTask: (letters) ->
-        @hideNewTaskForm()
-        ls = _.keys letters
-        ws = _.map(ls, ((l) -> letters[l]))
-        @tasks.create letters: ls, weights: ws
+
 
     # Open a new exam view.
     # Eventhandler for all taskView's newExam event.
@@ -130,6 +124,8 @@ App.ApplicationView = Backbone.View.extend
             @stopListening(@currentExamView)
 
         @currentExamView = null
+
+
 
     # Opens a new detail view.
     # EventHandler for all taskViews showDetail events.
