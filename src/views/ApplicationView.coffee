@@ -75,7 +75,7 @@ App.ApplicationView = Backbone.View.extend
         @hideExam()
         @hideTaskDetail()
 
-        @newTaskView = new App.NewTaskView model: new App.NewTaskModel()
+        @newTaskView = new App.NewTaskView model: new App.NewTaskModel({tasks: @tasks})
         @listenTo @newTaskView, "cancelNewTask", @hideNewTaskForm
         @listenTo @newTaskView, "submitNewTask", @submitNewTask
 

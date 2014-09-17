@@ -2,6 +2,7 @@ App = App or {}
 
 App.NewTaskModel = Backbone.Model.extend
     defaults:
+        tasks: []                                                                   # Collection with all known tasks
         letters:
             space: 0.1                                                              # We always have a space with weight 0.1
 
@@ -23,8 +24,15 @@ App.NewTaskModel = Backbone.Model.extend
         # validate weights;
         if Math.abs(_.reduce(ls, ((m, v) -> m + v), 0) - 1) > 0.00001
             error = "Weigths do not add up to 1!"
+
+        # validate existing
+        ls_[' '] = 0
+        s = _.keys(ls_).sort().join('')
+        if @get("tasks").some(((t) -> t.letterString() is s))
+            error = "Task already exists!"
         return error
 
+        
     # Add a letter to the array of letters.
     # We have to validate here if the letter is in the task already.
     #

@@ -298,8 +298,22 @@ describe("An New Task model", function () {
             expect(newTask.isValid()).to.be.false;
         });
 
-        it.skip("should not validate when a task with the same letters is already known", function () {
+        it("should not validate when a task with the same letters is already known", function () {
+            /* jshint -W030 */
+            var taskCollection, firstTask, secondTask; 
 
+            taskCollection = new App.TaskCollection();
+            existingTask = new App.TaskModel({letters: ['a', 'b', ' '], weights: [0.1, 0.45, 0.45]});
+            taskCollection.add(existingTask);
+
+            secondTask = new App.NewTaskModel({letters: {'a': 0.45, 'b': 0.45, 'space': 0.1}, tasks: taskCollection});
+            expect(secondTask.isValid()).to.be.false;
+
+            secondTask = new App.NewTaskModel({letters: {'b': 0.45, 'space': 0.1, 'a': 0.45}, tasks: taskCollection});
+            expect(secondTask.isValid()).to.be.false;
+
+            secondTask = new App.NewTaskModel({letters: {'x': 0.45, 'space': 0.1, 'a': 0.45}, tasks: taskCollection});
+            expect(secondTask.isValid()).to.be.true;
         });
     });
 });
