@@ -17,6 +17,7 @@ App.TaskModel = Backbone.Model.extend
     initialize: () ->
         # Be sure our letter array has one, and only one space, at its last position.
         ls = @get "letters"
+        ls = ls.sort()
         ls.push ' '
         ls = _.uniq ls
         unless ls[ls.length - 1] is ' '
@@ -34,6 +35,7 @@ App.TaskModel = Backbone.Model.extend
 
         # init the examcollection
         @set "exams", new App.ExamCollection(@get "exams")
+
 
 
     # Validates a taskmodel

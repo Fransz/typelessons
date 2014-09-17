@@ -165,7 +165,7 @@ App.NewTaskView = Backbone.View.extend
     # renders an error
     #
     # return void
-    renderError: () ->
+    renderError: (model, error) ->
         @$el.find(".newtaskerror").remove()
         @$el.append @errorTemplate error: error
 
