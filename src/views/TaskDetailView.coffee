@@ -11,6 +11,7 @@ App.TaskDetailView = Backbone.View.extend
     events:
         "click #taskdetailcancelbutton": "cancel"
         "click #taskdetailtrybutton": "try"
+        "click #taskdetailremovebutton": "remove"
 
     # Initialize the view.
     #
@@ -35,6 +36,13 @@ App.TaskDetailView = Backbone.View.extend
     #
     # @return void
     cancel: () ->
+        @trigger "hideDetail"
+
+    # Removes the task, and cancels the detail view
+    #
+    # return void
+    remove: () ->
+        @model.destroy()
         @trigger "hideDetail"
 
     # Hides the current detail view.

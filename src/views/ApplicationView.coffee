@@ -29,6 +29,7 @@ App.ApplicationView = Backbone.View.extend
 
         @tasks = new App.TaskCollection()
         @listenTo @tasks, "add", @renderTask
+        @listenTo @tasks, "remove", @renderTasks
         @tasks.fetch(validate: true)
 
         @_initializeTasks() unless @tasks.length > 0
@@ -67,6 +68,20 @@ App.ApplicationView = Backbone.View.extend
         hdr.html "#{nr} tasks"
 
 
+    # Render all tasks in the tasks collection
+    # eventHandler for tasks:remove
+    #
+    # return void
+    renderTasks: () ->
+        @taskViews = []
+
+        # remove content for all lettergroups
+        f = (g) ->
+                el = @$ "#tasks ##{g}lettertasks"
+                el.html('')
+        [2, 4, 6, 8].map(f)
+
+        @tasks.each(@renderTask, this)
 
     # Enable the new task section.
     # Dom Eventhandler for the newtask button.
