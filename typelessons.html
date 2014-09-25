@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>typelessons</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="build/css/typelessons.css" />
+    </head>
+    <body>
+        <!--[if lt IE 8]>
+            <p class="browsehappy">
+                You are using an <strong>outdated</strong> browser. 
+                Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.
+            </p>
+        <![endif]-->
+
+        <div class="container-fluid">
+            <div class="row">
+
+                <div id="otherthenexam">
+                    <section id="tasks">
+                        <script type="text/template" id="tasktemplate">
+                                <div class="keyrow">
+                                    <% for(var i = 0, l = letters.length; i < l ; i++) { %>
+                                        <div class="key">
+                                            <span class="letter"><%= letters[i] %></span>
+                                        </div>
+                                    <% }; %>
+                                </div>
+                                <div class="scores">
+                                    <div class="pass">
+                                        <span class="glyphicon glyphicon-ok"></span>
+                                        <span class="score"><%= score.pass %></span>
+                                    </div>
+                                    <div class="fail">
+                                        <span class="score"><%= score.fail %></span>
+                                        <span class="glyphicon glyphicon-remove"></span>
+                                    </div>
+                                    <div class="time">
+                                        <span class="glyphicon glyphicon-time"></span>
+                                        <span class="score"><%= score.time %></span>
+                                    </div>
+                                    <div class="tries">
+                                        <span class="score"><%= score.tries %></span>
+                                        <span class="glyphicon glyphicon-star"></span>
+                                    </div>
+                                </div>
+                        </script>
+
+                        <div class="row">
+                            <div class="taskgroupwrapper">
+                                <div class="taskgroupheader">
+                                    <h1>2 letters</h1>
+                                    <div class="count"></div>
+                                </div>
+                                <div id="2lettertasks" class="taskgroup"></div>
+                            </div>
+                            <div class="taskgroupwrapper">
+                                <div class="taskgroupheader">
+                                    <h1>4 letters</h1>
+                                    <div class="count"></div>
+                                </div>
+                                <div id="4lettertasks" class="taskgroup"></div>
+                            </div>
+                            <div class="taskgroupwrapper">
+                                <div class="taskgroupheader">
+                                    <h1>6 letters</h1>
+                                    <div class="count"></div>
+                                </div>
+                                <div id="6lettertasks" class="taskgroup"></div>
+                            </div>
+                            <div class="taskgroupwrapper">
+                                <div class="taskgroupheader">
+                                    <h1>8 letters</h1>
+                                    <div class="count"></div>
+                                </div>
+                                <div id="8lettertasks" class="taskgroup"></div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section id="appcontrols">
+                        <button id="newtaskcontrol">new task</button>
+                    </section>
+
+                    <section id="newtask">
+                        <script type="text/template" id="newtaskrowtemplate">
+                            <div class="letterweightpairrow"> </div>
+                        </script>
+
+                        <script type="text/template" id="newtaskinputtemplate">
+                            <div class="letterweightpair">
+                                <label for="<%= 'newtaskinput' + letter %>">letter</label>
+                                <input disabled maxlength="1" id="<%= 'newtaskinput' + letter %>" class="letter" type="text" value="<%= letter %>" />
+                                <label for="<%= 'newtaskinput' + letter  + 'w'%>">weight</label>
+                                <input id="<%= 'newtaskinput' + letter  + 'w'%>" class="weight" type="text" value="<%= weight %>" />
+                                <span class="delete glyphicon glyphicon-remove"></span>
+                            </div>
+                        </script>
+
+                        <script type="text/template" id="newtaskerrortemplate">
+                            <div class="newtaskerror"><%= error %></div>
+                        </script>
+
+                        <form>
+                            <div class="letterweightpairrows"></div>
+                            <div id="newtaskcontrols">
+                                <button id="newtaskok">ok</button>
+                                <button id="newtaskevenweights">even weights</button>
+                                <button id="newtaskcancel">cancel</button>
+                            </div>
+                        </form>
+                    </section>
+
+                    <section id="taskdetail">
+                        <script type="text/template" id="taskdetaillettertemplate">
+                            <div class="keyrow">
+                                <span class="legenda">letters</span>
+                                <% for(var i = 0, l = letters.length; i < l ; i++) { %>
+                                    <div class="key">
+                                        <span class="letter"><%= letters[i] %></span>
+                                    </div>
+                                <% }; %>
+                            </div>
+                        </script>
+                        <script type="text/template" id="taskdetailweighttemplate">
+                            <div class="weightrow">
+                                <span class="legenda">weights</span>
+                                <% for(var i = 0, l = weights.length; i < l ; i++) { %>
+                                    <div class="key">
+                                        <span class="weight"><%= weights[i] %></span>
+                                    </div>
+                                <% }; %>
+                            </div>
+                        </script>
+                        <script type="text/template" id="taskdetailtriestemplate">
+                            <span class="legenda">tries</span>
+                            <div class="trie">
+                                <span class="score"><%= tries %></span>
+                                <span class="glyphicon glyphicon-star"></span>
+                            </div>
+                        </script>
+                        <script type="text/template" id="taskdetailscoretemplate">
+                                <div class="pass">
+                                    <span class="score"><%= score.pass %></span>
+                                    <span class="glyphicon glyphicon-ok"></span>
+                                </div>
+                                <div class="fail">
+                                    <span class="score"><%= score.fail %></span>
+                                    <span class="glyphicon glyphicon-remove"></span>
+                                </div>
+                                <div class="time">
+                                    <span class="score"><%= score.time %></span>
+                                    <span class="glyphicon glyphicon-time"></span>
+                                </div>
+                        </script>
+
+                        <div class="letters"></div>
+                        <div class="weights"></div>
+                        <div class="tries"></div>
+                        <div class="scores">
+                            <div class="lastscore">
+                                <span class="legenda">last</span>
+                                <div class="scorewrapper"></div>
+                            </div>
+                            <div class="sumscore">
+                                <span class="legenda">sum</span>
+                                <div class="scorewrapper"></div>
+                            </div>
+                            <div class="avgscore">
+                                <span class="legenda">average</span>
+                                <div class="scorewrapper"></div>
+                            </div>
+                        </div>
+                        <div class="buttons">
+                            <button id="taskdetailtrybutton">try</button>
+                            <button id="taskdetailcancelbutton">cancel</button>
+                            <button id="taskdetailremovebutton">remove</button>
+                        </div>
+
+                    </section>
+                </div>
+
+                <section id="exam">
+                    <div id="teststring">
+                        <div id="content">&nbsp;</div>
+                    </div>
+
+                    <div id="keyboard">
+                        <div class="keyboardrow" id="rowone">
+                            <div class="key" id="key1">
+                                <span class="letter" id="key1">1</span>
+                            </div>
+
+                            <div class="key" id="key2">
+                                <span class="letter">2</span>
+                            </div>
+
+                            <div class="key" id="key3">
+                                <span class="letter">3</span>
+                            </div>
+
+                            <div class="key" id="key4">
+                                <span class="letter">4</span>
+                            </div>
+                           
+                            <div class="key" id="key5">
+                                <span class="letter">5</span>
+                            </div>
+
+                            <div class="key" id="key6">
+                                <span class="letter">6</span>
+                            </div>
+
+                            <div class="key" id="key7">
+                                <span class="letter">7</span>
+                            </div>
+
+                            <div class="key" id="key8">
+                                <span class="letter">8</span>
+                            </div>
+
+                            <div class="key" id="key9">
+                                <span class="letter">9</span>
+                            </div>
+
+                            <div class="key" id="key0">
+                                <span class="letter">0</span>
+                            </div>
+
+                            <div class="key" id="keydash">
+                                <span class="letter">-</span>
+                            </div>
+
+                            <div class="key" id="keyequal">
+                                <span class="letter">=</span>
+                            </div>
+                        </div>
+
+                        <div class="keyboardrow" id="rowtwo">
+                            <div class="key" id="keyq">
+                                <span class="letter">q</span>
+                            </div>
+
+                            <div class="key" id="keyw">
+                                <span class="letter">w</span>
+                            </div>
+
+                            <div class="key" id="keye">
+                                <span class="letter">e</span>
+                            </div>
+
+                            <div class="key" id="keyr">
+                                <span class="letter">r</span>
+                            </div>
+
+                            <div class="key" id="keyt">
+                                <span class="letter">t</span>
+                            </div>
+
+                            <div class="key" id="keyy">
+                                <span class="letter">y</span>
+                            </div>
+
+                            <div class="key" id="keyu">
+                                <span class="letter">u</span>
+                            </div>
+
+                            <div class="key" id="keyi">
+                                <span class="letter">i</span>
+                            </div>
+
+                            <div class="key" id="keyo">
+                                <span class="letter">o</span>
+                            </div>
+
+                            <div class="key" id="keyp">
+                                <span class="letter">p</span>
+                            </div>
+
+                            <div class="key" id="keyblockopen">
+                                <span class="letter">[</span>
+                            </div>
+
+                            <div class="key" id="keyblockclose">
+                                <span class="letter">]</span>
+                            </div>
+                        </div>
+
+                        <div class="keyboardrow" id="rowthree">
+                            <div class="key" id="keya">
+                                <span class="letter">a</span>
+                            </div>
+
+                            <div class="key" id="keys">
+                                <span class="letter">s</span>
+                            </div>
+
+                            <div class="key" id="keyd">
+                                <span class="letter">d</span>
+                            </div>
+
+                            <div class="key" id="keyf">
+                                <span class="letter">f</span>
+                            </div>
+
+                            <div class="key" id="keyg">
+                                <span class="letter">g</span>
+                            </div>
+
+                            <div class="key" id="keyh">
+                                <span class="letter">h</span>
+                            </div>
+
+                            <div class="key" id="keyj">
+                                <span class="letter">j</span>
+                            </div>
+
+                            <div class="key" id="keyk">
+                                <span class="letter">k</span>
+                            </div>
+
+                            <div class="key" id="keyl">
+                                <span class="letter">l</span>
+                            </div>
+
+                            <div class="key" id="keysemicolon">
+                                <span class="letter">;</span>
+                            </div>
+
+                            <div class="key" id="keysinglequote">
+                                <span class="letter">&#39;</span>
+                            </div>
+
+                            <div class="key" id="keybackslash">
+                                <span class="letter">\</span>
+                            </div>
+                        </div>
+
+                        <div class="keyboardrow" id="rowfour">
+                            <div class="key" id="keybackquote">
+                                <span class="letter">`</span>
+                            </div>
+
+                            <div class="key" id="keyz">
+                                <span class="letter">z</span>
+                            </div>
+
+                            <div class="key" id="keyx">
+                                <span class="letter">x</span>
+                            </div>
+
+                            <div class="key" id="keyc">
+                                <span class="letter">c</span>
+                            </div>
+
+                            <div class="key" id="keyv">
+                                <span class="letter">v</span>
+                            </div>
+
+                            <div class="key" id="keyb">
+                                <span class="letter">b</span>
+                            </div>
+
+                            <div class="key" id="keyn">
+                                <span class="letter">n</span>
+                            </div>
+
+                            <div class="key" id="keym">
+                                <span class="letter">m</span>
+                            </div>
+
+                            <div class="key" id="keycomma">
+                                <span class="letter">,</span>
+                            </div>
+
+                            <div class="key" id="keydot">
+                                <span class="letter">.</span>
+                            </div>
+
+                            <div class="key" id="keyslash">
+                                <span class="letter">/</span>
+                            </div>
+                        </div>
+
+                        <div class="keyboardrow" id="rowfive">
+                            <div class="key" id="keyspace">
+                                <span class="letter">space</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div id="scores">
+                            <div class="pass">
+                                <h1>Pass</h1> 
+                                <span class="score">0</span>
+                                <span class="glyphicon glyphicon-ok"></span>
+                            </div>
+                            <div class="fail">
+                                <h1>Fail</h1> 
+                                <span class="score">0</span>
+                                <span class="glyphicon glyphicon-remove"></span>
+                            </div>
+                            <div class="time">
+                                <h1>Time</h1> 
+                                <span class="score">0:00</span>
+                                <span class="glyphicon glyphicon-time"></span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </div>
+
+
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"> </script>
+        <script src="http://documentcloud.github.com/underscore/underscore-min.js"> </script>
+        <script src="http://documentcloud.github.com/backbone/backbone.js"> </script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/backbone-localstorage.js/1.1.13/backbone.localStorage-min.js"> </script>
+
+        <script src="build/js/typelessons.js"> </script>
+    </body>
+</html>

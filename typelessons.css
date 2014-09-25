@@ -1,0 +1,59 @@
+#typedstring {
+    font-family:monospace;
+    width:50em;
+    height:1em;
+    border:1px solid gray;
+    margin:0.25em;
+}
+
+#typedstring .fail {
+    color:red;
+}
+
+#typedstring .pass {
+    color:green;
+}
+
+#teststring {
+    font-family:monospace;
+    width:50em;
+    height:1em;
+    border:1px solid gray;
+    margin:0.25em;
+}
+
+#keyboard .row {
+    margin:1em 0;
+}
+
+#keyboard .key {
+    margin:0em 0.5em;
+    border:2px solid grey;
+    padding:0.25em 0.5em;
+}
+
+#keyboard .key.fail {
+    color:red;
+    border: 2px solid red;
+}
+
+#keyboard .key.pass {
+    color:green;
+    border: 2px solid green;
+}
+
+#completed {
+    display:none;
+}
+
+#newtask {
+    display: hidden;
+}
+
+#newtask .error {
+    color: red;
+}
+
+#newtask .letterweightpair {
+    display:inline;
+}

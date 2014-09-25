@@ -1,0 +1,115 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="/usr/local/lib/node_modules/mocha/mocha.css" />
+  </head>
+  <body>
+    <div id="mocha"></div>
+
+    <script src="/usr/local/lib/node_modules/mocha/mocha.js"></script>
+    <script src="/usr/local/lib/node_modules/chai/chai.js"></script>
+    <script>
+      mocha.ui('bdd');
+      mocha.reporter('html');
+      expect = chai.expect;
+    </script>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"> </script>
+    <script src="http://documentcloud.github.com/underscore/underscore-min.js"> </script>
+    <script src="http://documentcloud.github.com/backbone/backbone-min.js"> </script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/backbone-localstorage.js/1.1.13/backbone.localStorage-min.js"> </script>
+
+
+    <!-- templates on which our code relies -->
+    <script type="text/template" id="newtaskrowtemplate">
+        <div class="row"> </div>
+    </script>
+    <script type="text/template" id="newtaskinputtemplate">
+        <div class="letterweightpair">
+            <label for="<%= 'newtaskinput' + letter %>">l:</label>
+            <input disabled maxlength="1" id="<%= 'newtaskinput' + letter %>" class="letter" type="text" value="<%= letter %>" />
+            <label for="<%= 'newtaskinput' + letter  + 'w'%>">w:</label>
+            <input id="<%= 'newtaskinput' + letter  + 'w'%>" class="weight" type="text" value="<%= weight %>" />
+            <span class="delete">X</span>
+        </div>
+    </script>
+    <script type="text/template" id="newtaskerrortemplate">
+        <div class="error"><%= error %></div>
+    </script>
+
+    <script type="text/template" id="tasktemplate">
+            <div class="keyboardrow">
+                <% for(var i = 0, l = letters.length; i < l ; i++) { %>
+                    <div class="key">
+                        <span class="letter"><%= letters[i] %></span>
+                    </div>
+                <% }; %>
+            </div>
+            <div class="scores">
+                <span><%= score.pass %></span>
+                <span><%= score.fail %></span>
+                <span><%= score.time %></span>
+                <span><%= score.tries %></span>
+            </div>
+    </script>
+
+    <script type="text/template" id="taskdetaillettertemplate">
+        <div class="keyrow">
+            <span class="legenda">letters</span>
+            <% for(var i = 0, l = letters.length; i < l ; i++) { %>
+                <div class="key">
+                    <span class="letter"><%= letters[i] %></span>
+                </div>
+            <% }; %>
+        </div>
+    </script>
+    <script type="text/template" id="taskdetailweighttemplate">
+        <div class="weightrow">
+            <span class="legenda">weights</span>
+            <% for(var i = 0, l = weights.length; i < l ; i++) { %>
+                <div class="key">
+                    <span class="weight"><%= weights[i] %></span>
+                </div>
+            <% }; %>
+        </div>
+    </script>
+    <script type="text/template" id="taskdetailtriestemplate">
+        <span class="legenda">tries</span>
+        <span class="score"><%= score.tries %></span>
+        <span class="glyphicon glyphicon-star"></span>
+    </script>
+    <script type="text/template" id="taskdetailscoretemplate">
+            <div class="pass">
+                <span class="score"><%= score.pass %></span>
+                <span class="glyphicon glyphicon-ok"></span>
+            </div>
+            <div class="fail">
+                <span class="score"><%= score.fail %></span>
+                <span class="glyphicon glyphicon-remove"></span>
+            </div>
+            <div class="time">
+                <span class="score"><%= score.time %></span>
+                <span class="glyphicon glyphicon-star"></span>
+            </div>
+    </script>
+
+
+
+    <script src="../../build/js/typelessons.js"></script>
+
+
+    <script src="ExamModelTest.js"></script>
+    <script src="ExamCollectionTest.js"></script>
+
+    <script src="TaskModelTest.js"></script>
+    <script src="TaskViewTest.js"></script>
+
+    <script src="NewTaskModelTest.js"></script>
+    <script src="NewTaskViewTest.js"></script>
+
+    <script>
+      if (window.mochaPhantomJS) { mochaPhantomJS.run(); }
+      else { mocha.run(); }
+    </script>
+  </body>
+</html>
