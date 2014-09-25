@@ -24,7 +24,6 @@
     <script type="text/template" id="newtaskrowtemplate">
         <div class="row"> </div>
     </script>
-
     <script type="text/template" id="newtaskinputtemplate">
         <div class="letterweightpair">
             <label for="<%= 'newtaskinput' + letter %>">l:</label>
@@ -34,10 +33,10 @@
             <span class="delete">X</span>
         </div>
     </script>
-
     <script type="text/template" id="newtaskerrortemplate">
         <div class="error"><%= error %></div>
     </script>
+
     <script type="text/template" id="tasktemplate">
             <div class="keyboardrow">
                 <% for(var i = 0, l = letters.length; i < l ; i++) { %>
@@ -51,6 +50,46 @@
                 <span><%= score.fail %></span>
                 <span><%= score.time %></span>
                 <span><%= score.tries %></span>
+            </div>
+    </script>
+
+    <script type="text/template" id="taskdetaillettertemplate">
+        <div class="keyrow">
+            <span class="legenda">letters</span>
+            <% for(var i = 0, l = letters.length; i < l ; i++) { %>
+                <div class="key">
+                    <span class="letter"><%= letters[i] %></span>
+                </div>
+            <% }; %>
+        </div>
+    </script>
+    <script type="text/template" id="taskdetailweighttemplate">
+        <div class="weightrow">
+            <span class="legenda">weights</span>
+            <% for(var i = 0, l = weights.length; i < l ; i++) { %>
+                <div class="key">
+                    <span class="weight"><%= weights[i] %></span>
+                </div>
+            <% }; %>
+        </div>
+    </script>
+    <script type="text/template" id="taskdetailtriestemplate">
+        <span class="legenda">tries</span>
+        <span class="score"><%= score.tries %></span>
+        <span class="glyphicon glyphicon-star"></span>
+    </script>
+    <script type="text/template" id="taskdetailscoretemplate">
+            <div class="pass">
+                <span class="score"><%= score.pass %></span>
+                <span class="glyphicon glyphicon-ok"></span>
+            </div>
+            <div class="fail">
+                <span class="score"><%= score.fail %></span>
+                <span class="glyphicon glyphicon-remove"></span>
+            </div>
+            <div class="time">
+                <span class="score"><%= score.time %></span>
+                <span class="glyphicon glyphicon-star"></span>
             </div>
     </script>
 

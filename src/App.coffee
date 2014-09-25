@@ -26,7 +26,7 @@ App.initialModels = _.map [
     "ghtybn", "fjruvm", "dkeicm", "slwox.", "qpa;z.",
 
     # "asdfg","hjkl;" "zxcvb","nm,./" "qwert","yuiop" "12345","67890"
-    "azq1hnm6", "sxw2jmu7", "dce3k,i8", "fvr4l.o9", "gbt5;/p0"
+    "eiqrtuwy", "16ahmnqz", "27jmsuwx", ",38cdeki", ".49florv", "/05;bgpt"
 ], (s) -> s.split('')
 
 # Sample function.

@@ -143,26 +143,47 @@ describe("An New Task model", function () {
             newTask = new App.NewTaskModel();
         });
 
-        it("should validate with 3, 5, 7, 9  letters, one of which is space", function () {
+        it("should validate with 3 letters, one of which is space", function () {
             /* jshint -W030, -W069 */
             r = newTask.addWeight('a', "0.45");
             r = newTask.addWeight('b', "0.45");
             expect(newTask.isValid()).to.be.true;
+        });
 
+        it("should validate with 5 letters, one of which is space", function () {
+            /* jshint -W030, -W069 */
+            r = newTask.addWeight('a', "0.225");
+            r = newTask.addWeight('b', "0.225");
             r = newTask.addWeight('c', "0.225");
             r = newTask.addWeight('d', "0.225");
             expect(newTask.isValid()).to.be.true;
+        });
 
+        it("should validate with 7 letters, one of which is space", function () {
+            /* jshint -W030, -W069 */
+            r = newTask.addWeight('a', "0.15");
+            r = newTask.addWeight('b', "0.15");
+            r = newTask.addWeight('c', "0.15");
+            r = newTask.addWeight('d', "0.15");
             r = newTask.addWeight('e', "0.15");
             r = newTask.addWeight('f', "0.15");
             expect(newTask.isValid()).to.be.true;
+        });
 
+        it("should validate with 9 letters, one of which is space", function () {
+            /* jshint -W030, -W069 */
+            r = newTask.addWeight('a', "0.1125");
+            r = newTask.addWeight('b', "0.1125");
+            r = newTask.addWeight('c', "0.1125");
+            r = newTask.addWeight('d', "0.1125");
+            r = newTask.addWeight('e', "0.1125");
+            r = newTask.addWeight('f', "0.1125");
             r = newTask.addWeight('g', "0.1125");
             r = newTask.addWeight('h', "0.1125");
             expect(newTask.isValid()).to.be.true;
         });
 
-        it("should not validate with 3, 5, 7, 9  letters, none of which is space", function () {
+        it("should not validate with 3 letters, none of which is space", function () {
             /* jshint -W030, -W069 */
             newTask.deleteLetter('space');
 
@@ -170,35 +191,83 @@ describe("An New Task model", function () {
             r = newTask.addWeight('a', "0.45");
             r = newTask.addWeight('b', "0.45");
             expect(newTask.isValid()).to.be.false;
+        });
 
+        it("should not validate with 5 letters, none of which is space", function () {
+            /* jshint -W030, -W069 */
+            newTask.deleteLetter('space');
+
+            r = newTask.addWeight('s', "0.1");
+            r = newTask.addWeight('a', "0.225");
+            r = newTask.addWeight('b', "0.225");
             r = newTask.addWeight('c', "0.225");
             r = newTask.addWeight('d', "0.225");
             expect(newTask.isValid()).to.be.false;
+        });
 
+        it("should not validate with 7 letters, none of which is space", function () {
+            /* jshint -W030, -W069 */
+            newTask.deleteLetter('space');
+
+            r = newTask.addWeight('s', "0.1");
+            r = newTask.addWeight('a', "0.15");
+            r = newTask.addWeight('b', "0.15");
+            r = newTask.addWeight('c', "0.15");
+            r = newTask.addWeight('d', "0.15");
             r = newTask.addWeight('e', "0.15");
             r = newTask.addWeight('f', "0.15");
             expect(newTask.isValid()).to.be.false;
+        });
 
+        it("should not validate with 9 letters, none of which is space", function () {
+            /* jshint -W030, -W069 */
+            newTask.deleteLetter('space');
+
+            r = newTask.addWeight('s', "0.1");
+            r = newTask.addWeight('a', "0.1125");
+            r = newTask.addWeight('b', "0.1125");
+            r = newTask.addWeight('c', "0.1125");
+            r = newTask.addWeight('d', "0.1125");
+            r = newTask.addWeight('e', "0.1125");
+            r = newTask.addWeight('f', "0.1125");
             r = newTask.addWeight('g', "0.1125");
             r = newTask.addWeight('h', "0.1125");
             expect(newTask.isValid()).to.be.false;
         });
 
-        it("should not validate with 2, 4, 6, 8  letters, one of which is space", function () {
+        it("should not validate with 2 letters, one of which is space", function () {
             /* jshint -W030, -W069 */
-            r = newTask.addWeight('b', "0.45");
+            r = newTask.addWeight('b', "0.9");
             expect(newTask.isValid()).to.be.false;
+        });
 
-            r = newTask.addWeight('c', "0.225");
-            r = newTask.addWeight('d', "0.225");
+        it("should not validate with 4 letters, one of which is space", function () {
+            /* jshint -W030, -W069 */
+            r = newTask.addWeight('b', "0.3");
+            r = newTask.addWeight('c', "0.3");
+            r = newTask.addWeight('d', "0.3");
             expect(newTask.isValid()).to.be.false;
+        });
 
-            r = newTask.addWeight('e', "0.15");
-            r = newTask.addWeight('f', "0.15");
+        it("should not validate with 6 letters, one of which is space", function () {
+            /* jshint -W030, -W069 */
+            r = newTask.addWeight('b', "0.2");
+            r = newTask.addWeight('c', "0.2");
+            r = newTask.addWeight('d', "0.2");
+            r = newTask.addWeight('e', "0.2");
+            r = newTask.addWeight('f', "0.2");
             expect(newTask.isValid()).to.be.false;
+        });
 
-            r = newTask.addWeight('g', "0.1125");
-            r = newTask.addWeight('h', "0.1125");
+        it("should not validate with 8 letters, one of which is space", function () {
+            /* jshint -W030, -W069 */
+            r = newTask.addWeight('b', "0.129");
+            r = newTask.addWeight('c', "0.129");
+            r = newTask.addWeight('d', "0.129");
+            r = newTask.addWeight('e', "0.129");
+            r = newTask.addWeight('f', "0.129");
+            r = newTask.addWeight('g', "0.129");
+            r = newTask.addWeight('h', "0.129");
             expect(newTask.isValid()).to.be.false;
         });
 
@@ -216,8 +285,35 @@ describe("An New Task model", function () {
             expect(newTask.isValid()).to.be.false;
         });
 
-        it.skip("should not validate when a task with the same letters is already known", function () {
+        it("should not validate when the weights dont count up to one", function () {
+            /*jshint -W030 */
+            r = newTask.addWeight('a', "0.1");
+            r = newTask.addWeight('b', "0.25");
+            r = newTask.addWeight('c', "0.2");
+            r = newTask.addWeight('d', "0.03");
+            r = newTask.addWeight('e', "0.12");
+            r = newTask.addWeight('f', "0.3");
+            r = newTask.addWeight('space', "0.3");
 
+            expect(newTask.isValid()).to.be.false;
+        });
+
+        it("should not validate when a task with the same letters is already known", function () {
+            /* jshint -W030 */
+            var taskCollection, firstTask, secondTask; 
+
+            taskCollection = new App.TaskCollection();
+            existingTask = new App.TaskModel({letters: ['a', 'b', ' '], weights: [0.1, 0.45, 0.45]});
+            taskCollection.add(existingTask);
+
+            secondTask = new App.NewTaskModel({letters: {'a': 0.45, 'b': 0.45, 'space': 0.1}, tasks: taskCollection});
+            expect(secondTask.isValid()).to.be.false;
+
+            secondTask = new App.NewTaskModel({letters: {'b': 0.45, 'space': 0.1, 'a': 0.45}, tasks: taskCollection});
+            expect(secondTask.isValid()).to.be.false;
+
+            secondTask = new App.NewTaskModel({letters: {'x': 0.45, 'space': 0.1, 'a': 0.45}, tasks: taskCollection});
+            expect(secondTask.isValid()).to.be.true;
         });
     });
 });

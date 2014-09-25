@@ -7,27 +7,28 @@ App.TaskView = Backbone.View.extend
     template: _.template @$("#tasktemplate").html()
     
     events:
-        dblclick: "createExam"
+        click: "showTaskDetail"
 
-
+    # Initialize the taskview
+    #
+    # @return void
     initialize: () ->
         @listenTo @model, "sync", @render
 
-    createExam: () ->
-        examModel = new App.ExamModel
-                        letters: @model.get "letters"
-                        weights: @model.get "weights"
-        examView = new App.ExamView
-                        model: examModel
-                        task: @model
-
+    # Shows a tasks detail
+    # Event handler for the DOM click event on this taskview
+    # We just fire an onther event listened to by the Application view.
+    #
+    # @return void
+    showTaskDetail: () ->
+        @trigger "showDetail", @model
 
     # Render the task. We show the models letters but not spaces, and stats for completed exams.
     #
     # @return void
     render: () ->
         letters = _.filter(@model.get("letters"), (l) -> l isnt ' ')
-        score = @model.get("exams").cummScore()
+        score = @model.get("exams").sumScore()
 
         s = score.time % 60
         m = Math.floor(score.time / 60)

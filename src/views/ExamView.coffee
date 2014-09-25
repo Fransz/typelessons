@@ -20,10 +20,15 @@ App.ExamView = Backbone.View.extend
     initialize: (args) ->
         @task = args.task
 
-        # Show our testString.
+        @$el.show()
+
+        # Show our testString, and inital scores.
         @toBeTypedString = @model.get("testString")
         @$("#teststring #content").html @toBeTypedString
         @$("#teststring").css visibility: "visible"
+        @$("#scores .pass .score").html "0"
+        @$("#scores .fail .score").html "0"
+        @$("#scores .time .score").html "0:00"
 
         @listenTo @model, "change:lastChar", @showKey
         @listenTo @model, "change:lastChar", @renderScores
@@ -89,7 +94,7 @@ App.ExamView = Backbone.View.extend
     #
     # @return void
     renderScores: () ->
-        scores = @model.sumScore()
+        scores = @model.totalScore()
         @$("#scores .pass .score").html scores.pass
         @$("#scores .fail .score").html scores.fail
 
@@ -101,8 +106,10 @@ App.ExamView = Backbone.View.extend
     # @return void
     processKey: (evt) ->
         if not @ticker then @setTicker()
-        evt.preventDefault()
         @model.addKeyStroke String.fromCharCode evt.which
+
+        evt.preventDefault()
+        evt.stopPropagation()
 
     # A ticker for keeping time
     #
@@ -113,7 +120,7 @@ App.ExamView = Backbone.View.extend
         @ticks = 0
 
         _ticker = () =>
-            e.html "#{if(m < 10) then '0' + m else m}:#{if(s < 10) then '0' + s else s}"
+            e.html "#{m}:#{if(s < 10) then '0' + s else s}"
             if (++s == 60)
                 s = 0
                 m++
@@ -128,15 +135,31 @@ App.ExamView = Backbone.View.extend
     clearTicker: () ->
         clearInterval @ticker
 
+    # Stops an exam.
+    # Cleans up the exam.
+    #
+    # return: void
+    stopExam: () ->
+        @clearTicker()
+        @stopListening()
+        @undelegateEvents()
+        $(document).unbind 'keypress'
+
+
+    # Hides the exam: () ->
+    #
+    # return void
+    hideExam: () ->
+        @$el.hide()
+
     # Mark he model for this exam as completed, clean up our exam.
     # eventhandler for change:completed
     #
     # @return void
     examCompleted: () ->
-        @clearTicker()
-        @stopListening()
-        $(document).unbind 'keypress'
+        @stopExam()
 
+        # Process last keystroke.
         @renderToBeTypedString()
         @showKey()
         @renderScores()
@@ -145,4 +168,9 @@ App.ExamView = Backbone.View.extend
         @$("#teststring").css visibility: "hidden"
 
         @model.set "time", @ticks - 1
+
+        # Our task Model will process this exam.
         @task.completeExam @model
+
+        # Our app view will destroy us.
+        @trigger "hideExam"

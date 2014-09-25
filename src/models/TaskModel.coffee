@@ -17,6 +17,7 @@ App.TaskModel = Backbone.Model.extend
     initialize: () ->
         # Be sure our letter array has one, and only one space, at its last position.
         ls = @get "letters"
+        ls = ls.sort()
         ls.push ' '
         ls = _.uniq ls
         unless ls[ls.length - 1] is ' '
@@ -36,13 +37,16 @@ App.TaskModel = Backbone.Model.extend
         @set "exams", new App.ExamCollection(@get "exams")
 
 
+
     # Validates a taskmodel
     #
+    # @param attrs the attributes of this model.
+    # @param options passes to set, save.
     # @return error string if the model doesnt validate; "" if we do validate.
-    validate: () ->
+    validate: (attrs, opts) ->
         error = ""
-        ls = @get "letters"
-        ws = @get "weights"
+        ls = attrs.letters
+        ws = attrs.weights
 
         if ls[ls.length - 1] isnt ' '
             error = 'A tasks letters should have a space in its last position'
@@ -74,3 +78,9 @@ App.TaskModel = Backbone.Model.extend
     completeExam: (exam) ->
         @get("exams").add exam
         @save()
+
+    # Creates a string from all letters in the task
+    #
+    # @return string
+    letterString: () ->
+        return _.clone(@get("letters")).sort().join('')

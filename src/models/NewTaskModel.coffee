@@ -2,24 +2,40 @@ App = App or {}
 
 App.NewTaskModel = Backbone.Model.extend
     defaults:
+        tasks: []                                                                   # Collection with all known tasks
         letters:
             space: 0.1                                                              # We always have a space with weight 0.1
 
-    # Validation for submitting a newTask. Validation for new letters and weights is done while adding the letter or weight.
+    # Validation for submitting a newTask. 
+    # Validation for new letters and weights is done while adding the letter or weight.
     #
+    # @param attrs the attributes of this model.
+    # @param options passes to set, save.
     # @return error string if the model doesnt validate; "" if we do validate.
-    validate: () ->
+    validate: (attrs, opts) ->
         error = ""
-        ls = @get "letters"
+        ls = attrs.letters
+        ls_ = _.clone attrs.letters
 
-        ls_ = _.clone(@get "letters")
         delete ls_["space"]
         s = _.size(ls_)                                                           # size without space
 
+        # validate letters cnt; space existence.
         if s is 0 or s %% 2 is 1 or s > 8 or not "space" of ls
-            error = "A task should have 2 or more letters and one space"
+            error = "A task should have 2, 4, 6 or 8 letters and one space!"
+
+        # validate weights;
+        if Math.abs(_.reduce(ls, ((m, v) -> m + v), 0) - 1) > 0.00001
+            error = "Weigths do not add up to 1!"
+
+        # validate existing
+        ls_[' '] = 0
+        s = _.keys(ls_).sort().join('')
+        if @get("tasks").some(((t) -> t.letterString() is s))
+            error = "Task already exists!"
         return error
 
+        
     # Add a letter to the array of letters.
     # We have to validate here if the letter is in the task already.
     #

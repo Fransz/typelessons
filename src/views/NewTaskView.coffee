@@ -20,6 +20,7 @@ App.NewTaskView = Backbone.View.extend
     
 
     initialize: () ->
+        @$el.show()
         @listenTo @model, "invalid", @renderError
         @render()
 
@@ -87,12 +88,22 @@ App.NewTaskView = Backbone.View.extend
         @trigger "cancelNewTask"
         return false
 
+    # Submit a new Task.
+    # The collection is known in the model to add, we used it for validation also.
+    #
+    # @return void
     submit: () ->
         if @model.isValid()
-            ls = _.clone(@model.get "letters")
-            ls[" "] = ls["space"]
-            delete ls["space"]
-            @trigger "submitNewTask", ls
+            letters_ = _.clone(@model.get "letters")
+            letters_[" "] = letters_["space"]
+            delete letters_["space"]
+
+            ls = _.keys letters_
+            ws = _.map(ls, ((l) -> letters_[l]))
+            tasks = @model.get "tasks"
+            tasks.create letters: ls, weights: ws
+
+            @trigger "hideNewTask"
 
         return false
 
@@ -161,6 +172,22 @@ App.NewTaskView = Backbone.View.extend
         (inp.find(".letter").get())[0].focus()
 
 
+    # renders an error
+    #
+    # return void
     renderError: (model, error) ->
         @$el.find(".newtaskerror").remove()
         @$el.append @errorTemplate error: error
+
+    # Stops defining a new task.
+    #
+    # @return void
+    stop: () ->
+        @undelegateEvents()
+        @stopListening @model
+
+    # hides the form for adding a new task
+    #
+    # @return void
+    hide: () ->
+        @$el.hide()

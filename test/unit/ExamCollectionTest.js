@@ -12,16 +12,30 @@ describe("An Exam collection", function () {
         });
 
         it("should have cummelative scores with all values 0", function() {
-            ss = collection.cummScore();
+            ss = collection.sumScore();
             expect(ss.fail).to.be.equal(0);
             expect(ss.pass).to.be.equal(0);
             expect(ss.time).to.be.equal(0);
             expect(ss.tries).to.be.equal(0);
         });
 
+        it("should have average scores with all values 0", function () {
+            ss = collection.avgScore();
+            expect(ss.fail).to.be.equal(0);
+            expect(ss.pass).to.be.equal(0);
+            expect(ss.time).to.be.equal(0);
+        });
+
+        it("should have last scores with all values 0", function () {
+            ss = collection.lastScore();
+            expect(ss.fail).to.be.equal(0);
+            expect(ss.pass).to.be.equal(0);
+            expect(ss.time).to.be.equal(0);
+        });
+
     });
 
-    describe("when having 3 completed exams for with letters 'gh '", function() {
+    describe("when having 4 completed exams for with letters 'gh '", function() {
         var collection;
 
         beforeEach(function () {
@@ -39,19 +53,46 @@ describe("An Exam collection", function () {
                 exam.set("time", 100);
                 collection.add(exam);
             }
+
+            scores = {
+                'h': {pass: 45, fail: 2},
+                'j': {pass: 20, fail: 0},
+                ' ': {pass: 0, fail: 13},
+            };
+            exam = new App.ExamModel({letters: ['g', 'h'], weights: [0.5, 0.5]});
+            exam.set("scores", scores);
+            exam.set("time", 20);
+            collection.add(exam);
         });
 
-        it("should have a length of 3", function () {
-            expect(collection.length).to.be.equal(3);
+
+
+        it("should have a length of 4", function () {
+            expect(collection.length).to.be.equal(4);
         });
 
         it("should have the correct cummelative scores", function () {
-            ss = collection.cummScore();
-            expect(ss.fail).to.be.equal(165);
-            expect(ss.pass).to.be.equal(135);
-            expect(ss.time).to.be.equal(300);
-            expect(ss.tries).to.be.equal(3);
+            ss = collection.sumScore();
+            expect(ss.pass).to.be.equal(200);
+            expect(ss.fail).to.be.equal(180);
+            expect(ss.time).to.be.equal(320);
+            expect(ss.tries).to.be.equal(4);
 
+        });
+
+        it("should have the correct average scores", function () {
+            ss = collection.avgScore();
+            expect(ss.pass).to.be.equal(50);
+            expect(ss.fail).to.be.equal(45);
+            expect(ss.time).to.be.equal(80);
+
+        });
+
+        it("should have the correct last scores", function () {
+            ss = collection.lastScore();
+            expect(ss.pass).to.be.equal(65);
+            expect(ss.fail).to.be.equal(15);
+            expect(ss.time).to.be.equal(20);
         });
     });
  });
